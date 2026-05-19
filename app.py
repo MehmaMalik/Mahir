@@ -34,9 +34,35 @@ def onboarding_3():
 def role_selection():
     return render_template('role-selection.html')
 
-@app.route('/language-selection')
-def language_selection():
-    return render_template('language-selection.html')
+@app.route('/provider-registration', methods=['GET'])
+def provider_registration():
+    return render_template('provider-registration.html')
+
+@app.route('/provider-skill-test', methods=['POST'])
+def provider_skill_test():
+    name = request.form.get('name', '')
+    service_type = request.form.get('service_type', 'plumber')
+    city = request.form.get('city', '')
+    return render_template('provider-skill-test.html', name=name, service_type=service_type, city=city)
+
+@app.route('/provider-profile', methods=['POST'])
+def provider_profile_view():
+    name = request.form.get('name', '')
+    service_type = request.form.get('service_type', 'plumber')
+    city = request.form.get('city', '')
+    score = int(request.form.get('score', '2'))
+    # Assign skill badge based on score
+    if score >= 3:
+        badge = 'Master Ustad'
+        badge_color = '#1a7f4b'
+    elif score == 2:
+        badge = 'Verified Ustad'
+        badge_color = '#1960a3'
+    else:
+        badge = 'Rookie'
+        badge_color = '#854600'
+    return render_template('provider-profile.html', name=name, service_type=service_type,
+                           city=city, badge=badge, badge_color=badge_color)
 
 @app.route('/home')
 def home():

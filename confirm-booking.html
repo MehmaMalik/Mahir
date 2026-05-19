@@ -115,7 +115,7 @@
 <!-- Top App Bar -->
 <header class="bg-surface-container-lowest flex justify-between items-center w-full px-margin-main py-stack-sm border-b border-outline-variant sticky top-0 z-40">
 <div class="flex items-center gap-4">
-<button class="text-on-surface-variant Active: opacity-80 transition-opacity">
+<button onclick="history.back()" class="text-on-surface-variant Active: opacity-80 transition-opacity">
 <span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
 </button>
 <img src='/static/images/mahir-logo.svg' height='40' alt='Mahir Logo'>
@@ -228,68 +228,67 @@
 </div>
 </section>
 
-<!-- Section: Safe Mode -->
-<section>
-<h2 class="font-label-lg text-label-lg text-on-surface-variant mb-stack-sm ml-1 text-sm font-bold">Safe mode</h2>
-<div class="bg-white rounded-xl p-4 space-y-3 border border-outline-variant shadow-sm">
-<div class="flex items-start justify-between gap-4">
-<div class="flex items-start gap-3">
-<div class="mt-1">
-<span class="material-symbols-outlined text-red-600" data-icon="shield" style="font-variation-settings: 'FILL' 1;">shield</span>
-</div>
-<div>
-<h3 class="font-label-lg text-label-lg font-bold">Safe mode</h3>
-<p class="font-body-md text-body-md text-on-surface-variant text-xs text-gray-400">Guardian notified · Job timer active</p>
-</div>
-</div>
-<!-- Toggle Checkbox Styled -->
-<label class="relative inline-flex items-center cursor-pointer mt-1">
-<input type="checkbox" id="safe_mode_toggle" class="sr-only peer" onchange="toggleSafeMode()">
-<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1a7f4b]"></div>
-</label>
-</div>
 
-<!-- Guardian Phone input field (hidden by default) -->
-<div id="guardian_phone_container" class="hidden space-y-2 pt-3 border-t border-gray-100">
-<label class="block text-xs font-bold text-gray-500">GUARDIAN WHATSAPP PHONE NUMBER</label>
-<input type="text" id="guardian_phone_field" placeholder="e.g. +92 300 1234567" class="w-full h-12 px-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#1a7f4b] focus:border-[#1a7f4b] text-sm">
+<!-- Guardian Number Popup Modal (shown when Safe Mode ON and no guardian saved) -->
+<div id="guardian-popup" class="hidden fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/50">
+    <div class="bg-white border border-outline rounded-2xl p-6 text-center space-y-4 shadow-xl max-w-sm w-full">
+        <div class="w-14 h-14 bg-[#d0ffda] text-[#1a7f4b] rounded-full flex items-center justify-center mx-auto">
+            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">shield</span>
+        </div>
+        <h3 class="text-base font-bold text-on-surface">Safe Mode Active</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">Safe Mode requires a guardian number. Please enter a phone number to notify during your booking.</p>
+        <input type="tel" id="popup-guardian-phone" placeholder="+92 300 1234567"
+            class="w-full h-11 px-3 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-[#1a7f4b] text-center">
+        <button onclick="saveAndContinue()" class="w-full h-11 bg-[#1a7f4b] text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-sm">check_circle</span> Save &amp; Confirm Booking
+        </button>
+        <button onclick="skipSafeMode()" class="text-xs text-gray-400 underline cursor-pointer">Continue without Safe Mode</button>
+    </div>
 </div>
-</div>
-</section>
 </main>
 
 <script>
-function toggleSafeMode() {
-    const isChecked = document.getElementById('safe_mode_toggle').checked;
-    const container = document.getElementById('guardian_phone_container');
-    const hiddenField = document.getElementById('safe_mode_hidden');
-    const inputField = document.getElementById('guardian_phone_field');
-    const formInput = document.getElementById('form_guardian_phone');
-    
-    if (isChecked) {
-        container.classList.remove('hidden');
-        hiddenField.value = "on";
-    } else {
-        container.classList.add('hidden');
-        hiddenField.value = "off";
-        inputField.value = "";
-        formInput.value = "";
-    }
+// Load safe mode state from profile settings
+document.addEventListener('DOMContentLoaded', () => {
+    const safeMode = localStorage.getItem('mahir_safe_mode') || 'off';
+    const guardianPhone = localStorage.getItem('mahir_guardian_phone') || '';
+    document.getElementById('safe_mode_hidden').value = safeMode;
+    document.getElementById('form_guardian_phone').value = guardianPhone;
+});
+
+function saveAndContinue() {
+    const phone = document.getElementById('popup-guardian-phone').value.trim();
+    if (!phone) { alert('Please enter a guardian phone number.'); return; }
+    localStorage.setItem('mahir_guardian_phone', phone);
+    localStorage.setItem('mahir_safe_mode', 'on');
+    document.getElementById('safe_mode_hidden').value = 'on';
+    document.getElementById('form_guardian_phone').value = phone;
+    document.getElementById('guardian-popup').classList.add('hidden');
+    document.getElementById('booking-form').submit();
 }
 
-// Keep hidden inputs synced with interactive field
-document.addEventListener('DOMContentLoaded', () => {
-    const inputField = document.getElementById('guardian_phone_field');
-    const formInput = document.getElementById('form_guardian_phone');
-    inputField.addEventListener('input', () => {
-        formInput.value = inputField.value;
-    });
-});
+function skipSafeMode() {
+    document.getElementById('safe_mode_hidden').value = 'off';
+    document.getElementById('guardian-popup').classList.add('hidden');
+    document.getElementById('booking-form').submit();
+}
+
+function checkSafeModeBeforeSubmit(e) {
+    e.preventDefault();
+    const safeMode = localStorage.getItem('mahir_safe_mode') || 'off';
+    const guardianPhone = localStorage.getItem('mahir_guardian_phone') || '';
+    if (safeMode === 'on' && !guardianPhone) {
+        document.getElementById('guardian-popup').classList.remove('hidden');
+        return;
+    }
+    document.getElementById('safe_mode_hidden').value = safeMode;
+    document.getElementById('form_guardian_phone').value = guardianPhone;
+    document.getElementById('booking-form').submit();
+}
 </script>
 
-<!-- Fixed Bottom Actions -->
 <footer class="fixed bottom-0 left-0 w-full p-margin-main bg-surface-container-lowest border-t border-outline-variant">
-    <form action="/confirm-booking" method="POST">
+    <form id="booking-form" action="/confirm-booking" method="POST" onsubmit="checkSafeModeBeforeSubmit(event)">
         <input type="hidden" name="worker_name" value="{{ worker_name }}">
         <input type="hidden" name="service_type" value="{{ service_type }}">
         <input type="hidden" name="location" value="{{ location }}">

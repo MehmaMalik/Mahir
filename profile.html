@@ -15,9 +15,9 @@
     <!-- TopAppBar -->
     <header class="bg-white border-b border-outline-variant sticky top-0 z-50 flex justify-between items-center w-full px-4 h-16 shadow-sm">
         <div class="flex items-center gap-3">
-            <a href="/" class="text-on-surface flex items-center justify-center min-h-[48px] min-w-[48px]">
+            <button onclick="history.back()" class="text-on-surface flex items-center justify-center min-h-[48px] min-w-[48px]">
                 <span class="material-symbols-outlined">arrow_back</span>
-            </a>
+            </button>
             <h1 class="text-lg font-bold text-primary">My Profile</h1>
         </div>
     </header>
@@ -45,9 +45,50 @@
                 <span class="text-sm text-gray-500">Email Address</span>
                 <span class="text-sm font-bold text-on-surface">bilal.ahmed@example.com</span>
             </div>
-            <div class="flex justify-between items-center py-3 last:pb-0">
+            <div class="flex justify-between items-center py-3">
                 <span class="text-sm text-gray-500">Default Area</span>
                 <span class="text-sm font-bold text-on-surface">G-13, Islamabad</span>
+            </div>
+            <div class="flex justify-between items-center py-3 last:pb-0">
+                <span class="text-sm text-gray-500">Gender</span>
+                <select id="gender-select" onchange="onGenderChange(this.value)" class="text-sm font-bold text-on-surface border border-gray-200 rounded-lg px-2 py-1 bg-white focus:ring-2 focus:ring-primary">
+                    <option value="prefer_not">Prefer not to say</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Safe Mode Settings Panel -->
+        <div class="bg-white border border-outline-variant rounded-2xl overflow-hidden shadow-sm">
+            <div class="px-4 py-3 border-b border-gray-100">
+                <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wider">Safety Settings</h2>
+            </div>
+            <!-- Safe Mode Toggle Row -->
+            <div class="p-4 space-y-3">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-[#1a7f4b]" style="font-variation-settings: 'FILL' 1;">shield</span>
+                        <div>
+                            <p class="text-sm font-bold text-on-surface">Safe Mode</p>
+                            <p class="text-xs text-gray-400">Guardian notified · Job timer active</p>
+                        </div>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="profile-safe-mode" class="sr-only peer" onchange="onSafeModeToggle(this.checked)">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1a7f4b]"></div>
+                    </label>
+                </div>
+                <!-- Guardian Phone Section (visible when Safe Mode ON) -->
+                <div id="guardian-section" class="hidden pt-3 border-t border-gray-100 space-y-2">
+                    <label class="block text-xs font-bold text-gray-500">GUARDIAN WHATSAPP NUMBER</label>
+                    <input type="tel" id="guardian-phone-profile" placeholder="e.g. +92 300 1234567"
+                        class="w-full h-11 px-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#1a7f4b] focus:border-[#1a7f4b]">
+                    <button onclick="saveGuardianPhone()" class="w-full h-11 bg-[#1a7f4b] text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 active:scale-95 transition-all">
+                        <span class="material-symbols-outlined text-sm">save</span> Save Guardian Number
+                    </button>
+                    <p id="guardian-saved-msg" class="text-xs text-[#1a7f4b] font-bold text-center hidden">✅ Guardian number saved!</p>
+                </div>
             </div>
         </div>
 
@@ -55,20 +96,11 @@
         <div class="bg-white border border-outline-variant rounded-2xl overflow-hidden shadow-sm divide-y divide-gray-100">
             <button class="w-full flex items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-all text-left min-h-[48px] cursor-pointer">
                 <div class="flex items-center gap-3">
-                    <span class="material-symbols-outlined text-gray-400">shield</span>
-                    <span class="text-sm font-bold">Safety Settings (Safe Mode)</span>
-                </div>
-                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
-            </button>
-            
-            <button class="w-full flex items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-all text-left min-h-[48px] cursor-pointer">
-                <div class="flex items-center gap-3">
                     <span class="material-symbols-outlined text-gray-400">language</span>
-                    <span class="text-sm font-bold">Preferred Language (Urdu)</span>
+                    <span class="text-sm font-bold">Preferred Language (Auto-detect)</span>
                 </div>
                 <span class="material-symbols-outlined text-gray-400">chevron_right</span>
             </button>
-
             <button class="w-full flex items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-all text-left min-h-[48px] text-red-600 cursor-pointer">
                 <div class="flex items-center gap-3">
                     <span class="material-symbols-outlined text-red-500">logout</span>
@@ -77,6 +109,40 @@
                 <span class="material-symbols-outlined text-red-500">chevron_right</span>
             </button>
         </div>
+
+        <script>
+        function onGenderChange(val) {
+            localStorage.setItem('mahir_gender', val);
+            if (val === 'female') {
+                document.getElementById('profile-safe-mode').checked = true;
+                onSafeModeToggle(true);
+            }
+        }
+        function onSafeModeToggle(checked) {
+            localStorage.setItem('mahir_safe_mode', checked ? 'on' : 'off');
+            document.getElementById('guardian-section').classList.toggle('hidden', !checked);
+        }
+        function saveGuardianPhone() {
+            const phone = document.getElementById('guardian-phone-profile').value.trim();
+            if (phone) {
+                localStorage.setItem('mahir_guardian_phone', phone);
+                document.getElementById('guardian-saved-msg').classList.remove('hidden');
+                setTimeout(() => document.getElementById('guardian-saved-msg').classList.add('hidden'), 2500);
+            }
+        }
+        // Restore saved settings on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const gender = localStorage.getItem('mahir_gender') || 'prefer_not';
+            document.getElementById('gender-select').value = gender;
+            const safeMode = localStorage.getItem('mahir_safe_mode');
+            if (safeMode === 'on' || gender === 'female') {
+                document.getElementById('profile-safe-mode').checked = true;
+                onSafeModeToggle(true);
+            }
+            const phone = localStorage.getItem('mahir_guardian_phone') || '';
+            if (phone) document.getElementById('guardian-phone-profile').value = phone;
+        });
+        </script>
     </main>
 
     <!-- BottomNavBar -->

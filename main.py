@@ -62,12 +62,12 @@ def run_pipeline(user_query):
     
     # --- AGENT 3 ---
     # Dummy lat/lng for G-13 (approx: 33.6420, 72.9815)
-    top_5 = discover_providers(service_type, complexity, 33.6420, 72.9815)
+    top_5 = discover_providers(service_type, complexity, 33.6420, 72.9815, customer_city=location)
     if not top_5:
-        # Fallback to test coords if none found
-        top_5 = discover_providers("plumber", "Basic", 24.8000, 67.0400)
+        # Fallback: try without city filter
+        top_5 = discover_providers(service_type, "Basic", 24.8000, 67.0400, customer_city=None)
         if not top_5:
-            return {"error": f"No {complexity} {service_type} available near you."}
+            return {"error": f"No {complexity} {service_type} available near you in {location}."}
         
     # --- AGENT 4 ---
     best_provider = rank_providers(top_5)
