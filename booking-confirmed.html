@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Booking Confirmed! - Mahir</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#f8f9fa] text-[#191c1d] min-h-screen flex flex-col justify-between pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-white border-b border-gray-100 flex justify-between items-center w-full px-4 h-16 shadow-sm sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <a href="/" class="text-on-surface flex items-center justify-center min-h-[48px] min-w-[48px]">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <img src='/static/images/mahir-logo.svg' height='40' alt='Mahir Logo'>
+        </div>
+    </header>
+
+    <main class="flex-1 flex flex-col items-center justify-center px-6 py-6 text-center max-w-md mx-auto w-full space-y-6">
+        
+        <!-- Outgoing Phone Call Simulation Box -->
+        <div id="calling-screen" class="w-full bg-[#0b1512] text-white border border-green-800 rounded-3xl p-6 flex flex-col justify-between shadow-2xl relative overflow-hidden min-h-[420px] transition-all duration-500">
+            <!-- Glassmorphic Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-b from-green-950/20 to-black/90 pointer-events-none"></div>
+            
+            <!-- Call Header -->
+            <div class="relative z-10 space-y-1">
+                <span class="inline-block text-[9px] font-bold tracking-widest text-[#7cda9d] uppercase bg-green-950/60 border border-green-800/40 px-3 py-1 rounded-full">
+                    🤖 AI Dispatcher Call Verification
+                </span>
+                <h2 class="text-xl font-bold mt-3">Ustad {{ worker_name }}</h2>
+                <p class="text-xs text-gray-400 font-mono tracking-wider">+92-300-1111111</p>
+                <div id="call-status" class="text-sm font-semibold text-[#7cda9d] flex items-center justify-center gap-2 mt-1">
+                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse" id="status-dot"></span>
+                    <span id="status-text">Connecting...</span>
+                </div>
+            </div>
+
+            <!-- Pulsing Ripples / Active Timer Area -->
+            <div class="relative z-10 flex flex-col items-center justify-center my-6 h-28">
+                <!-- Ripples (Visible during Ringing) -->
+                <div id="ringing-ripples" class="absolute w-24 h-24 flex items-center justify-center">
+                    <div class="absolute inset-0 rounded-full border border-green-500/30 animate-ping"></div>
+                    <div class="absolute inset-2 rounded-full border border-green-500/40 animate-ping" style="animation-delay: 0.4s;"></div>
+                    <div class="absolute inset-4 rounded-full border border-green-500/50 animate-ping" style="animation-delay: 0.8s;"></div>
+                </div>
+                
+                <!-- Worker Initials Avatar -->
+                <div class="relative w-20 h-20 rounded-full bg-[#1a7f4b] flex items-center justify-center text-white text-3xl font-bold uppercase shadow-lg border border-[#7cda9d]/40 z-10">
+                    {{ worker_name[:2] }}
+                </div>
+                
+                <!-- Call Duration (Hidden during ringing) -->
+                <div id="call-duration" class="hidden text-xs text-gray-400 mt-2 font-mono z-10">00:00</div>
+            </div>
+
+            <!-- Live Urdu Transcript / Subtitles -->
+            <div id="transcript-box" class="relative z-10 bg-black/60 border border-green-800/30 rounded-xl p-3 text-left text-[11px] space-y-1.5 hidden max-h-28 overflow-y-auto mb-4 transition-all duration-300">
+                <div class="text-[9px] font-bold text-[#7cda9d] tracking-widest uppercase pb-1 border-b border-green-950">Live Call Dialogue</div>
+                <div id="transcript-content" class="space-y-1.5 leading-relaxed font-medium">
+                    <!-- Dialogue items populated via JS -->
+                </div>
+            </div>
+
+            <!-- iOS Grid Call Action Buttons -->
+            <div class="relative z-10 grid grid-cols-3 gap-y-3 gap-x-2 my-2 justify-items-center opacity-80">
+                <div class="flex flex-col items-center">
+                    <div class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20">
+                        <span class="material-symbols-outlined text-sm">mic_off</span>
+                    </div>
+                    <span class="text-[8px] text-gray-400 mt-1">Mute</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20">
+                        <span class="material-symbols-outlined text-sm">keypad</span>
+                    </div>
+                    <span class="text-[8px] text-gray-400 mt-1">Keypad</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20">
+                        <span class="material-symbols-outlined text-sm">volume_up</span>
+                    </div>
+                    <span class="text-[8px] text-gray-400 mt-1">Speaker</span>
+                </div>
+            </div>
+
+            <!-- Decline Action Button -->
+            <div class="relative z-10 flex justify-center mt-2">
+                <div class="w-11 h-11 rounded-full bg-red-600 flex items-center justify-center shadow-lg active:scale-95 transition-transform duration-100">
+                    <span class="material-symbols-outlined text-white text-base">call_end</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmed State (Visible after Call Hangup) -->
+        <div id="confirmed-state" class="hidden w-full bg-white border border-outline-variant rounded-2xl p-6 flex flex-col items-center justify-center space-y-4 shadow-sm transition-all duration-500 scale-95 opacity-0">
+            <div class="w-16 h-16 bg-green-100 text-[#1a7f4b] rounded-full flex items-center justify-center shadow-inner">
+                <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            </div>
+            <div>
+                <h1 class="text-lg font-bold text-[#1a7f4b]">Worker accepted — Booking confirmed!</h1>
+                <p class="text-xs text-gray-500 mt-1">Your service partner is wrapping up and heading out</p>
+            </div>
+            
+            <a href="/live-job/{{ booking_id }}" class="w-full min-h-[48px] bg-[#1a7f4b] text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-all text-sm py-3 cursor-pointer">
+                <span class="material-symbols-outlined text-base">map</span>
+                Go to Live Job Tracking
+            </a>
+        </div>
+        
+        <!-- Booking Card Details -->
+        <div class="w-full bg-white border border-outline-variant rounded-2xl p-6 text-left space-y-4 shadow-sm">
+            <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+                <span class="text-xs text-gray-400 font-bold uppercase tracking-wider">Booking ID</span>
+                <span class="text-sm font-bold text-[#1a7f4b] bg-green-50 px-3 py-1 rounded-full">{{ booking_id }}</span>
+            </div>
+            
+            <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">Service Worker</span>
+                <div class="flex items-center gap-2">
+                    <span class="text-sm font-bold text-on-surface">{{ worker_name }}</span>
+                    <span class="inline-flex items-center gap-0.5 px-2 py-0.5 bg-[#d0ffda] text-[#1a7f4b] rounded-full text-[10px] font-bold">
+                        <span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                        PKM
+                    </span>
+                </div>
+            </div>
+            
+            <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">Scheduled Time</span>
+                <span class="text-sm font-bold text-on-surface">{{ date }} at {{ time }}</span>
+            </div>
+            
+            <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                <span class="text-sm text-gray-500 font-bold">Total Price</span>
+                <span class="text-lg font-bold text-[#1a7f4b]">Rs. {{ price }}</span>
+            </div>
+        </div>
+        
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-white px-4 pb-safe border-t border-gray-200">
+        <a href="/" class="flex flex-col items-center justify-center text-gray-400 font-medium transition-all py-2 min-h-[48px] px-4">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-xs">Home</span>
+        </a>
+        <a href="/bookings" class="flex flex-col items-center justify-center text-[#1a7f4b] font-bold transition-all py-2 min-h-[48px] px-4">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">handyman</span>
+            <span class="text-xs">Bookings</span>
+        </a>
+        <a href="/messages" class="flex flex-col items-center justify-center text-gray-400 font-medium transition-all py-2 min-h-[48px] px-4">
+            <span class="material-symbols-outlined">chat_bubble</span>
+            <span class="text-xs">Messages</span>
+        </a>
+        <a href="/profile" class="flex flex-col items-center justify-center text-gray-400 font-medium transition-all py-2 min-h-[48px] px-4">
+            <span class="material-symbols-outlined">person</span>
+            <span class="text-xs">Profile</span>
+        </a>
+    </nav>
+
+    <script>
+        // Trigger server-side log events
+        function logEvent(eventName) {
+            fetch('/api/log-call-event', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    event: eventName,
+                    worker_name: "{{ worker_name }}",
+                    service_type: "{{ service_type }}",
+                    location: "{{ location }}",
+                    time: "{{ time }}",
+                    price: "{{ price }}"
+                })
+            }).catch(err => console.error("Event log failed:", err));
+        }
+
+        // Call State machine simulation
+        window.addEventListener('DOMContentLoaded', () => {
+            const statusText = document.getElementById('status-text');
+            const statusDot = document.getElementById('status-dot');
+            const durationEl = document.getElementById('call-duration');
+            const ripples = document.getElementById('ringing-ripples');
+            const transcriptBox = document.getElementById('transcript-box');
+            const transcriptContent = document.getElementById('transcript-content');
+            
+            // 1. Initial State: Ringing (3 seconds)
+            logEvent('dialing');
+            statusText.innerText = "Ringing...";
+            statusDot.className = "w-2 h-2 rounded-full bg-amber-400 animate-pulse";
+            
+            // 2. State: Connected & speaking Urdu Dispatch script (at 3 seconds)
+            setTimeout(() => {
+                logEvent('connected');
+                statusText.innerText = "Connected (AI Dispatcher)";
+                statusDot.className = "w-2 h-2 rounded-full bg-green-500 animate-pulse";
+                ripples.classList.add('hidden');
+                durationEl.classList.remove('hidden');
+                
+                // Start call timer
+                let durationSecs = 0;
+                const timerInterval = setInterval(() => {
+                    durationSecs++;
+                    const m = String(Math.floor(durationSecs / 60)).padStart(2, '0');
+                    const s = String(durationSecs % 60).padStart(2, '0');
+                    durationEl.innerText = `${m}:${s}`;
+                }, 1000);
+                
+                // Show Transcript Bubble 1 (AI voice speaking)
+                transcriptBox.classList.remove('hidden');
+                const aiBubble = document.createElement('p');
+                aiBubble.className = "text-[#7cda9d] font-semibold";
+                aiBubble.innerHTML = "🤖 <strong>AI Voice:</strong> ";
+                transcriptContent.appendChild(aiBubble);
+                
+                // Animate text appearance word by word
+                const aiText = "Assalam o Alaikum {{ worker_name }} bhai. {{ service_type }} ka kaam hai. {{ location }} mein, kal {{ time }}. Total bill Rs. {{ price }} hai. Accept karne ke liye 1 dabaein.";
+                const words = aiText.split(' ');
+                let wordIdx = 0;
+                const aiSpeechInterval = setInterval(() => {
+                    if (wordIdx < words.length) {
+                        aiBubble.innerHTML += words[wordIdx] + " ";
+                        wordIdx++;
+                        transcriptBox.scrollTop = transcriptBox.scrollHeight;
+                    } else {
+                        clearInterval(aiSpeechInterval);
+                    }
+                }, 180);
+
+                // 3. State: Worker presses 1 - Accepted (at 6.5 seconds total)
+                setTimeout(() => {
+                    logEvent('accepted');
+                    statusText.innerText = "Worker Accepted ✅";
+                    statusDot.className = "w-2 h-2 rounded-full bg-green-400 animate-pulse";
+                    
+                    // Show Transcript Bubble 2 (Worker response)
+                    const workerBubble = document.createElement('p');
+                    workerBubble.className = "text-white mt-1 border-t border-green-950/40 pt-1.5";
+                    workerBubble.innerHTML = "👨 <strong>{{ worker_name }}:</strong> ";
+                    transcriptContent.appendChild(workerBubble);
+                    
+                    const workerText = "[Worker pressed 1] Ji bilkul, main farigh hoon. Main kal time par pahunch jaunga. Shukriya!";
+                    const workerWords = workerText.split(' ');
+                    let wIdx = 0;
+                    const workerSpeechInterval = setInterval(() => {
+                        if (wIdx < workerWords.length) {
+                            workerBubble.innerHTML += workerWords[wIdx] + " ";
+                            wIdx++;
+                            transcriptBox.scrollTop = transcriptBox.scrollHeight;
+                        } else {
+                            clearInterval(workerSpeechInterval);
+                        }
+                    }, 180);
+
+                    // 4. State: Hang up & Transition to Booking Invoice details (at 9.5 seconds total)
+                    setTimeout(() => {
+                        logEvent('completed');
+                        clearInterval(timerInterval);
+                        
+                        // Slide calling screen out
+                        const callScreen = document.getElementById('calling-screen');
+                        const confirmedScreen = document.getElementById('confirmed-state');
+                        
+                        callScreen.classList.add('scale-95', 'opacity-0');
+                        setTimeout(() => {
+                            callScreen.classList.add('hidden');
+                            confirmedScreen.classList.remove('hidden');
+                            // Trigger transition animations
+                            setTimeout(() => {
+                                confirmedScreen.classList.remove('scale-95', 'opacity-0');
+                            }, 50);
+                        }, 500);
+                        
+                    }, 3000); // 3 seconds for worker dialogue
+
+                }, 3500); // 3.5 seconds after connection
+
+            }, 3000); // 3 seconds ringing
+        });
+    </script>
+
+<footer style='text-align:center;font-size:10px;color:#aaaaaa;padding:12px 0 24px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</footer>
+</body>
+</html>

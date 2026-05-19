@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Dispute Resolution - Mahir</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#f8f9fa] text-[#191c1d] min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-white border-b border-gray-100 flex justify-between items-center w-full px-4 h-16 shadow-sm sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <a href="/bookings" class="text-on-surface flex items-center justify-center min-h-[48px] min-w-[48px]">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <h1 class="text-lg font-bold text-red-600">Dispute & Resolution</h1>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto py-6 px-4 space-y-6">
+        
+        <div class="text-center space-y-2">
+            <h2 class="text-base font-bold text-on-surface">What seems to be the issue?</h2>
+            <p class="text-xs text-gray-500">Please choose one of the options below. Our AI dispute matching engine will automatically trigger the appropriate solution.</p>
+        </div>
+
+        <!-- Dispute Buttons Panel -->
+        <div class="space-y-4">
+            
+            <!-- Option 1 -->
+            <button onclick="selectDispute('no_show', 'Full refund will be processed in 24 hours')" class="w-full bg-white border border-gray-200 text-gray-700 hover:bg-red-50 hover:border-red-300 font-bold py-4 min-h-[48px] rounded-xl flex items-center justify-between px-4 active:scale-[0.98] transition-all text-sm shadow-sm cursor-pointer">
+                <span class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-red-500">person_off</span>
+                    Worker did not arrive (Ustad nahi aye)
+                </span>
+                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+            </button>
+
+            <!-- Option 2 -->
+            <button onclick="selectDispute('quality', '30% partial refund + warning added to worker')" class="w-full bg-white border border-gray-200 text-gray-700 hover:bg-red-50 hover:border-red-300 font-bold py-4 min-h-[48px] rounded-xl flex items-center justify-between px-4 active:scale-[0.98] transition-all text-sm shadow-sm cursor-pointer">
+                <span class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-red-500">handyman</span>
+                    Quality problem (Kaam me masla)
+                </span>
+                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+            </button>
+
+            <!-- Option 3 -->
+            <button onclick="selectDispute('pricing', 'Difference will be refunded')" class="w-full bg-white border border-gray-200 text-gray-700 hover:bg-red-50 hover:border-red-300 font-bold py-4 min-h-[48px] rounded-xl flex items-center justify-between px-4 active:scale-[0.98] transition-all text-sm shadow-sm cursor-pointer">
+                <span class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-red-500">monetization_on</span>
+                    Price was different (Ziada paise mange)
+                </span>
+                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+            </button>
+        </div>
+
+        <!-- Dynamic Solution Detail Panel (Hidden initially) -->
+        <div id="solution-panel" class="hidden bg-white border border-red-100 rounded-2xl p-6 space-y-4 shadow-md text-center">
+            <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto">
+                <span class="material-symbols-outlined text-2xl">verified</span>
+            </div>
+            
+            <div class="space-y-2">
+                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest">PROPOSED AI RESOLUTION</h3>
+                <p id="solution-text" class="text-lg font-bold text-red-600 font-headline-sm"></p>
+                <p class="text-xs text-gray-400">We stand by our customer safety and quality guarantee.</p>
+            </div>
+
+            <!-- Submit form to /report-dispute -->
+            <form action="/report-dispute" method="POST" class="pt-2">
+                <input type="hidden" name="booking_id" value="{{ booking_id }}">
+                <input type="hidden" name="dispute_type" id="form_dispute_type" value="">
+                <input type="hidden" name="resolution" id="form_resolution" value="">
+                
+                <button type="submit" class="w-full bg-red-600 text-white font-bold py-3.5 min-h-[48px] rounded-xl flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-all text-sm cursor-pointer">
+                    <span class="material-symbols-outlined">gavel</span>
+                    Confirm Dispute Filing
+                </button>
+            </form>
+        </div>
+
+    </main>
+
+    <script>
+        function selectDispute(type, solution) {
+            document.getElementById('form_dispute_type').value = type;
+            document.getElementById('form_resolution').value = solution;
+            
+            const textEl = document.getElementById('solution-text');
+            textEl.innerText = solution;
+            
+            const panel = document.getElementById('solution-panel');
+            panel.classList.remove('hidden');
+            panel.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+<footer style='text-align:center;font-size:10px;color:#aaaaaa;padding:12px 0 24px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</footer>
+</body>
+</html>

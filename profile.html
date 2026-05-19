@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>My Profile - Mahir</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#f8f9fa] text-[#191c1d] min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-white border-b border-outline-variant sticky top-0 z-50 flex justify-between items-center w-full px-4 h-16 shadow-sm">
+        <div class="flex items-center gap-3">
+            <a href="/" class="text-on-surface flex items-center justify-center min-h-[48px] min-w-[48px]">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <h1 class="text-lg font-bold text-primary">My Profile</h1>
+        </div>
+    </header>
+
+    <!-- Profile Info -->
+    <main class="max-w-md mx-auto py-6 px-4 space-y-6">
+        <!-- Profile Header Card -->
+        <div class="bg-white border border-outline-variant rounded-2xl p-6 text-center space-y-4 shadow-sm">
+            <div class="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary mx-auto flex items-center justify-center text-primary overflow-hidden">
+                <span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">person</span>
+            </div>
+            <div>
+                <h2 class="text-lg font-bold text-on-surface">Bilal Ahmed</h2>
+                <p class="text-xs text-gray-400">Mahir Customer since 2026</p>
+            </div>
+        </div>
+
+        <!-- Details Card -->
+        <div class="bg-white border border-outline-variant rounded-2xl p-4 shadow-sm divide-y divide-gray-100 space-y-4">
+            <div class="flex justify-between items-center py-2 first:pt-0">
+                <span class="text-sm text-gray-500">Phone Number</span>
+                <span class="text-sm font-bold text-on-surface">+92 300 9876543</span>
+            </div>
+            <div class="flex justify-between items-center py-3">
+                <span class="text-sm text-gray-500">Email Address</span>
+                <span class="text-sm font-bold text-on-surface">bilal.ahmed@example.com</span>
+            </div>
+            <div class="flex justify-between items-center py-3 last:pb-0">
+                <span class="text-sm text-gray-500">Default Area</span>
+                <span class="text-sm font-bold text-on-surface">G-13, Islamabad</span>
+            </div>
+        </div>
+
+        <!-- Quick Settings Actions -->
+        <div class="bg-white border border-outline-variant rounded-2xl overflow-hidden shadow-sm divide-y divide-gray-100">
+            <button class="w-full flex items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-all text-left min-h-[48px] cursor-pointer">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-gray-400">shield</span>
+                    <span class="text-sm font-bold">Safety Settings (Safe Mode)</span>
+                </div>
+                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+            </button>
+            
+            <button class="w-full flex items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-all text-left min-h-[48px] cursor-pointer">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-gray-400">language</span>
+                    <span class="text-sm font-bold">Preferred Language (Urdu)</span>
+                </div>
+                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+            </button>
+
+            <button class="w-full flex items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-all text-left min-h-[48px] text-red-600 cursor-pointer">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-red-500">logout</span>
+                    <span class="text-sm font-bold">Logout</span>
+                </div>
+                <span class="material-symbols-outlined text-red-500">chevron_right</span>
+            </button>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-white px-4 pb-safe border-t border-gray-200">
+        <a href="/" class="flex flex-col items-center justify-center text-gray-400 font-medium transition-all py-2 min-h-[48px] px-4">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-xs">Home</span>
+        </a>
+        <a href="/bookings" class="flex flex-col items-center justify-center text-gray-400 font-medium transition-all py-2 min-h-[48px] px-4">
+            <span class="material-symbols-outlined">handyman</span>
+            <span class="text-xs">Bookings</span>
+        </a>
+        <a href="/messages" class="flex flex-col items-center justify-center text-gray-400 font-medium transition-all py-2 min-h-[48px] px-4">
+            <span class="material-symbols-outlined">chat_bubble</span>
+            <span class="text-xs">Messages</span>
+        </a>
+        <a href="/profile" class="flex flex-col items-center justify-center text-[#1a7f4b] font-bold transition-all py-2 min-h-[48px] px-4">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+            <span class="text-xs">Profile</span>
+        </a>
+    </nav>
+</body>
+</html>

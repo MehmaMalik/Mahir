@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Booking Confirmation - Mahir</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f8f9fa",
+                        "secondary": "#1960a3",
+                        "inverse-on-surface": "#f0f1f2",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "on-tertiary-container": "#fff1e9",
+                        "on-tertiary-fixed": "#2f1500",
+                        "background": "#f8f9fa",
+                        "surface-dim": "#d9dadb",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#d0ffda",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#7db6ff",
+                        "primary-fixed-dim": "#7cda9d",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#001c38",
+                        "surface-container-high": "#e7e8e9",
+                        "primary-container": "#1a7f4b",
+                        "primary": "#006438",
+                        "on-secondary-container": "#00477f",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "secondary-fixed": "#d3e4ff",
+                        "outline-variant": "#becabe",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#a95b00",
+                        "inverse-primary": "#7cda9d",
+                        "surface-tint": "#006d3d",
+                        "on-primary-fixed": "#00210f",
+                        "secondary-fixed-dim": "#a2c9ff",
+                        "surface-container-low": "#f3f4f5",
+                        "surface": "#f8f9fa",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2e3132",
+                        "surface-container": "#edeeef",
+                        "tertiary-fixed": "#ffdcc3",
+                        "on-secondary-fixed-variant": "#004881",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "outline": "#6f7a70",
+                        "tertiary": "#854600",
+                        "primary-fixed": "#98f6b7",
+                        "on-background": "#191c1d",
+                        "on-surface": "#191c1d",
+                        "on-surface-variant": "#3f4941",
+                        "on-primary-fixed-variant": "#00522c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-main": "1rem",
+                        "gutter": "0.75rem",
+                        "stack-md": "1rem",
+                        "stack-lg": "1.5rem",
+                        "stack-sm": "0.5rem"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["DM Sans"],
+                        "headline-lg": ["DM Sans"],
+                        "label-lg": ["DM Sans"],
+                        "headline-md": ["DM Sans"],
+                        "body-md": ["DM Sans"],
+                        "body-lg": ["DM Sans"],
+                        "headline-sm": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}],
+                        "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface-bright text-on-surface min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="bg-surface-container-lowest flex justify-between items-center w-full px-margin-main py-stack-sm border-b border-outline-variant sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant Active: opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<img src='/static/images/mahir-logo.svg' height='40' alt='Mahir Logo'>
+</div>
+<button class="text-primary-container Active: opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+</header>
+<main class="px-margin-main py-stack-lg space-y-stack-lg">
+<!-- Section: Selected Worker -->
+<section>
+<h2 class="font-label-lg text-label-lg text-on-surface-variant mb-stack-sm ml-1">Selected worker</h2>
+<div class="bg-surface-container-low rounded-xl p-3 flex items-center gap-4">
+<div class="w-16 h-16 rounded-full bg-secondary flex items-center justify-center text-white text-2xl font-bold uppercase shadow-inner">
+    {{ worker_name[:2] }}
+</div>
+<div class="flex-1">
+<h3 class="font-headline-sm text-headline-sm font-bold">{{ worker_name }}</h3>
+<div class="flex flex-wrap gap-2 mt-1">
+<!-- PKM Verified Badge -->
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-[#d0ffda] text-primary rounded-full font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified_user" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                            PKM Verified
+                        </span>
+<!-- Master Ustad Badge -->
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-[#d3e4ff] text-secondary rounded-full font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]" data-icon="award" style="font-variation-settings: 'FILL' 1;">award_star</span>
+                            {{ skill_level }}
+                        </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: AI Pricing Check & Breakdown -->
+<section class="space-y-4">
+<div class="bg-[#d0ffda] border-2 border-[#1a7f4b] rounded-xl p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#1a7f4b]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<p class="font-label-lg text-label-lg text-[#1a7f4b] font-bold">Rs. {{ total_cost }} is fair</p>
+<p class="font-body-md text-body-md text-gray-700">AI Checked against local service rates</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#1a7f4b]" data-icon="auto_awesome">auto_awesome</span>
+</div>
+
+<!-- Price Breakdown Card -->
+<div class="bg-white rounded-xl p-4 space-y-3 border border-outline-variant shadow-sm">
+<h3 class="font-label-lg text-label-lg font-bold text-on-surface-variant text-sm">Price Breakdown</h3>
+<div class="flex justify-between text-sm">
+<span class="text-gray-500">Base Fee</span>
+<span class="font-semibold text-on-surface">Rs. {{ base_fee }}</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-gray-500">Distance Cost</span>
+<span class="font-semibold text-on-surface">Rs. {{ distance_cost }}</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-gray-500">Complexity Premium</span>
+<span class="font-semibold text-on-surface">Rs. {{ complexity_premium }}</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-gray-500">Urgency Fee</span>
+<span class="font-semibold text-on-surface">Rs. {{ urgency_fee }}</span>
+</div>
+<div class="h-px bg-outline-variant w-full my-1"></div>
+<div class="flex justify-between text-sm">
+<span class="text-gray-500">Subtotal</span>
+<span class="font-semibold text-on-surface">Rs. {{ subtotal }}</span>
+</div>
+<div class="flex justify-between text-sm text-green-600 font-bold">
+<span>Loyalty Discount</span>
+<span>-Rs. {{ loyalty_discount }}</span>
+</div>
+<div class="h-px bg-outline-variant w-full my-1"></div>
+<div class="flex justify-between items-center">
+<span class="font-bold text-on-surface text-base">TOTAL PRICE</span>
+<span class="font-headline-sm text-lg font-bold text-[#1a7f4b]">Rs. {{ total_cost }}</span>
+</div>
+</div>
+
+<!-- Budget Alternative Box -->
+<div class="bg-[#e8f0fe] border border-[#1a73e8] rounded-xl p-4 space-y-1">
+<div class="flex items-center gap-2 text-[#1a73e8]">
+<span class="material-symbols-outlined text-[18px]">lightbulb</span>
+<span class="font-bold text-sm">Budget Alternative Option</span>
+</div>
+<p class="text-xs text-gray-700 font-medium leading-relaxed">{{ budget_alt }}</p>
+</div>
+</section>
+
+<!-- Section: Booking Details -->
+<section>
+<h2 class="font-label-lg text-label-lg text-on-surface-variant mb-stack-sm ml-1 text-sm font-bold">Booking details</h2>
+<div class="bg-white rounded-xl p-4 space-y-4 border border-outline-variant shadow-sm">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Service</span>
+<span class="font-label-lg text-label-lg font-bold capitalize">{{ service_type }}</span>
+</div>
+<div class="h-px bg-outline-variant w-full"></div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Date and time</span>
+<span class="font-label-lg text-label-lg font-bold">{{ date }} at {{ time }}</span>
+</div>
+<div class="h-px bg-outline-variant w-full"></div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Location</span>
+<span class="font-label-lg text-label-lg font-bold capitalize">{{ location }}</span>
+</div>
+</div>
+</section>
+
+<!-- Section: Safe Mode -->
+<section>
+<h2 class="font-label-lg text-label-lg text-on-surface-variant mb-stack-sm ml-1 text-sm font-bold">Safe mode</h2>
+<div class="bg-white rounded-xl p-4 space-y-3 border border-outline-variant shadow-sm">
+<div class="flex items-start justify-between gap-4">
+<div class="flex items-start gap-3">
+<div class="mt-1">
+<span class="material-symbols-outlined text-red-600" data-icon="shield" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg font-bold">Safe mode</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-xs text-gray-400">Guardian notified · Job timer active</p>
+</div>
+</div>
+<!-- Toggle Checkbox Styled -->
+<label class="relative inline-flex items-center cursor-pointer mt-1">
+<input type="checkbox" id="safe_mode_toggle" class="sr-only peer" onchange="toggleSafeMode()">
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1a7f4b]"></div>
+</label>
+</div>
+
+<!-- Guardian Phone input field (hidden by default) -->
+<div id="guardian_phone_container" class="hidden space-y-2 pt-3 border-t border-gray-100">
+<label class="block text-xs font-bold text-gray-500">GUARDIAN WHATSAPP PHONE NUMBER</label>
+<input type="text" id="guardian_phone_field" placeholder="e.g. +92 300 1234567" class="w-full h-12 px-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#1a7f4b] focus:border-[#1a7f4b] text-sm">
+</div>
+</div>
+</section>
+</main>
+
+<script>
+function toggleSafeMode() {
+    const isChecked = document.getElementById('safe_mode_toggle').checked;
+    const container = document.getElementById('guardian_phone_container');
+    const hiddenField = document.getElementById('safe_mode_hidden');
+    const inputField = document.getElementById('guardian_phone_field');
+    const formInput = document.getElementById('form_guardian_phone');
+    
+    if (isChecked) {
+        container.classList.remove('hidden');
+        hiddenField.value = "on";
+    } else {
+        container.classList.add('hidden');
+        hiddenField.value = "off";
+        inputField.value = "";
+        formInput.value = "";
+    }
+}
+
+// Keep hidden inputs synced with interactive field
+document.addEventListener('DOMContentLoaded', () => {
+    const inputField = document.getElementById('guardian_phone_field');
+    const formInput = document.getElementById('form_guardian_phone');
+    inputField.addEventListener('input', () => {
+        formInput.value = inputField.value;
+    });
+});
+</script>
+
+<!-- Fixed Bottom Actions -->
+<footer class="fixed bottom-0 left-0 w-full p-margin-main bg-surface-container-lowest border-t border-outline-variant">
+    <form action="/confirm-booking" method="POST">
+        <input type="hidden" name="worker_name" value="{{ worker_name }}">
+        <input type="hidden" name="service_type" value="{{ service_type }}">
+        <input type="hidden" name="location" value="{{ location }}">
+        <input type="hidden" name="date" value="{{ date }}">
+        <input type="hidden" name="time" value="{{ time }}">
+        <input type="hidden" name="total_cost" value="{{ total_cost }}">
+        <input type="hidden" name="safe_mode" id="safe_mode_hidden" value="off">
+        <input type="hidden" name="guardian_phone" id="form_guardian_phone" value="">
+        
+        <button type="submit" class="w-full bg-[#1a7f4b] text-white py-4 min-h-[48px] rounded-xl flex justify-center items-center gap-2 font-headline-sm text-base active:scale-95 transition-transform duration-150 cursor-pointer font-bold">
+            <span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+            Confirm booking
+        </button>
+    </form>
+</footer>
+
+<footer style='text-align:center;font-size:10px;color:#aaaaaa;padding:12px 0 24px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</footer>
+</body></html>

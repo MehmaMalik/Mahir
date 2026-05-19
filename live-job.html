@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Live Job Tracking - Mahir</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+    </style>
+<style>
+@keyframes panic-pulse {
+  0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,0.7);transform:scale(1);}
+  50%{box-shadow:0 0 0 14px rgba(220,38,38,0);transform:scale(1.02);}
+}
+button[onclick="triggerPanic()"]{animation:panic-pulse 1.2s infinite;}
+</style>
+</head>
+<body class="bg-[#f8f9fa] text-[#191c1d] min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-white border-b border-gray-100 flex justify-between items-center w-full px-4 h-16 shadow-sm sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <a href="/bookings" class="text-on-surface flex items-center justify-center min-h-[48px] min-w-[48px]">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <img src='/static/images/mahir-logo.svg' height='40' alt='Mahir Logo'>
+        </div>
+        <div class="text-xs font-bold text-gray-400">ID: {{ booking.booking_id }}</div>
+    </header>
+
+    <!-- Guardian Notification Status Bar -->
+    <div class="w-full px-4 py-3 bg-[#e8f0fe] border-b border-[#1a73e8]/20 flex items-center justify-between text-xs text-[#1a73e8]">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">shield</span>
+            {% if booking.safe_mode == 'on' %}
+            <span class="font-bold">Safe Mode ON: Guardian ({{ booking.guardian_phone }}) notified via WhatsApp ✅</span>
+            {% else %}
+            <span class="font-medium">Safe Mode is OFF. You can activate it during booking checkout.</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <main class="max-w-md mx-auto py-6 px-4 space-y-6">
+        
+        <!-- Live Tracking Status Header -->
+        <div class="bg-white border border-outline-variant rounded-2xl p-6 text-center space-y-4 shadow-sm">
+            <div>
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">CURRENT STATUS</p>
+                <h2 id="job-status" class="text-xl font-bold text-primary mt-1 text-[#1a7f4b]">On the way</h2>
+            </div>
+            
+            <div class="h-px bg-gray-100 w-full"></div>
+            
+            <!-- Dynamic Timer Area -->
+            <div id="countdown-area">
+                <p class="text-xs text-gray-500">Estimated arrival in</p>
+                <div id="countdown-timer" class="text-3xl font-bold text-on-surface mt-1 font-mono">14:59</div>
+            </div>
+            
+            <div id="elapsed-area" class="hidden">
+                <p class="text-xs text-gray-500">Job execution active elapsed time</p>
+                <div id="elapsed-timer" class="text-3xl font-bold text-primary mt-1 font-mono text-[#1a7f4b]">00:00</div>
+            </div>
+        </div>
+
+        <!-- Worker Information Card -->
+        <div class="bg-white border border-outline-variant rounded-2xl p-4 flex items-center gap-4 shadow-sm">
+            <div class="w-16 h-16 rounded-full bg-secondary flex items-center justify-center text-white text-2xl font-bold uppercase shadow-inner">
+                {{ booking.provider_name[:2] }}
+            </div>
+            <div class="flex-1">
+                <div class="flex items-center gap-2">
+                    <h3 class="text-base font-bold text-on-surface">{{ booking.provider_name }}</h3>
+                    <span class="inline-flex items-center gap-0.5 px-2 py-0.5 bg-[#d0ffda] text-[#1a7f4b] rounded-full text-[10px] font-bold">
+                        <span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                        PKM Verified
+                    </span>
+                </div>
+                <p class="text-xs text-gray-400 mt-0.5">AC & Plumbing Master Technician</p>
+                <p class="text-xs text-gray-500 mt-2 font-medium">CNIC: 37405-8910432-1</p>
+            </div>
+        </div>
+
+        <!-- Safe Mode Panic Panel -->
+        <div class="bg-red-50 border border-red-200 rounded-2xl p-4 space-y-3 shadow-sm">
+            <div class="flex items-start gap-3 text-red-700">
+                <span class="material-symbols-outlined mt-0.5" style="font-variation-settings: 'FILL' 1;">warning</span>
+                <div>
+                    <h4 class="text-sm font-bold">Emergency Safety Panel</h4>
+                    <p class="text-xs text-red-600 leading-relaxed mt-0.5">Tapping the panic button will instantly trigger a critical WhatsApp alert with worker credentials to your designated guardian.</p>
+                </div>
+            </div>
+            
+            <button onclick="triggerPanic()" class="w-full bg-red-600 hover:bg-red-700 active:scale-95 transition-all text-white font-bold py-4 min-h-[48px] rounded-xl flex items-center justify-center gap-2 text-sm uppercase shadow-sm cursor-pointer">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">gpp_bad</span>
+                Trigger Red Panic Button
+            </button>
+        </div>
+
+        <!-- Action Control Center -->
+        <div class="bg-white border border-outline-variant rounded-2xl p-4 space-y-4 shadow-sm">
+            <h3 class="text-sm font-bold text-gray-600">Job Controls</h3>
+            
+            <!-- Button 1: Worker has arrived -->
+            <button id="btn-arrived" onclick="startJob()" class="w-full bg-[#125832] text-white py-3.5 min-h-[48px] rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-all text-sm cursor-pointer">
+                <span class="material-symbols-outlined text-sm">hail</span>
+                Worker Has Arrived
+            </button>
+
+            <!-- Button 2: Job Complete Form -->
+            <form action="/complete-job" method="POST">
+                <input type="hidden" name="booking_id" value="{{ booking.booking_id }}">
+                <input type="hidden" name="provider_name" value="{{ booking.provider_name }}">
+                <input type="hidden" name="service_type" value="{{ booking.service_type }}">
+                <input type="hidden" name="total_cost" value="{{ booking.total_cost }}">
+                
+                <button type="submit" id="btn-complete" disabled class="w-full bg-[#1a7f4b] disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-white py-3.5 min-h-[48px] rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-all text-sm cursor-pointer">
+                    <span class="material-symbols-outlined text-sm">task_alt</span>
+                    Job Complete (Proceed to Payment)
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-white px-4 pb-safe border-t border-gray-200">
+        <a href="/" class="flex flex-col items-center justify-center text-gray-400 font-medium transition-all py-2 min-h-[48px] px-4">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-xs">Home</span>
+        </a>
+        <a href="/bookings" class="flex flex-col items-center justify-center text-[#1a7f4b] font-bold transition-all py-2 min-h-[48px] px-4">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">handyman</span>
+            <span class="text-xs">Bookings</span>
+        </a>
+        <a href="/messages" class="flex flex-col items-center justify-center text-gray-400 font-medium transition-all py-2 min-h-[48px] px-4">
+            <span class="material-symbols-outlined">chat_bubble</span>
+            <span class="text-xs">Messages</span>
+        </a>
+        <a href="/profile" class="flex flex-col items-center justify-center text-gray-400 font-medium transition-all py-2 min-h-[48px] px-4">
+            <span class="material-symbols-outlined">person</span>
+            <span class="text-xs">Profile</span>
+        </a>
+    </nav>
+
+    <script>
+        // Countdown timer logic
+        let minutes = 14;
+        let seconds = 59;
+        const countdownEl = document.getElementById('countdown-timer');
+        
+        const countdownInterval = setInterval(() => {
+            if (seconds === 0) {
+                if (minutes === 0) {
+                    clearInterval(countdownInterval);
+                    countdownEl.innerText = "Arrived";
+                    return;
+                }
+                minutes--;
+                seconds = 59;
+            } else {
+                seconds--;
+            }
+            const minStr = String(minutes).padStart(2, '0');
+            const secStr = String(seconds).padStart(2, '0');
+            countdownEl.innerText = `${minStr}:${secStr}`;
+        }, 1000);
+
+        // Job timer variables
+        let elapsedInterval = null;
+        let elapsedSeconds = 0;
+
+        function startJob() {
+            // Stop countdown
+            clearInterval(countdownInterval);
+            document.getElementById('countdown-area').classList.add('hidden');
+            
+            // Show active elapsed area
+            document.getElementById('elapsed-area').classList.remove('hidden');
+            document.getElementById('job-status').innerText = "Arrived / In Progress 🛠️";
+            
+            // Disable arrived button
+            document.getElementById('btn-arrived').disabled = true;
+            document.getElementById('btn-arrived').classList.add('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
+            
+            // Enable complete button
+            document.getElementById('btn-complete').disabled = false;
+            
+            // Start elapsed counter
+            elapsedInterval = setInterval(() => {
+                elapsedSeconds++;
+                const m = String(Math.floor(elapsedSeconds / 60)).padStart(2, '0');
+                const s = String(elapsedSeconds % 60).padStart(2, '0');
+                document.getElementById('elapsed-timer').innerText = `${m}:${s}`;
+            }, 1000);
+        }
+
+        function triggerPanic() {
+            alert(`🚨 EMERGENCY ESCALATION ALERT 🚨\n\nSafe Mode Emergency WhatsApp triggered!\nCNIC: 37405-8910432-1\nWorker: {{ booking.provider_name }}\nGuardian Phone: {{ booking.guardian_phone or "None registered" }}\n\nMessage successfully sent to security dispatch and guardian!`);
+            
+            // Trigger AJAX call to /guardian-notify
+            fetch('/guardian-notify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `booking_id={{ booking.booking_id }}&guardian_phone={{ booking.guardian_phone or '' }}`
+            }).then(response => {
+                console.log("Emergency alert logging completed.");
+            });
+        }
+    </script>
+
+<footer style='text-align:center;font-size:10px;color:#aaaaaa;padding:12px 0 24px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</footer>
+</body>
+</html>

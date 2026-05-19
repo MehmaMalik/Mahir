@@ -1,0 +1,197 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Mahir Pakistan - Choose Language</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#f0f1f2",
+                    "error-container": "#ffdad6",
+                    "primary": "#006438",
+                    "on-secondary-fixed-variant": "#004881",
+                    "on-primary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#becabe",
+                    "on-primary-fixed-variant": "#00522c",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#ffb77d",
+                    "surface-container-low": "#f3f4f5",
+                    "on-tertiary-container": "#fff1e9",
+                    "on-secondary-fixed": "#001c38",
+                    "on-tertiary": "#ffffff",
+                    "inverse-surface": "#2e3132",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#00210f",
+                    "secondary-container": "#7db6ff",
+                    "primary-fixed-dim": "#7cda9d",
+                    "on-tertiary-fixed-variant": "#6e3900",
+                    "background": "#f8f9fa",
+                    "outline": "#6f7a70",
+                    "tertiary": "#854600",
+                    "on-surface": "#191c1d",
+                    "primary-fixed": "#98f6b7",
+                    "surface-container": "#edeeef",
+                    "surface-container-high": "#e7e8e9",
+                    "secondary-fixed-dim": "#a2c9ff",
+                    "on-surface-variant": "#3f4941",
+                    "tertiary-fixed": "#ffdcc3",
+                    "surface-tint": "#006d3d",
+                    "surface": "#f8f9fa",
+                    "primary-container": "#1a7f4b",
+                    "secondary": "#1960a3",
+                    "secondary-fixed": "#d3e4ff",
+                    "surface-dim": "#d9dadb",
+                    "on-tertiary-fixed": "#2f1500",
+                    "tertiary-container": "#a95b00",
+                    "surface-bright": "#f8f9fa",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#191c1d",
+                    "on-secondary-container": "#00477f",
+                    "on-primary-container": "#d0ffda",
+                    "surface-variant": "#e1e3e4",
+                    "surface-container-highest": "#e1e3e4",
+                    "inverse-primary": "#7cda9d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "0.5rem",
+                    "gutter": "0.75rem",
+                    "margin-main": "1rem",
+                    "stack-md": "1rem",
+                    "stack-lg": "1.5rem"
+            },
+            "fontFamily": {
+                    "label-sm": ["DM Sans"],
+                    "body-md": ["DM Sans"],
+                    "headline-md": ["DM Sans"],
+                    "body-lg": ["DM Sans"],
+                    "label-lg": ["DM Sans"],
+                    "headline-sm": ["DM Sans"],
+                    "headline-lg": ["DM Sans"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "500"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #ffffff;
+            font-family: 'DM Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .urdu-text {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            direction: rtl;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- Top Navigation Suppression (Transactional Page) -->
+<main class="flex-grow flex flex-col px-margin-main pt-stack-lg pb-32">
+<!-- Logo Branding -->
+<div class="flex justify-start mb-stack-lg">
+<img src='/static/images/mahir-logo.svg' height='40' alt='Mahir Logo'>
+</div>
+<!-- Header Section -->
+<div class="text-center mb-stack-lg">
+<h1 class="font-headline-md text-headline-md text-on-surface mb-stack-sm">Apni zaban chunein</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Choose your preferred language</p>
+</div>
+<!-- Language Options Grid -->
+<div class="space-y-stack-md">
+<!-- Option 1: Selected (Roman Urdu) -->
+<button class="w-full text-left bg-surface-container-lowest border-2 border-primary rounded-lg p-stack-md flex items-center justify-between transition-opacity active:opacity-80">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center overflow-hidden">
+<img alt="Pakistan Flag" class="w-full h-full object-cover" data-alt="A clean, high-resolution graphic of the Pakistan national flag with its vibrant green field and white crescent and star. The flag is presented in a minimalist, flat design style that aligns with a modern professional UI. The lighting is even and bright, creating a crisp and reliable visual identity for a local marketplace app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwPq4W1J2VDj0xB8jNI4P0c2O9yuvWFz0eQC7JzSMBPqyriOKRr7VF2FHoCBe-_lm_7E0BSjWWFFio-_uG0AvX32xlBCcpU4LX5cpqPFXlXFIfC7dq2w-47t65NV-p3TZ8DuDyBldGOSf_nILz_PRbL7fZZB4M0e-tmTmjlG58j9tXEilBjmCgAComfywP6PoBKmXqBLSeyIGglV0K5G6MtLUHTQA4tooVTd91-n2iZzugK7U3ZFl-1KJ99E7nzTHL1iPfSBu46P8">
+</div>
+<div>
+<span class="block font-label-lg text-label-lg text-on-surface font-bold">Roman Urdu</span>
+<span class="block font-body-md text-body-md text-on-surface-variant italic">"Mujhe plumber chahiye"</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+<!-- Option 2: Urdu (Native Script) -->
+<button class="w-full text-left bg-surface-container-lowest border border-outline-variant rounded-lg p-stack-md flex items-center justify-between transition-opacity active:opacity-80">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center overflow-hidden">
+<img alt="Pakistan Flag" class="w-full h-full object-cover" data-alt="A detailed representation of the Pakistani flag featuring a dark green background and a white crescent moon and star. The visual is captured in a high-contrast, flat design aesthetic suitable for a premium mobile application interface. The lighting is soft and neutral, ensuring the green and white colors are accurately represented for brand trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVYMh9gYSHpG6JphsZxB1UWdQYqcDOCHA7c40GzVtYUIpPM7z5MCUrFdAB1Lz3dKPNQBZAqjW1Vk94BnbXhkCc7fg31oV9bIVLOkhspJ4P9ugJpF7IKaeDoOEY8KEEoTScIhxzoj_gsnFTrt5L_DrJHX8NjtOAkxCG-4fbQcR4LwWh6oK9nQW3v5mMS3di4A5TrPMgpgQjd4rywKK4RbPLkeQFInXlwDhFBNW446Ffvfo_5104IRe7bAsejqa8DLC040edom2VGto">
+</div>
+<div>
+<span class="block font-label-lg text-label-lg text-on-surface">اردو</span>
+<span class="block font-body-md text-body-md text-on-surface-variant urdu-text">"مجھے پلمبر چاہیے"</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+</button>
+<!-- Option 3: English -->
+<button class="w-full text-left bg-surface-container-lowest border border-outline-variant rounded-lg p-stack-md flex items-center justify-between transition-opacity active:opacity-80">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center overflow-hidden">
+<img alt="UK Flag" class="w-full h-full object-cover" data-alt="The Union Jack flag of the United Kingdom displayed in a clean circular frame. The red, white, and blue colors are vivid and rendered in a modern flat design style. The lighting is high-key and clear, emphasizing professionalism and accessibility within a clean white-mode user interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs7mi50G0qV-y8ctb8pRhbw_hqw2ibFNwNa3mo_ibzo3hy5-Io3Qgy522IQmgCqAUJKxrgjRqOuwY9yCUG_r3tcbN_6WCDBH-35ZyfAneA1o_Q_orM4X7y79AMM_2QDhOJOfWAe9JR9oy7OWZ19Ghx1CMRhnnOpxS3pd0LyBCQ-on-HDkowudFndG5_ELEowxiokO3wyCSSrJ7rzRzdh_1uvXV3cgJY_EiAuWKwXaodJo_M4mH_X9KE8imNh3J9-Ja2PhNY-pVdsA">
+</div>
+<div>
+<span class="block font-label-lg text-label-lg text-on-surface">English</span>
+<span class="block font-body-md text-body-md text-on-surface-variant italic">"I need a plumber"</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+</button>
+<!-- Option 4: Mixed -->
+<button class="w-full text-left bg-surface-container-lowest border border-outline-variant rounded-lg p-stack-md flex items-center justify-between transition-opacity active:opacity-80">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="shuffle">shuffle</span>
+</div>
+<div>
+<span class="block font-label-lg text-label-lg text-on-surface">Mixed / Code-switch</span>
+<span class="block font-body-md text-body-md text-on-surface-variant italic">"Plumber chahiye for today"</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+</button>
+</div>
+</main>
+<!-- Footer Section -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface-container-lowest p-margin-main flex flex-col gap-stack-sm">
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant">
+            You can change this anytime in Settings
+        </p>
+<a class="w-full h-12 bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-lg font-bold flex items-center justify-center transition-opacity active:opacity-80" href="/home">Start using Mahir</a>
+</footer>
+
+
+
+<footer style='text-align:center;font-size:10px;color:#aaaaaa;padding:12px 0 24px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</footer>
+</body></html>

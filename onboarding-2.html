@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Karigar Pakistan - Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f8f9fa",
+                        "on-secondary-fixed": "#001c38",
+                        "inverse-primary": "#7cda9d",
+                        "inverse-on-surface": "#f0f1f2",
+                        "surface-container-low": "#f3f4f5",
+                        "primary-container": "#1a7f4b",
+                        "on-background": "#191c1d",
+                        "surface-variant": "#e1e3e4",
+                        "surface-bright": "#f8f9fa",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#d9dadb",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#7db6ff",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#2f1500",
+                        "on-secondary": "#ffffff",
+                        "background": "#f8f9fa",
+                        "tertiary-container": "#a95b00",
+                        "on-primary-fixed": "#00210f",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#006d3d",
+                        "surface-container": "#edeeef",
+                        "primary": "#006438",
+                        "tertiary": "#854600",
+                        "tertiary-fixed": "#ffdcc3",
+                        "on-secondary-fixed-variant": "#004881",
+                        "secondary-fixed": "#d3e4ff",
+                        "secondary-fixed-dim": "#a2c9ff",
+                        "on-tertiary-container": "#fff1e9",
+                        "on-surface": "#191c1d",
+                        "on-secondary-container": "#00477f",
+                        "surface-container-high": "#e7e8e9",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "primary-fixed": "#98f6b7",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2e3132",
+                        "on-surface-variant": "#3f4941",
+                        "on-primary-fixed-variant": "#00522c",
+                        "outline-variant": "#becabe",
+                        "on-primary-container": "#d0ffda",
+                        "outline": "#6f7a70",
+                        "primary-fixed-dim": "#7cda9d",
+                        "secondary": "#1960a3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "1rem",
+                        "gutter": "0.75rem",
+                        "stack-lg": "1.5rem",
+                        "stack-sm": "0.5rem",
+                        "margin-main": "1rem"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["DM Sans"],
+                        "body-lg": ["DM Sans"],
+                        "label-sm": ["DM Sans"],
+                        "headline-sm": ["DM Sans"],
+                        "headline-md": ["DM Sans"],
+                        "headline-lg": ["DM Sans"],
+                        "body-md": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                        "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "500"}],
+                        "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
+<!-- Top AppBar (Not used in Onboarding according to "Shell Visibility & Relevance" rule, but Karigar logo is often present) -->
+<header class="w-full flex justify-start px-4 py-2 bg-surface-container-lowest border-b border-outline-variant">
+<img src='/static/images/mahir-logo.svg' height='40' alt='Mahir Logo'>
+</header>
+<main class="flex-grow flex flex-col">
+<!-- Illustration Section -->
+<section class="bg-primary-fixed/30 w-full aspect-square max-h-[40vh] flex items-center justify-center overflow-hidden">
+<div class="relative w-full h-full flex items-center justify-center p-margin-main">
+<img alt="Security Verification Illustration" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDs1yqKlHKdQjcWx1L6s9NF7r7uKb3J1PdqTLs5ZocysefTEbo13NpOsJqVlnJ8ILz9rRI365kOa6w2AVcFmf28vPa_KtobSFhJYEICRRo2QQTUA-GYrVwfYnedkR95phl-eBuhVOnD5QoUHb0wOViI_5GFY1iLUzaPl4g0MNu96-wkJMdD2kq5ufyaRNgQJ9ip4Kuh6MWOuZzMPGMkRpKFFNH3iDpde_B6fkc8kZvY8orGDc3bcrJ-3jRlkiVki0a1E4Pdl9bbqeg"/>
+</div>
+</section>
+<!-- Content Canvas -->
+<section class="px-margin-main py-stack-lg flex flex-col space-y-stack-md">
+<div class="space-y-stack-sm text-center md:text-left">
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold leading-tight">
+                    Every worker is verified and safe
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                    All workers hold a Police Character Certificate from Punjab Police Khidmat Markaz renewed every 6 months.
+                </p>
+</div>
+<!-- Feature Rows - Bento-lite Stack -->
+<div class="space-y-gutter mt-stack-md">
+<!-- Police Verified Row -->
+<div class="bg-surface-container-low p-gutter rounded-xl flex items-center space-x-gutter border border-outline-variant">
+<div class="bg-primary/10 text-primary w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div class="flex-grow">
+<span class="font-label-lg text-label-lg block text-on-surface">Mahir police verified — government criminal check</span>
+</div>
+</div>
+<!-- Safe Mode Row -->
+<div class="bg-surface-container-low p-gutter rounded-xl flex items-center space-x-gutter border border-outline-variant">
+<div class="bg-tertiary/10 text-tertiary w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<div class="flex-grow">
+<span class="font-label-lg text-label-lg block text-on-surface">Safe Mode for women — guardian notified, panic button active</span>
+</div>
+</div>
+<!-- Skill Verified Row -->
+<div class="bg-surface-container-low p-gutter rounded-xl flex items-center space-x-gutter border border-outline-variant">
+<div class="bg-secondary/10 text-secondary w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<div class="flex-grow">
+<span class="font-label-lg text-label-lg block text-on-surface">Skill verified Mahirs — AI phone interview confirms expertise</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Onboarding Navigation -->
+<footer class="p-margin-main bg-surface-container-lowest border-t border-outline-variant flex items-center justify-between h-20">
+<!-- Skip Button -->
+<button class="font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container px-stack-md py-stack-sm rounded-lg transition-colors">
+            Skip
+        </button>
+<!-- Progress Indicators -->
+<div class="flex items-center space-x-2">
+<div class="h-2 w-2 rounded-full bg-outline-variant"></div>
+<div class="h-2 w-6 rounded-full bg-primary-container"></div>
+<div class="h-2 w-2 rounded-full bg-outline-variant"></div>
+</div>
+<!-- Next Button -->
+<button class="flex items-center space-x-1 bg-primary-container text-on-primary font-label-lg text-label-lg px-6 py-stack-sm rounded-xl active:scale-95 transition-transform" onclick="location.href='/onboarding-3'">
+<span class="">Next</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</footer>
+
+<footer style='text-align:center;font-size:10px;color:#aaaaaa;padding:12px 0 24px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</footer>
+</body></html>
