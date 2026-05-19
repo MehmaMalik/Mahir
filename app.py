@@ -7,7 +7,12 @@ from datetime import datetime
 
 app = Flask(__name__, template_folder='.', static_folder='static')
 
-from main import run_pipeline
+try:
+    from main import run_pipeline
+except Exception as e:
+    print(f"WARNING: Could not import run_pipeline: {e}")
+    def run_pipeline(query):
+        return {"error": "Pipeline unavailable: backend agents failed to load."}
 
 @app.route('/')
 def splash():
@@ -321,5 +326,7 @@ def guardian_notify():
     return {"status": "success"}
 
 if __name__ == '__main__':
-    print("Starting Mahir AI Flask Server on http://0.0.0.0:5000 (accessible on your local network)")
-    app.run(host='0.0.0.0', debug=True, port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
+    print(f"Starting Mahir AI Flask Server on http://0.0.0.0:{port}")
+    app.run(host='0.0.0.0', port=port, debug=debug)
