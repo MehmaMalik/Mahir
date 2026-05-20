@@ -3,6 +3,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Mahir Pakistan - Home</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="/static/js/drawer.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
@@ -112,7 +113,7 @@
 <div class="flex items-center gap-2">
 <img src='/static/images/mahir-logo.svg' height='40' alt='Mahir Logo'>
 </div>
-<div class="flex items-center">
+<div class="flex items-center cursor-pointer active:scale-95 transition-transform" onclick="openDrawer()">
 <div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
 <img class="w-full h-full object-cover" data-alt="A professional headshot of a smiling South Asian man with a neatly groomed beard, wearing a crisp white polo shirt. The lighting is soft and natural, suggesting an outdoor daylight setting. The background is a clean, out-of-focus modern office environment. The overall aesthetic is trustworthy, professional, and consistent with a high-end service marketplace identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxywGlGEA5vGewdmPlX1Dfth-iZkK-Jh-bZb-hRznYCyLpZZb0Zc2LoFQvlBEbN_NQpQmCk1AhoSeTk6-UvU8JLwwvEdEbCFQeTImg6E7PM3LO2q7Y7xxPtmM6-F6rhqwpBV_yCAxvvvR-2rJS0kEANrdsX9rxS3p06n1hcswiNBby7H0RAcm_f3MmT0zBKBSH4hlcdja5LFNsIc7y0yZR9CXRtZsw0LC_O-Yjkl2YtlIOwnDqEPg7CblVVPZADm6Q1uWKQW0ZB1U">
 </div>
@@ -147,16 +148,32 @@
 </form>
 </section>
 <!-- Popular Services - Bento-ish 2x2 Grid -->
+<!-- Popular Services - Bento-ish Grid -->
 <section class="px-margin-main mb-stack-lg">
 <div class="flex justify-between items-center mb-4">
 <h3 class="font-label-lg text-label-lg font-bold text-on-surface">Popular services</h3>
-<button class="text-primary font-label-sm">View all</button>
+<button id="view-all-btn" onclick="toggleAllServices()" class="text-primary font-label-sm min-h-[48px] px-2 active:opacity-60 transition-opacity">View all</button>
 </div>
 <script>
     function submitService(serviceName) {
         const input = document.getElementById('search-input');
         input.value = serviceName + " urgent service";
         document.getElementById('search-form').submit();
+    }
+    
+    function toggleAllServices() {
+        const carpenter = document.getElementById('service-carpenter');
+        const request = document.getElementById('service-request');
+        const btn = document.getElementById('view-all-btn');
+        if (carpenter.classList.contains('hidden')) {
+            carpenter.classList.remove('hidden');
+            request.classList.remove('hidden');
+            btn.textContent = 'Show less';
+        } else {
+            carpenter.classList.add('hidden');
+            request.classList.add('hidden');
+            btn.textContent = 'View all';
+        }
     }
 </script>
 <div class="grid grid-cols-2 gap-3">
@@ -212,6 +229,31 @@
 </div>
 </div>
 </div>
+<!-- Carpenter Card (Hidden initially) -->
+<div id="service-carpenter" onclick="submitService('Carpenter')" class="hidden cursor-pointer bg-surface hover:bg-green-50/30 hover:border-[#1a7f4b] rounded-xl p-4 border border-outline-variant flex flex-col items-start gap-3 active:scale-95 transition-all min-h-[110px]">
+<div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-700">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">construction</span>
+</div>
+<div>
+<p class="font-label-lg text-on-surface font-bold text-sm">Carpenter</p>
+<div class="flex items-center gap-1 mt-1 bg-amber-50 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[12px] text-amber-700" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm text-amber-700 text-[10px]">112 verified</span>
+</div>
+</div>
+</div>
+<!-- Request New Service Card (Hidden initially) -->
+<div id="service-request" onclick="showRequestServiceForm()" class="hidden cursor-pointer bg-surface hover:bg-green-50/30 hover:border-[#1a7f4b] rounded-xl p-4 border border-dashed border-[#1a7f4b] flex flex-col items-start gap-3 active:scale-95 transition-all min-h-[110px]">
+<div class="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center text-[#1a7f4b]">
+<span class="material-symbols-outlined text-2xl font-bold">add</span>
+</div>
+<div>
+<p class="font-label-lg text-on-surface font-bold text-sm">Request Service</p>
+<div class="flex items-center gap-1 mt-1 bg-green-50/50 px-2 py-0.5 rounded-full">
+<span class="font-label-sm text-gray-500 text-[10px]">Tap to request</span>
+</div>
+</div>
+</div>
 </div>
 </section>
 <!-- Recently Booked -->
@@ -256,7 +298,7 @@
 <!-- BottomNavBar -->
 <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-white px-4 pb-safe border-t border-gray-200">
 <!-- Home (Active) -->
-<a href="/" class="flex flex-col items-center justify-center text-[#1a7f4b] font-bold transition-all py-2 min-h-[48px] px-4">
+<a href="/home" class="flex flex-col items-center justify-center text-[#1a7f4b] font-bold transition-all py-2 min-h-[48px] px-4">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
 <span class="text-xs">Home</span>
 </a>
@@ -317,6 +359,70 @@
 })();
 </script>
 
+
+<!-- Request Service Modal -->
+<div id="request-service-modal" class="hidden fixed inset-0 z-[2000] bg-black/60 flex items-end sm:items-center justify-center p-4 transition-all duration-300">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl p-6 space-y-4 transform translate-y-full transition-transform duration-300">
+        <div class="flex justify-between items-center">
+            <h3 class="text-lg font-bold text-[#006438]">Request New Service</h3>
+            <button onclick="hideRequestServiceForm()" class="text-gray-400 hover:text-gray-600 min-h-[48px] min-w-[48px] flex items-center justify-center">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <form id="request-service-form" onsubmit="handleRequestServiceSubmit(event)" class="space-y-4">
+            <div class="space-y-1">
+                <label for="new-service-name" class="block text-xs font-bold text-gray-700">What service do you need?</label>
+                <input type="text" id="new-service-name" required placeholder="e.g. Mason, Cleaning, Car Repair..."
+                       class="w-full h-11 px-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#1a7f4b] focus:border-[#1a7f4b] focus:outline-none">
+            </div>
+            <div class="space-y-1">
+                <label for="new-service-desc" class="block text-xs font-bold text-gray-700">Additional Details (Optional)</label>
+                <textarea id="new-service-desc" rows="3" placeholder="Describe what you need help with..."
+                          class="w-full p-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#1a7f4b] focus:border-[#1a7f4b] focus:outline-none"></textarea>
+            </div>
+            <button type="submit" class="w-full h-12 bg-[#1a7f4b] text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md">
+                Submit Request
+                <span class="material-symbols-outlined text-[18px]">send</span>
+            </button>
+        </form>
+        <div id="request-success-msg" class="hidden text-center p-6 bg-green-50 text-green-700 rounded-2xl border border-green-100 space-y-2">
+            <span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            <p class="text-sm font-bold">Request Submitted!</p>
+            <p class="text-xs text-green-600/80">Shukriya! Hum jald hi yeh service shuru karenge.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+function showRequestServiceForm() {
+    const modal = document.getElementById('request-service-modal');
+    const modalContent = modal.querySelector('div');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modalContent.classList.replace('translate-y-full', 'translate-y-0');
+    }, 10);
+}
+function hideRequestServiceForm() {
+    const modal = document.getElementById('request-service-modal');
+    const modalContent = modal.querySelector('div');
+    modalContent.classList.replace('translate-y-0', 'translate-y-full');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.getElementById('request-service-form').classList.remove('hidden');
+        document.getElementById('request-success-msg').classList.add('hidden');
+        document.getElementById('new-service-name').value = '';
+        document.getElementById('new-service-desc').value = '';
+    }, 300);
+}
+function handleRequestServiceSubmit(e) {
+    e.preventDefault();
+    document.getElementById('request-service-form').classList.add('hidden');
+    document.getElementById('request-success-msg').classList.remove('hidden');
+    setTimeout(() => {
+        hideRequestServiceForm();
+    }, 2500);
+}
+</script>
 
 <footer style='text-align:center;font-size:10px;color:#aaaaaa;padding:12px 0 24px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</footer>
 </body></html>

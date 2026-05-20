@@ -133,6 +133,10 @@
                     Submit Certificate
                     <span class="material-symbols-outlined text-[16px]">verified_user</span>
                 </button>
+                <button type="button" onclick="skipVerification()" class="w-full h-11 bg-gray-200 text-gray-700 rounded-xl text-sm font-bold flex items-center justify-center gap-2 active:scale-95 transition-all hover:bg-gray-300 mt-2">
+                    Abhi nahi — baad mein karein
+                    <span class="material-symbols-outlined text-[16px]">forward</span>
+                </button>
             </form>
 
             <!-- Digital Certificate Badge Preview Card -->
@@ -257,6 +261,11 @@
         function goToProfile() {
             const pkmId = document.getElementById('pkm-id').value || "PKM-123456";
             const profileUrl = `/provider-profile?name=${encodeURIComponent(name)}&service_type=${encodeURIComponent(service)}&city=${encodeURIComponent(city)}&score=${score}&pkm_status=Pending&certificate_id=${encodeURIComponent(pkmId)}`;
+            window.location.href = profileUrl;
+        }
+
+        function skipVerification() {
+            const profileUrl = `/provider-profile?name=${encodeURIComponent(name)}&service_type=${encodeURIComponent(service)}&city=${encodeURIComponent(city)}&score=${score}&pkm_status=Not Verified`;
             window.location.href = profileUrl;
         }
 

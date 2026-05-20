@@ -97,40 +97,41 @@ def discover_providers(service_type, complexity, cust_lat, cust_lng, customer_ci
     matched_providers = []
 
     for p in providers:
-        # 1. Match service type
-        if p.get("service_type") != service_type:
+        # 1. Match service type (case-insensitive)
+        if p.get("service_type", "").lower() != service_type.lower():
             continue
 
         # 2. City matching — ONLY show providers from same city as customer
         if customer_city_canonical:
             provider_city = detect_city_from_query(p.get("city", p.get("area", "")))
-            if provider_city != customer_city_canonical:
+            if provider_city != "available nearby" and provider_city != customer_city_canonical:
                 continue
-
-        # 3. Match PKM verified
-        if not p.get("pkm_verified"):
-            continue
-
-        # 4. Expiry date check
-        expiry_str = p.get("pkm_expiry")
-        if not expiry_str or expiry_str == "null":
-            continue
-
-        try:
-            expiry_date = datetime.strptime(expiry_str, "%Y-%m-%d")
-            if expiry_date < today:
-                continue
-        except ValueError:
-            continue
-
-        # 5. Complexity & Skill Level check
-        if p.get("skill_level") not in allowed_skills:
-            continue
-
-        # 6. Calculate distance
-        dist = haversine_distance(cust_lat, cust_lng, p.get("location_lat"), p.get("location_lng"))
 
         p_copy = p.copy()
+        
+        # 3. Expiry date check if pkm_verified
+        if p_copy.get("pkm_verified"):
+            expiry_str = p_copy.get("pkm_expiry")
+            if expiry_str and expiry_str != "null":
+                try:
+                    expiry_date = datetime.strptime(expiry_str, "%Y-%m-%d")
+                    if expiry_date < today:
+                        p_copy["pkm_verified"] = False
+                except ValueError:
+                    p_copy["pkm_verified"] = False
+            else:
+                p_copy["pkm_verified"] = False
+
+        # 4. Complexity & Skill Level check
+        if p_copy.get("skill_level") not in allowed_skills:
+            continue
+
+        # 5. Calculate distance
+        if p_copy.get("area") == "Available nearby" or p_copy.get("city") == "Available nearby":
+            dist = 1.2
+        else:
+            dist = haversine_distance(cust_lat, cust_lng, p_copy.get("location_lat", cust_lat), p_copy.get("location_lng", cust_lng))
+
         p_copy["distance_km"] = round(dist, 2)
         matched_providers.append(p_copy)
 

@@ -5,6 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
     <title>Messages - Mahir</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="/static/js/drawer.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <style>
@@ -15,10 +16,15 @@
     <!-- TopAppBar -->
     <header class="bg-white border-b border-outline-variant sticky top-0 z-50 flex justify-between items-center w-full px-4 h-16 shadow-sm">
         <div class="flex items-center gap-3">
-            <a href="/" class="text-on-surface flex items-center justify-center min-h-[48px] min-w-[48px]">
+            <a href="/home" class="text-on-surface flex items-center justify-center min-h-[48px] min-w-[48px]">
                 <span class="material-symbols-outlined">arrow_back</span>
             </a>
             <h1 class="text-lg font-bold text-primary">Messages</h1>
+        </div>
+        <div class="flex items-center cursor-pointer active:scale-95 transition-transform" onclick="openDrawer()">
+            <div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxywGlGEA5vGewdmPlX1Dfth-iZkK-Jh-bZb-hRznYCyLpZZb0Zc2LoFQvlBEbN_NQpQmCk1AhoSeTk6-UvU8JLwwvEdEbCFQeTImg6E7PM3LO2q7Y7xxPtmM6-F6rhqwpBV_yCAxvvvR-2rJS0kEANrdsX9rxS3p06n1hcswiNBby7H0RAcm_f3MmT0zBKBSH4hlcdja5LFNsIc7y0yZR9CXRtZsw0LC_O-Yjkl2YtlIOwnDqEPg7CblVVPZADm6Q1uWKQW0ZB1U" alt="Profile Picture">
+            </div>
         </div>
     </header>
 
@@ -26,7 +32,7 @@
     <main class="max-w-md mx-auto py-4">
         <div class="bg-white border border-outline-variant rounded-2xl overflow-hidden shadow-sm divide-y divide-gray-100">
             <!-- Message Item 1 -->
-            <div class="flex items-center gap-4 p-4 hover:bg-gray-50 active:bg-gray-100 transition-all cursor-pointer min-h-[72px]">
+            <div onclick="openChat('Ahmed Khan')" class="flex items-center gap-4 p-4 hover:bg-gray-50 active:bg-gray-100 transition-all cursor-pointer min-h-[72px]">
                 <div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white font-bold text-lg shadow-inner">
                     AK
                 </div>
@@ -40,7 +46,7 @@
             </div>
             
             <!-- Message Item 2 -->
-            <div class="flex items-center gap-4 p-4 hover:bg-gray-50 active:bg-gray-100 transition-all cursor-pointer min-h-[72px]">
+            <div onclick="openChat('Ustad Kareem')" class="flex items-center gap-4 p-4 hover:bg-gray-50 active:bg-gray-100 transition-all cursor-pointer min-h-[72px]">
                 <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg shadow-inner">
                     UK
                 </div>
@@ -54,7 +60,7 @@
             </div>
             
             <!-- Message Item 3 -->
-            <div class="flex items-center gap-4 p-4 hover:bg-gray-50 active:bg-gray-100 transition-all cursor-pointer min-h-[72px]">
+            <div onclick="openChat('Kamran Shah')" class="flex items-center gap-4 p-4 hover:bg-gray-50 active:bg-gray-100 transition-all cursor-pointer min-h-[72px]">
                 <div class="w-12 h-12 rounded-full bg-tertiary flex items-center justify-center text-white font-bold text-lg shadow-inner">
                     KS
                 </div>
@@ -69,9 +75,43 @@
         </div>
     </main>
 
+    <!-- Chat Window Overlay -->
+    <div id="chat-window" class="fixed inset-0 z-[2000] bg-white hidden flex-col transition-all duration-300 transform translate-x-full">
+        <!-- Chat Header -->
+        <header class="bg-white border-b border-outline-variant h-16 px-4 flex items-center gap-3 flex-shrink-0 shadow-sm">
+            <button onclick="closeChat()" class="text-on-surface flex items-center justify-center min-h-[48px] min-w-[48px] active:opacity-60 transition-opacity">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <div id="chat-avatar" class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-base shadow-inner">
+                <!-- Dynamic initials -->
+            </div>
+            <div>
+                <h2 id="chat-name" class="text-sm font-bold text-on-surface"></h2>
+                <p id="chat-status" class="text-[10px] text-green-600 font-bold flex items-center gap-0.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 inline-block animate-pulse"></span>
+                    Online
+                </p>
+            </div>
+        </header>
+        
+        <!-- Chat Messages Area -->
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 flex flex-col justify-end">
+            <!-- Messages loaded dynamically -->
+        </div>
+        
+        <!-- Chat Input Area -->
+        <form onsubmit="sendChatMessage(event)" class="p-3 bg-white border-t border-gray-100 flex items-center gap-2 flex-shrink-0">
+            <input type="text" id="chat-input-text" placeholder="Type a message..." required
+                   class="flex-1 h-11 px-4 border border-gray-200 rounded-full text-sm focus:ring-2 focus:ring-[#1a7f4b] focus:border-[#1a7f4b] focus:outline-none">
+            <button type="submit" class="w-11 h-11 bg-[#1a7f4b] text-white rounded-full flex items-center justify-center active:scale-95 transition-all shadow-md">
+                <span class="material-symbols-outlined text-[20px] font-bold">send</span>
+            </button>
+        </form>
+    </div>
+
     <!-- BottomNavBar -->
     <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-white px-4 pb-safe border-t border-gray-200">
-        <a href="/" class="flex flex-col items-center justify-center text-gray-400 font-medium transition-all py-2 min-h-[48px] px-4">
+        <a href="/home" class="flex flex-col items-center justify-center text-gray-400 font-medium transition-all py-2 min-h-[48px] px-4">
             <span class="material-symbols-outlined">home</span>
             <span class="text-xs">Home</span>
         </a>
@@ -88,5 +128,105 @@
             <span class="text-xs">Profile</span>
         </a>
     </nav>
+
+    <script>
+    const chatData = {
+        "Ahmed Khan": {
+            initials: "AK",
+            color: "bg-secondary",
+            messages: [
+                { sender: 'other', text: "Assalam o Alaikum, main 10 min mein aa raha hoon." },
+                { sender: 'me', text: "Walaikum Assalam, theek hai main ghar pe hi hoon." },
+                { sender: 'other', text: "Bhai, main time pe pohnch raha hoon. Location ready rakhna." }
+            ]
+        },
+        "Ustad Kareem": {
+            initials: "UK",
+            color: "bg-primary",
+            messages: [
+                { sender: 'me', text: "Ustad ji, leakage check kar li aapne?" },
+                { sender: 'other', text: "Ji check kar li hai, pipe change karna pare ga." },
+                { sender: 'me', text: "Theek hai, kar dein." },
+                { sender: 'other', text: "Shukriya! Kaam tasalli bakhsh ho gaya." }
+            ]
+        },
+        "Kamran Shah": {
+            initials: "KS",
+            color: "bg-tertiary",
+            messages: [
+                { sender: 'other', text: "Bhai color combination select kar liya?" },
+                { sender: 'me', text: "Ji wall pe light gray aur slate gray karna hai." },
+                { sender: 'other', text: "Allah Hafiz, next time zaroor batayein ga." }
+            ]
+        }
+    };
+
+    let currentContact = "";
+
+    function openChat(name) {
+        currentContact = name;
+        const data = chatData[name];
+        const win = document.getElementById('chat-window');
+        
+        // Header setup
+        const avatar = document.getElementById('chat-avatar');
+        avatar.className = `w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-base shadow-inner ${data.color}`;
+        avatar.textContent = data.initials;
+        document.getElementById('chat-name').textContent = name;
+        
+        // Render messages
+        renderMessages();
+        
+        // Open transition
+        win.classList.remove('hidden');
+        setTimeout(() => {
+            win.classList.replace('translate-x-full', 'translate-x-0');
+        }, 10);
+    }
+
+    function closeChat() {
+        const win = document.getElementById('chat-window');
+        win.classList.replace('translate-x-0', 'translate-x-full');
+        setTimeout(() => {
+            win.classList.add('hidden');
+        }, 300);
+    }
+
+    function renderMessages() {
+        const container = document.getElementById('chat-messages');
+        container.innerHTML = "";
+        const list = chatData[currentContact].messages;
+        list.forEach(msg => {
+            const row = document.createElement('div');
+            row.className = `flex w-full ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`;
+            
+            const bubble = document.createElement('div');
+            if (msg.sender === 'me') {
+                bubble.className = "max-w-[75%] bg-[#1a7f4b] text-white px-4 py-2.5 rounded-2xl rounded-tr-none text-sm font-semibold shadow-sm";
+            } else {
+                bubble.className = "max-w-[75%] bg-white text-gray-800 border border-gray-100 px-4 py-2.5 rounded-2xl rounded-tl-none text-sm font-semibold shadow-sm";
+            }
+            bubble.textContent = msg.text;
+            
+            row.appendChild(bubble);
+            container.appendChild(row);
+        });
+        // Scroll to bottom
+        setTimeout(() => {
+            container.scrollTop = container.scrollHeight;
+        }, 50);
+    }
+
+    function sendChatMessage(e) {
+        e.preventDefault();
+        const input = document.getElementById('chat-input-text');
+        const text = input.value.trim();
+        if (!text) return;
+        
+        chatData[currentContact].messages.push({ sender: 'me', text: text });
+        input.value = "";
+        renderMessages();
+    }
+    </script>
 </body>
 </html>
