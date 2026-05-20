@@ -98,13 +98,22 @@
       },
     }
   </script>
-<style>
+<<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    .container { height: calc(100vh - 52px); display: flex; flex-direction: column; justify-content: space-between; padding: 15px 20px; overflow: hidden; }
+    .illustration { flex: 1; max-height: 32vh; display: flex; justify-content: center; align-items: center; overflow: hidden; background-color: #f8f9fa; border-radius: 12px; }
+    .illustration img { max-height: 100%; width: auto; object-fit: contain; }
+    .content { flex: 0; padding: 10px 0; }
+    .bottom-nav { flex: 0; padding-bottom: 10px; }
+
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
     body {
       background-color: #ffffff;
       color: #191c1d;
+      font-family: 'DM Sans', sans-serif;
     }
     /* Flattening all elements as per design system guidelines */
     * {
@@ -112,51 +121,55 @@
     }
   </style>
 </head>
-<body class="font-body-md text-body-md flex flex-col min-h-screen max-w-md mx-auto relative">
-<header style='background:#1a7f4b;padding:8px 16px;display:flex;align-items:center;'><img src='/static/images/mahir-logo.svg' height='36' alt='Mahir Logo' style='filter:brightness(0) invert(1);'></header>
+<body class="font-body-md text-body-md flex flex-col h-screen max-w-md mx-auto relative overflow-hidden bg-white">
+<header style='height: 52px; background:#1a7f4b; padding:8px 16px; display:flex; align-items:center; flex-shrink:0;'>
+  <img src='/static/images/mahir-logo.svg' height='36' alt='Mahir Logo' style='filter:brightness(0) invert(1);'>
+</header>
 
+<div class="container bg-surface-container-lowest">
 <!-- Illustration Header Section -->
-<section class="w-full pt-stack-lg pb-0 flex flex-col items-center justify-end overflow-hidden bg-surface-container-lowest" style="height: 40vh;">
-<div class="w-full px-margin-main flex flex-col items-center">
-<img alt="Mahir Service Search Illustration" class="w-full h-auto object-contain object-bottom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTXPuKUUDDcN5e0w0AbiQCAw-l7002rDIB98pBAXXZDiGlC3_BjvBSJLl5JPNd4NDIr0Pqm4naJAUV_o_t6WiUoeE2nsMtJC6V2OWWoGFgSFMwU_ZWk9gLm3v18diRr1QtF1z9fKTSa7DlRVB6g0jNf5VxToctaSVUR_HHbnN-gbwZrF1c0e9poE1MWI502H2YyDWAB--ueRyavpeKufkdFaPIINNGl5IpK8zo4zxyX8j8LK1bi790ROoTDfhpeaB6YN1BL9OdjtY"/>
-</div>
+<section class="illustration w-full">
+<img alt="Mahir Service Search Illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTXPuKUUDDcN5e0w0AbiQCAw-l7002rDIB98pBAXXZDiGlC3_BjvBSJLl5JPNd4NDIr0Pqm4naJAUV_o_t6WiUoeE2nsMtJC6V2OWWoGFgSFMwU_ZWk9gLm3v18diRr1QtF1z9fKTSa7DlRVB6g0jNf5VxToctaSVUR_HHbnN-gbwZrF1c0e9poE1MWI502H2YyDWAB--ueRyavpeKufkdFaPIINNGl5IpK8zo4zxyX8j8LK1bi790ROoTDfhpeaB6YN1BL9OdjtY"/>
 </section>
+
 <!-- Content Section -->
-<main class="flex-1 px-margin-main pt-stack-lg bg-surface-container-lowest">
+<main class="content px-2">
 <!-- Main Headline -->
-<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-stack-sm">
+<h1 class="text-xl text-on-surface font-bold mb-2" style="font-size: 21.6px; line-height: 28px;">
       Find skilled workers instantly
     </h1>
 <!-- Description -->
-<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg">
+<p class="text-sm text-on-surface-variant mb-4" style="font-size: 14.4px; line-height: 20px;">
       Type in Roman Urdu, Urdu, or English. Our AI finds the best verified worker near you in seconds.
     </p>
 <!-- Features List -->
-<div class="space-y-stack-md mt-stack-lg">
+<div class="space-y-2">
 <!-- Feature Row 1 -->
-<div class="flex items-center gap-stack-md p-stack-sm rounded-xl border border-outline-variant bg-surface">
-<div class="flex items-center justify-center w-10 h-10 rounded-full bg-primary-container/10 text-primary">
-<span class="material-symbols-outlined" data-icon="language">language</span>
+<div class="flex items-center gap-3 p-2 rounded-xl border border-outline-variant bg-surface">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary-container/10 text-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="language">language</span>
 </div>
-<p class="font-label-lg text-label-lg text-on-surface">
+<p class="font-label-lg text-label-lg text-on-surface" style="font-size: 12.6px;">
           Roman Urdu, Urdu, or English — AI understands
         </p>
 </div>
 <!-- Feature Row 2 -->
-<div class="flex items-center gap-stack-md p-stack-sm rounded-xl border border-outline-variant bg-surface">
-<div class="flex items-center justify-center w-10 h-10 rounded-full bg-primary-container/10 text-primary">
-<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<div class="flex items-center gap-3 p-2 rounded-xl border border-outline-variant bg-surface">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary-container/10 text-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="location_on">location_on</span>
 </div>
-<p class="font-label-lg text-label-lg text-on-surface">
+<p class="font-label-lg text-label-lg text-on-surface" style="font-size: 12.6px;">
           Workers near your location
         </p>
 </div>
 </div>
 </main>
+
 <!-- Bottom Navigation Section -->
-<footer class="p-margin-main bg-surface-container-lowest flex items-center justify-between mt-auto">
+<footer class="bottom-nav flex flex-col gap-3 bg-surface-container-lowest w-full">
+<div class="flex items-center justify-between w-full">
 <!-- Skip Button -->
-<button onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'role-selection.html' : '/role-selection'" class="font-label-lg text-label-lg text-on-surface-variant px-stack-md py-stack-sm active:opacity-60 transition-opacity">
+<button onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'role-selection.html' : '/role-selection'" class="font-label-lg text-label-lg text-on-surface-variant px-3 py-1.5 active:opacity-60 transition-opacity" style="font-size: 12.6px;">
       Skip
     </button>
 <!-- Progress Dots -->
@@ -166,13 +179,12 @@
 <div class="h-2 w-2 rounded-full bg-outline-variant"></div>
 </div>
 <!-- Next Button -->
-<button class="flex items-center gap-2 px-stack-lg py-3 rounded-xl bg-primary-container text-on-primary-container font-label-lg text-label-lg active:scale-95 transition-transform" onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'onboarding-2.html' : '/onboarding-2'">
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-container text-on-primary-container font-label-lg text-label-lg active:scale-95 transition-transform" style="font-size: 12.6px;" onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'onboarding-2.html' : '/onboarding-2'">
       Next
-      <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+      <span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
 </button>
+</div>
+<div style='text-align:center;font-size:10px;color:#aaaaaa;padding-top:4px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</div>
 </footer>
-<!-- Layout padding for mobile gesture bar -->
-<div class="h-safe pb-4"></div>
-
-<footer style='text-align:center;font-size:10px;color:#aaaaaa;padding:12px 0 24px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</footer>
-</body></html>
+</div>
+</body></html>html>

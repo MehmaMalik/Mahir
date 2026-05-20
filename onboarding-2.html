@@ -98,87 +98,100 @@
         }
     </script>
 <style>
-        body { font-family: 'DM Sans', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; overflow: hidden; }
+        .container { height: calc(100vh - 52px); display: flex; flex-direction: column; justify-content: space-between; padding: 15px 20px; overflow: hidden; }
+        .illustration { flex: 1; max-height: 32vh; display: flex; justify-content: center; align-items: center; overflow: hidden; background-color: #f8f9fa; border-radius: 12px; }
+        .illustration img { max-height: 100%; width: auto; object-fit: contain; }
+        .content { flex: 0; padding: 10px 0; }
+        .bottom-nav { flex: 0; padding-bottom: 10px; }
+
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .fill-icon {
-            font-variation-settings: 'FILL' 1;
+        body {
+            background-color: #ffffff;
+            color: #191c1d;
+            font-family: 'DM Sans', sans-serif;
+        }
+        * {
+            box-shadow: none !important;
         }
     </style>
 </head>
-<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
-<!-- Top AppBar (Not used in Onboarding according to "Shell Visibility & Relevance" rule, but Karigar logo is often present) -->
-<header class="w-full flex justify-start px-4 py-2 bg-surface-container-lowest border-b border-outline-variant">
-<img src='/static/images/mahir-logo.svg' height='40' alt='Mahir Logo'>
+<body class="font-body-md text-body-md flex flex-col h-screen max-w-md mx-auto relative overflow-hidden bg-white">
+<header style='height: 52px; background:#1a7f4b; padding:8px 16px; display:flex; align-items:center; flex-shrink:0;'>
+  <img src='/static/images/mahir-logo.svg' height='36' alt='Mahir Logo' style='filter:brightness(0) invert(1);'>
 </header>
-<main class="flex-grow flex flex-col">
+
+<div class="container bg-surface-container-lowest">
 <!-- Illustration Section -->
-<section class="bg-primary-fixed/30 w-full aspect-square max-h-[40vh] flex items-center justify-center overflow-hidden">
-<div class="relative w-full h-full flex items-center justify-center p-margin-main">
-<img alt="Security Verification Illustration" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDs1yqKlHKdQjcWx1L6s9NF7r7uKb3J1PdqTLs5ZocysefTEbo13NpOsJqVlnJ8ILz9rRI365kOa6w2AVcFmf28vPa_KtobSFhJYEICRRo2QQTUA-GYrVwfYnedkR95phl-eBuhVOnD5QoUHb0wOViI_5GFY1iLUzaPl4g0MNu96-wkJMdD2kq5ufyaRNgQJ9ip4Kuh6MWOuZzMPGMkRpKFFNH3iDpde_B6fkc8kZvY8orGDc3bcrJ-3jRlkiVki0a1E4Pdl9bbqeg"/>
-</div>
+<section class="illustration w-full">
+<img alt="Security Verification Illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDs1yqKlHKdQjcWx1L6s9NF7r7uKb3J1PdqTLs5ZocysefTEbo13NpOsJqVlnJ8ILz9rRI365kOa6w2AVcFmf28vPa_KtobSFhJYEICRRo2QQTUA-GYrVwfYnedkR95phl-eBuhVOnD5QoUHb0wOViI_5GFY1iLUzaPl4g0MNu96-wkJMdD2kq5ufyaRNgQJ9ip4Kuh6MWOuZzMPGMkRpKFFNH3iDpde_B6fkc8kZvY8orGDc3bcrJ-3jRlkiVki0a1E4Pdl9bbqeg"/>
 </section>
+
 <!-- Content Canvas -->
-<section class="px-margin-main py-stack-lg flex flex-col space-y-stack-md">
-<div class="space-y-stack-sm text-center md:text-left">
-<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold leading-tight">
+<main class="content px-2">
+<div class="text-center md:text-left mb-2">
+<h1 class="text-xl text-on-surface font-bold mb-1" style="font-size: 21.6px; line-height: 28px;">
                     Every worker is verified and safe
                 </h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant">
+<p class="text-sm text-on-surface-variant mb-3" style="font-size: 14.4px; line-height: 20px;">
                     All workers hold a Police Character Certificate from Punjab Police Khidmat Markaz renewed every 6 months.
                 </p>
 </div>
 <!-- Feature Rows - Bento-lite Stack -->
-<div class="space-y-gutter mt-stack-md">
+<div class="space-y-2">
 <!-- Police Verified Row -->
-<div class="bg-surface-container-low p-gutter rounded-xl flex items-center space-x-gutter border border-outline-variant">
-<div class="bg-primary/10 text-primary w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0">
-<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">shield</span>
+<div class="flex items-center gap-3 p-2 rounded-xl border border-outline-variant bg-surface">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">shield</span>
 </div>
-<div class="flex-grow">
-<span class="font-label-lg text-label-lg block text-on-surface">Mahir police verified — government criminal check</span>
-</div>
+<p class="font-label-lg text-label-lg text-on-surface" style="font-size: 12.6px;">
+          Mahir police verified — government criminal check
+        </p>
 </div>
 <!-- Safe Mode Row -->
-<div class="bg-surface-container-low p-gutter rounded-xl flex items-center space-x-gutter border border-outline-variant">
-<div class="bg-tertiary/10 text-tertiary w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0">
-<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<div class="flex items-center gap-3 p-2 rounded-xl border border-outline-variant bg-surface">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-tertiary/10 text-tertiary flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
 </div>
-<div class="flex-grow">
-<span class="font-label-lg text-label-lg block text-on-surface">Safe Mode for women — guardian notified, panic button active</span>
-</div>
+<p class="font-label-lg text-label-lg text-on-surface" style="font-size: 12.6px;">
+          Safe Mode for women — guardian notified, panic button active
+        </p>
 </div>
 <!-- Skill Verified Row -->
-<div class="bg-surface-container-low p-gutter rounded-xl flex items-center space-x-gutter border border-outline-variant">
-<div class="bg-secondary/10 text-secondary w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0">
-<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<div class="flex items-center gap-3 p-2 rounded-xl border border-outline-variant bg-surface">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-secondary/10 text-secondary flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
 </div>
-<div class="flex-grow">
-<span class="font-label-lg text-label-lg block text-on-surface">Skill verified Mahirs — AI phone interview confirms expertise</span>
+<p class="font-label-lg text-label-lg text-on-surface" style="font-size: 12.6px;">
+          Skill verified Mahirs — AI phone interview confirms expertise
+        </p>
 </div>
 </div>
-</div>
-</section>
 </main>
+
 <!-- Bottom Onboarding Navigation -->
-<footer class="p-margin-main bg-surface-container-lowest border-t border-outline-variant flex items-center justify-between h-20">
+<footer class="bottom-nav flex flex-col gap-3 bg-surface-container-lowest w-full">
+<div class="flex items-center justify-between w-full">
 <!-- Skip Button -->
-<button onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'role-selection.html' : '/role-selection'" class="font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container px-stack-md py-stack-sm rounded-lg transition-colors">
+<button onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'role-selection.html' : '/role-selection'" class="font-label-lg text-label-lg text-on-surface-variant px-3 py-1.5 active:opacity-60 transition-opacity" style="font-size: 12.6px;">
             Skip
         </button>
 <!-- Progress Indicators -->
-<div class="flex items-center space-x-2">
+<div class="flex items-center gap-2">
 <div class="h-2 w-2 rounded-full bg-outline-variant"></div>
 <div class="h-2 w-6 rounded-full bg-primary-container"></div>
 <div class="h-2 w-2 rounded-full bg-outline-variant"></div>
 </div>
 <!-- Next Button -->
-<button class="flex items-center space-x-1 bg-primary-container text-on-primary font-label-lg text-label-lg px-6 py-stack-sm rounded-xl active:scale-95 transition-transform" onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'onboarding-3.html' : '/onboarding-3'">
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-container text-on-primary-container font-label-lg text-label-lg active:scale-95 transition-transform" style="font-size: 12.6px;" onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'onboarding-3.html' : '/onboarding-3'">
 <span class="">Next</span>
-<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
 </button>
+</div>
+<div style='text-align:center;font-size:10px;color:#aaaaaa;padding-top:4px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</div>
 </footer>
-
-<footer style='text-align:center;font-size:10px;color:#aaaaaa;padding:12px 0 24px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</footer>
+</div>
 </body></html>

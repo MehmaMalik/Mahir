@@ -97,83 +97,91 @@
         }
       </script>
 <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; overflow: hidden; }
+        .container { height: calc(100vh - 52px); display: flex; flex-direction: column; justify-content: space-between; padding: 15px 20px; overflow: hidden; }
+        .content { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 12px; overflow: hidden; }
+        .bottom-nav { flex: 0; padding-bottom: 10px; }
+
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
         body {
             background-color: #ffffff;
+            color: #191c1d;
             font-family: 'DM Sans', sans-serif;
         }
-      </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
+        * {
+            box-shadow: none !important;
+        }
+    </style>
 </head>
-<body class="antialiased text-on-surface">
-<header style='background:#1a7f4b;padding:8px 16px;display:flex;align-items:center;'><img src='/static/images/mahir-logo.svg' height='36' alt='Mahir Logo' style='filter:brightness(0) invert(1);'></header>
-
-<!-- App Bar Suppression Rule Applied (Transactional/Onboarding) -->
-<main class="min-h-screen flex flex-col px-margin-main pb-stack-lg pt-12">
-<!-- Header Section -->
-<header class="text-center mb-stack-lg">
-<h1 class="font-headline-lg text-headline-lg font-bold text-primary mb-2">Welcome to Mahir</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant">Ap kaun hain? — Tell us who you are</p>
+<body class="font-body-md text-body-md flex flex-col h-screen max-w-md mx-auto relative overflow-hidden bg-white">
+<header style='height: 52px; background:#1a7f4b; padding:8px 16px; display:flex; align-items:center; flex-shrink:0;'>
+  <img src='/static/images/mahir-logo.svg' height='36' alt='Mahir Logo' style='filter:brightness(0) invert(1);'>
 </header>
+
+<div class="container bg-surface-container-lowest">
+<!-- Content Canvas -->
+<main class="content">
+<!-- Header Section -->
+<section class="text-center my-1 flex-shrink-0">
+<h1 class="text-xl font-bold text-primary mb-1" style="font-size: 21.6px; line-height: 28px;">Welcome to Mahir</h1>
+<p class="text-sm text-on-surface-variant" style="font-size: 14.4px; line-height: 20px;">Ap kaun hain? — Tell us who you are</p>
+</section>
+
 <!-- Role Selection Canvas -->
-<div class="flex flex-col gap-stack-md flex-grow">
+<div class="flex flex-col gap-3 flex-grow justify-center">
 <!-- Card 1 (Selected State) -->
-<button class="relative w-full text-left bg-surface-container-low border-2 border-primary rounded-xl p-4 flex gap-4 items-start transition-all duration-150 active:scale-[0.98]">
-<div class="flex-shrink-0 bg-primary-fixed text-primary p-3 rounded-lg">
-<span class="material-symbols-outlined" style="font-size: 32px;">person</span>
+<button class="relative w-full text-left bg-surface-container-low border-2 border-primary rounded-xl p-3 flex gap-3 items-start transition-all duration-150 active:scale-[0.98]">
+<div class="flex-shrink-0 bg-primary-fixed text-primary p-2 rounded-lg">
+<span class="material-symbols-outlined" style="font-size: 28px;">person</span>
 </div>
 <div class="flex-grow">
-<div class="flex justify-between items-start mb-1">
-<span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">shield</span>
+<div class="flex justify-between items-start mb-0.5">
+<span class="bg-primary/10 text-primary px-2 py-0.5 rounded-full font-label-sm text-label-sm flex items-center gap-1" style="font-size: 10.8px;">
+<span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;">shield</span>
                             Customer
                         </span>
-<span class="material-symbols-outlined text-primary" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
 </div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">I need a service</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Looking for a plumber, electrician, painter or other skilled worker</p>
+<h3 class="text-base font-bold text-on-surface mb-0.5" style="font-size: 16.2px; line-height: 22px;">I need a service</h3>
+<p class="text-xs text-on-surface-variant" style="font-size: 12.6px; line-height: 16px;">Looking for a plumber, electrician, painter or other skilled worker</p>
 </div>
 </button>
 <!-- Card 2 (Unselected State) -->
-<button onclick="window.location.href='/provider-registration'" class="w-full text-left bg-surface-container-low border-2 border-outline-variant rounded-xl p-4 flex gap-4 items-start transition-all duration-150 active:scale-[0.98] hover:border-outline cursor-pointer">
-<div class="flex-shrink-0 bg-secondary-fixed text-secondary p-3 rounded-lg">
-<span class="material-symbols-outlined" style="font-size: 32px;">handyman</span>
+<button onclick="window.location.href='/provider-registration'" class="w-full text-left bg-surface-container-low border-2 border-outline-variant rounded-xl p-3 flex gap-3 items-start transition-all duration-150 active:scale-[0.98] hover:border-outline cursor-pointer">
+<div class="flex-shrink-0 bg-secondary-fixed text-secondary p-2 rounded-lg">
+<span class="material-symbols-outlined" style="font-size: 28px;">handyman</span>
 </div>
 <div class="flex-grow">
-<div class="flex justify-between items-start mb-1">
-<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">award_star</span>
+<div class="flex justify-between items-start mb-0.5">
+<span class="bg-secondary/10 text-secondary px-2 py-0.5 rounded-full font-label-sm text-label-sm flex items-center gap-1" style="font-size: 10.8px;">
+<span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;">award_star</span>
                             Service provider
                         </span>
 </div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">I provide services</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">I am a plumber, electrician or skilled worker looking for work</p>
+<h3 class="text-base font-bold text-on-surface mb-0.5" style="font-size: 16.2px; line-height: 22px;">I provide services</h3>
+<p class="text-xs text-on-surface-variant" style="font-size: 12.6px; line-height: 16px;">I am a plumber, electrician or skilled worker looking for work</p>
 </div>
 </button>
 <!-- Info Box -->
-<div class="mt-4 bg-primary-container/10 border-l-4 border-primary p-4 rounded-lg flex gap-3">
-<span class="material-symbols-outlined text-primary">info</span>
-<p class="font-body-md text-body-md text-on-surface-variant leading-tight">
+<div class="bg-primary-container/10 border-l-4 border-primary p-3 rounded-lg flex gap-3 items-center">
+<span class="material-symbols-outlined text-primary flex-shrink-0">info</span>
+<p class="text-xs text-on-surface-variant leading-tight" style="font-size: 11.7px;">
                     Service providers — register via a simple phone call in Urdu. No app download needed.
                 </p>
 </div>
 </div>
+</main>
 <!-- Sticky Footer Action -->
-<footer class="mt-stack-lg pt-4">
-<button class="w-full bg-primary-container text-on-primary-container py-4 rounded-xl font-headline-sm text-headline-sm font-bold flex justify-center items-center gap-2 active:opacity-80 transition-opacity" onclick="window.location.href='/home'">
+<footer class="bottom-nav flex flex-col gap-3 bg-surface-container-lowest w-full flex-shrink-0">
+<button class="w-full bg-primary-container text-on-primary-container py-3 rounded-xl font-bold flex justify-center items-center gap-2 active:opacity-80 transition-opacity" style="font-size: 16.2px;" onclick="window.location.href='/home'">
                 Continue as Customer
                 <span class="material-symbols-outlined">arrow_forward</span>
 </button>
-<p class="text-center font-label-sm text-label-sm text-on-surface-variant mt-4">By continuing, you agree to Mahir's Terms &amp; Privacy Policy</p>
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant" style="font-size: 10.8px;">By continuing, you agree to Mahir's Terms &amp; Privacy Policy</p>
+<div style='text-align:center;font-size:10px;color:#aaaaaa;padding-top:4px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</div>
 </footer>
-</main>
-<!-- Navigation Shell Suppressed: Role selection is a transactional/onboarding step -->
-
-<footer style='text-align:center;font-size:10px;color:#aaaaaa;padding:12px 0 24px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</footer>
+</div>
 </body></html>
