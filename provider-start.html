@@ -11,7 +11,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100dvh; overflow: hidden; }
         .container { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 16px 20px; overflow: hidden; min-height: 0; background: linear-gradient(180deg, #ffffff 0%, #f4faf6 100%); }
-        .content { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px; overflow: hidden; }
+        .content { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 16px; overflow-y: auto; padding-right: 4px; padding-top: 10px; }
         .bottom-nav { flex-shrink: 0; padding-bottom: 8px; }
         
         @keyframes fadeInUp {
@@ -54,7 +54,7 @@
             </button>
             <h1 class="text-base font-bold text-white">Mahir Partner Onboarding</h1>
         </div>
-        <img src="/static/images/mahir-logo.svg" style="height: 28px; width: auto; object-fit: contain; filter: brightness(0) invert(1);" alt="Mahir Logo">
+        <img src="/static/images/mahir-logo-white.svg" style="height: 28px; width: auto; object-fit: contain;" alt="Mahir Logo">
     </header>
 
     <div class="container relative">
@@ -154,44 +154,43 @@
 
     <script>
         // Web Speech synthesis helper
-        function speakUrdu(text, callback) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // stop previous
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'ur-PK';
-                
-                // Fallback rate & pitch
-                utterance.rate = 0.85; 
-                utterance.pitch = 1.0;
-
-                // Attempt to find Urdu voice
-                const voices = window.speechSynthesis.getVoices();
-                const urVoice = voices.find(v => v.lang.includes('ur') || v.lang.includes('PK'));
-                if (urVoice) {
-                    utterance.voice = urVoice;
-                }
-
-                if (callback) {
-                    utterance.onend = callback;
-                }
-                window.speechSynthesis.speak(utterance);
-            } else {
-                if (callback) callback();
-            }
+        
+function speakUrdu(text, callback) {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ur-PK';
+        utterance.rate = 0.5; // slower Urdu speech
+        const voices = window.speechSynthesis.getVoices();
+        let urVoice = voices.find(v => v.lang.toLowerCase().includes('ur-pk') || v.lang.toLowerCase() === 'ur');
+        if (!urVoice) {
+            urVoice = voices.find(v => v.lang.toLowerCase().includes('hi-in') || v.lang.toLowerCase().includes('hi'));
         }
-
+        if (urVoice) utterance.voice = urVoice;
+        if (callback) utterance.onend = callback;
+        const vBtn = document.getElementById('voice-trigger-btn');
+        if (vBtn) vBtn.classList.add('voice-icon-active');
+        utterance.onend = () => {
+            if (vBtn) vBtn.classList.remove('voice-icon-active');
+            if (callback) callback();
+        };
+        window.speechSynthesis.speak(utterance);
+    } else if (callback) {
+        callback();
+    }
+}
         // On Load, speak Urdu intro
         window.addEventListener('load', () => {
             // Need user interaction to trigger speech in some modern browsers, 
             // but we register speech as high probability on load or tap.
             setTimeout(() => {
-                speakUrdu("Assalam o Alaikum! Mahir partner registration mein khush amdeed. Aap kaise register hona chahte hain?");
+                speakUrdu("السلام علیکم! ماہر پارٹنر رجسٹریشن میں خوش آمدید۔ آپ کیسے رجسٹر ہونا چاہتے ہیں؟");
             }, 800);
         });
 
         // Safe voice redirection
         function speakAndNavigate(url, urduPhrase) {
-            speakUrdu(urduPhrase + ", please wait...", () => {
+            speakUrdu("میں خود رجسٹر کروں گا، براہ کرم انتظار کریں۔", () => {
                 window.location.href = url;
             });
             // fallback
@@ -202,7 +201,7 @@
             const form = document.getElementById('call-form-container');
             form.classList.toggle('hidden');
             if (!form.classList.contains('hidden')) {
-                speakUrdu("Hum aapko paanch minute mein Urdu mein call karein ge. Apna phone number enter karein.");
+                speakUrdu("ہم آپ کو پانچ منٹ میں اردو میں کال کریں گے۔ اپنا فون نمبر درج کریں۔");
             }
         }
 
@@ -210,14 +209,14 @@
             const phone = document.getElementById('provider-phone').value;
             if (!phone) {
                 alert("Baraye Meherbani apna mobile number enter karein!");
-                speakUrdu("Baraye Meherbani mobile number enter karein.");
+                speakUrdu("برائے مہربانی اپنا موبائل نمبر درج کریں۔");
                 return;
             }
 
-            speakUrdu("Shukriya! Call connect ho rahi hai. Apna phone ready rakhein.", () => {
+            speakUrdu("شکریہ! کال کنیکٹ ہو رہی ہے۔ اپنا فون تیار رکھیں۔", () => {
                 // Show dynamic full screen incoming call simulation
                 document.getElementById('call-overlay').classList.remove('hidden');
-                speakUrdu("Tring tring! Tring tring! Mahir AI Call center.");
+                speakUrdu("ٹرنگ ٹرنگ! ٹرنگ ٹرنگ! ماہر اے آئی کال سینٹر۔");
             });
 
             // Fallback show call overlay immediately if speech is blocked
@@ -226,11 +225,11 @@
 
         function hangUpCall() {
             document.getElementById('call-overlay').classList.add('hidden');
-            speakUrdu("Call disconnected.");
+            speakUrdu("کال منقطع ہو گئی ہے۔");
         }
 
         function acceptCall() {
-            speakUrdu("Assalam o Alaikum! Main Mahir AI call center se baat kar raha hoon. Aap ne registration ke liye request ki thi. Chaliye, main abhi aapki details register kar ke test shuru karta hoon.", () => {
+            speakUrdu("السلام علیکم! میں ماہر اے آئی کال سینٹر سے بات کر رہا ہوں۔ آپ نے رجسٹریشن کے لیے درخواست کی تھی۔ چلیے، میں ابھی آپ کی تفصیلات رجسٹر کر کے ٹیسٹ شروع کرتا ہوں۔", () => {
                 // Redirect directly to the skill test with pre-filled AI profile info!
                 window.location.href = "/provider-skill-test?name=Ustad%20AI%20Call&service_type=plumber&city=Islamabad";
             });

@@ -11,7 +11,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100dvh; overflow: hidden; }
         .container { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 16px 20px; overflow: hidden; min-height: 0; background: linear-gradient(180deg, #ffffff 0%, #f4faf6 100%); }
-        .content { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 12px; overflow-y: auto; padding-right: 4px; }
+        .content { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 12px; overflow-y: auto; padding-right: 4px; padding-top: 10px; }
         .bottom-nav { flex-shrink: 0; padding-bottom: 8px; }
         
         @keyframes fadeInUp {
@@ -32,7 +32,7 @@
             </button>
             <h1 class="text-base font-bold text-white">Provider Registration</h1>
         </div>
-        <img src="/static/images/mahir-logo.svg" style="height: 28px; width: auto; object-fit: contain; filter: brightness(0) invert(1);" alt="Mahir Logo">
+        <img src="/static/images/mahir-logo-white.svg" style="height: 28px; width: auto; object-fit: contain;" alt="Mahir Logo">
     </header>
 
     <div class="container">
@@ -108,14 +108,22 @@
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'ur-PK';
-                utterance.rate = 0.85;
+                utterance.rate = 0.5; // slower speech
+                
+                const voices = window.speechSynthesis.getVoices();
+                let urVoice = voices.find(v => v.lang.toLowerCase().includes('ur-pk') || v.lang.toLowerCase() === 'ur');
+                if (!urVoice) {
+                    urVoice = voices.find(v => v.lang.toLowerCase().includes('hi-in') || v.lang.toLowerCase().includes('hi'));
+                }
+                if (urVoice) utterance.voice = urVoice;
+                
                 window.speechSynthesis.speak(utterance);
             }
         }
 
         window.addEventListener('load', () => {
             setTimeout(() => {
-                speakUrdu("Apna naam, mobile number aur hunar darj karein taake hum technical test shuru kar sakein.");
+                speakUrdu("اپنا نام، موبائل نمبر اور ہنر درج کریں تاکہ ہم ٹیکنیکل ٹیسٹ شروع کر سکیں۔");
             }, 800);
         });
     </script>

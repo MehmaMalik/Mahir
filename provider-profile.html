@@ -48,7 +48,7 @@
             </button>
             <h1 class="text-base font-bold text-white">Partner Profile</h1>
         </div>
-        <img src="/static/images/mahir-logo.svg" style="height: 28px; width: auto; object-fit: contain; filter: brightness(0) invert(1);" alt="Mahir Logo">
+        <img src="/static/images/mahir-logo-white.svg" style="height: 28px; width: auto; object-fit: contain;" alt="Mahir Logo">
     </header>
 
     <!-- Scrollable Main Container -->
@@ -118,7 +118,7 @@
             </div>
 
             <!-- Call Dispatcher Alert Banner -->
-            <div class="bg-[#1a7f4b]/5 border-l-4 border-[#1a7f4b] p-3.5 rounded-2xl flex gap-3">
+            <div class="bg-[#1a7f4b]/5 border-l-4 border-[#1a7f4b] p-3.5 rounded-2xl flex gap-3 mb-4">
                 <span class="material-symbols-outlined text-[#1a7f4b] flex-shrink-0 mt-0.5">phone_callback</span>
                 <p class="text-[11px] text-gray-600 font-medium leading-relaxed">
                     You will receive direct phone calls in Urdu from the Mahir AI dispatch agent when customers request services near you. Keep your phone active.
@@ -146,10 +146,15 @@
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'ur-PK';
-                utterance.rate = 0.85;
+                utterance.rate = 0.5;
+                
                 const voices = window.speechSynthesis.getVoices();
-                const urVoice = voices.find(v => v.lang.includes('ur') || v.lang.includes('PK'));
+                let urVoice = voices.find(v => v.lang.toLowerCase().includes('ur-pk') || v.lang.toLowerCase() === 'ur');
+                if (!urVoice) {
+                    urVoice = voices.find(v => v.lang.toLowerCase().includes('hi-in') || v.lang.toLowerCase().includes('hi'));
+                }
                 if (urVoice) utterance.voice = urVoice;
+
                 window.speechSynthesis.speak(utterance);
             }
         }

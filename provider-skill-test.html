@@ -11,7 +11,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100dvh; overflow: hidden; }
         .container { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 16px 20px; overflow: hidden; min-height: 0; background: linear-gradient(180deg, #ffffff 0%, #f4faf6 100%); }
-        .content { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px; overflow: hidden; }
+        .content { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 16px; overflow-y: auto; padding-right: 4px; padding-top: 10px; }
         .bottom-nav { flex-shrink: 0; padding-bottom: 8px; }
         
         @keyframes fadeInUp {
@@ -44,7 +44,7 @@
             </button>
             <h1 class="text-base font-bold text-white">Mahir Skill Test</h1>
         </div>
-        <img src="/static/images/mahir-logo.svg" style="height: 28px; width: auto; object-fit: contain; filter: brightness(0) invert(1);" alt="Mahir Logo">
+        <img src="/static/images/mahir-logo-white.svg" style="height: 28px; width: auto; object-fit: contain;" alt="Mahir Logo">
     </header>
 
     <div class="container">
@@ -180,10 +180,14 @@
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'ur-PK';
-                utterance.rate = 0.82; // clear and slightly slower
-                
+                utterance.rate = 0.5; // slower Urdu speech
+
                 const voices = window.speechSynthesis.getVoices();
-                const urVoice = voices.find(v => v.lang.includes('ur') || v.lang.includes('PK'));
+                let urVoice = voices.find(v => v.lang.toLowerCase().includes('ur-pk') || v.lang.toLowerCase() === 'ur');
+                if (!urVoice) {
+                    // Fallback to Hindi voice if Urdu not available
+                    urVoice = voices.find(v => v.lang.toLowerCase().includes('hi-in') || v.lang.toLowerCase().includes('hi'));
+                }
                 if (urVoice) utterance.voice = urVoice;
 
                 if (callback) utterance.onend = callback;
@@ -203,12 +207,12 @@
             }
         }
 
-        // On Load speak introduction, then read Question 1
+        // On Load, render Question 1 instantly and speak the welcoming audio
         window.addEventListener('load', () => {
+            loadQuestion(0);
             setTimeout(() => {
-                speakUrdu("Assalam o Alaikum! Aapka skill test shuru hota hai. Har sawal ke liye ek option chunein.", () => {
-                    loadQuestion(0);
-                });
+                const welcomeText = "Assalam o Alaikum! Aapka skill test shuru hota hai. Sawal hai: " + questionsList[0].q;
+                speakUrdu(welcomeText);
             }, 800);
         });
 
@@ -229,14 +233,14 @@
             // Update Text
             document.getElementById('question-text').innerText = qObj.q;
 
-            // Load options text
+            // Load options text and reset buttons
             const buttons = document.querySelectorAll('#options-container button');
             buttons.forEach((btn, idx) => {
+                btn.disabled = false;
+                btn.classList.remove('border-[#1a7f4b]', 'bg-[#1a7f4b]/5');
                 btn.querySelector('.option-content').innerText = qObj.options[idx];
             });
-
-            // Read the question aloud automatically in Urdu
-            speakUrdu(qObj.q);
+            optionClicked = false;
         }
 
         function replayQuestionVoice() {
@@ -244,23 +248,44 @@
             speakUrdu(qObj.q);
         }
 
-        // Option click handler
+        let optionClicked = false;
+
+        // Option click handler - strictly waits for click and speaking
         function handleOptionSelect(selectedIdx) {
+            if (optionClicked) return;
+            optionClicked = true;
+
             const qObj = questionsList[currentQuestionIndex];
-            
-            // Speak selected option aloud
             const selectedText = qObj.options[selectedIdx];
             
+            // Highlight selected option and disable all options immediately to prevent double click
+            const buttons = document.querySelectorAll('#options-container button');
+            buttons.forEach((btn, idx) => {
+                if (idx === selectedIdx) {
+                    btn.classList.add('border-[#1a7f4b]', 'bg-[#1a7f4b]/5');
+                }
+                btn.disabled = true;
+            });
+
             // Check Correct
             if (selectedIdx === qObj.correct) {
                 score++;
             }
 
-            speakUrdu(selectedText, () => {
+            let nextCalled = false;
+            const advance = () => {
+                if (nextCalled) return;
+                nextCalled = true;
                 setTimeout(() => {
                     loadQuestion(currentQuestionIndex + 1);
                 }, 400);
-            });
+            };
+
+            // Speak answer then advance to next question
+            speakUrdu(selectedText, advance);
+
+            // Safety timeout fallback (in case browser blocks audio end event)
+            setTimeout(advance, 1500);
         }
 
         // Show result details

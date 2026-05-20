@@ -42,7 +42,7 @@
             </button>
             <h1 class="text-base font-bold text-white">Police Verification</h1>
         </div>
-        <img src="/static/images/mahir-logo.svg" style="height: 28px; width: auto; object-fit: contain; filter: brightness(0) invert(1);" alt="Mahir Logo">
+        <img src="/static/images/mahir-logo-white.svg" style="height: 28px; width: auto; object-fit: contain;" alt="Mahir Logo">
     </header>
 
     <div class="container relative">
@@ -219,10 +219,15 @@
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'ur-PK';
-                utterance.rate = 0.85;
+                utterance.rate = 0.62;
+                
                 const voices = window.speechSynthesis.getVoices();
-                const urVoice = voices.find(v => v.lang.includes('ur') || v.lang.includes('PK'));
+                let urVoice = voices.find(v => v.lang.toLowerCase().includes('ur-pk') || v.lang.toLowerCase() === 'ur');
+                if (!urVoice) {
+                    urVoice = voices.find(v => v.lang.toLowerCase().includes('hi-in') || v.lang.toLowerCase().includes('hi'));
+                }
                 if (urVoice) utterance.voice = urVoice;
+
                 if (callback) utterance.onend = callback;
                 window.speechSynthesis.speak(utterance);
             } else {
