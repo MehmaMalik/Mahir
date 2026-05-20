@@ -1,9 +1,14 @@
-from flask import Flask, render_template, request
 import sys
 import os
 import json
 import uuid
 from datetime import datetime
+
+try:
+    from flask import Flask, render_template, request
+except ImportError as e:
+    print(f"CRITICAL ERROR: Flask module is missing: {e}. Please run 'pip install -r requirements.txt'")
+    sys.exit(1)
 
 app = Flask(__name__, template_folder='.', static_folder='static')
 
@@ -34,6 +39,7 @@ def onboarding_3():
 def role_selection():
     return render_template('role-selection.html')
 
+@app.route('/provider')
 @app.route('/provider-registration', methods=['GET'])
 def provider_registration():
     return render_template('provider-registration.html')

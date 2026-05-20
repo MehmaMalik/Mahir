@@ -164,7 +164,7 @@
 <!-- Bottom Onboarding Navigation -->
 <footer class="p-margin-main bg-surface-container-lowest border-t border-outline-variant flex items-center justify-between h-20">
 <!-- Skip Button -->
-<button onclick="window.location.href='/role-selection'" class="font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container px-stack-md py-stack-sm rounded-lg transition-colors">
+<button onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'role-selection.html' : '/role-selection'" class="font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container px-stack-md py-stack-sm rounded-lg transition-colors">
             Skip
         </button>
 <!-- Progress Indicators -->
@@ -174,7 +174,7 @@
 <div class="h-2 w-2 rounded-full bg-outline-variant"></div>
 </div>
 <!-- Next Button -->
-<button class="flex items-center space-x-1 bg-primary-container text-on-primary font-label-lg text-label-lg px-6 py-stack-sm rounded-xl active:scale-95 transition-transform" onclick="location.href='/onboarding-3'">
+<button class="flex items-center space-x-1 bg-primary-container text-on-primary font-label-lg text-label-lg px-6 py-stack-sm rounded-xl active:scale-95 transition-transform" onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'onboarding-3.html' : '/onboarding-3'">
 <span class="">Next</span>
 <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
 </button>

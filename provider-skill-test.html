@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Provider Skill Test - Mahir</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#f8f9fa] text-[#191c1d] min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-white border-b border-outline-variant sticky top-0 z-50 flex justify-between items-center w-full px-4 h-16 shadow-sm">
+        <div class="flex items-center gap-3">
+            <button onclick="history.back()" class="text-on-surface flex items-center justify-center min-h-[48px] min-w-[48px]">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="text-lg font-bold text-primary">Mahir Skill Test</h1>
+        </div>
+        <img src="/static/images/mahir-logo.svg" height="32" alt="Mahir Logo" class="mr-2">
+    </header>
+
+    <main class="max-w-md mx-auto py-6 px-4 space-y-6">
+        <header class="text-center space-y-2">
+            <span class="bg-[#e0f2fe] text-[#0369a1] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                Skill Validation
+            </span>
+            <h2 class="text-2xl font-bold text-[#006438]">Quick Technical Test</h2>
+            <p class="text-sm text-gray-500">Hello <span class="font-bold text-on-surface">{{ name }}</span>! Please answer these 3 quick questions about <span class="font-bold text-on-surface capitalize">{{ service_type }}</span> work.</p>
+        </header>
+
+        <form id="quiz-form" action="/provider-profile" method="POST" class="space-y-6">
+            <!-- Hidden inputs to forward provider details -->
+            <input type="hidden" name="name" value="{{ name }}">
+            <input type="hidden" name="service_type" value="{{ service_type }}">
+            <input type="hidden" name="city" value="{{ city }}">
+            <input type="hidden" name="score" id="score-input" value="0">
+
+            <!-- Question container loaded via JS -->
+            <div id="questions-container" class="space-y-6">
+                <!-- Dynamically generated questions go here -->
+            </div>
+
+            <!-- Submit Quiz -->
+            <button type="button" onclick="gradeQuiz()" class="w-full h-14 bg-[#1a7f4b] text-white rounded-xl text-md font-bold flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md hover:bg-[#006438]">
+                Submit Test & View Profile
+                <span class="material-symbols-outlined">check_circle</span>
+            </button>
+        </form>
+    </main>
+
+    <script>
+        const questionsData = {
+            "plumber": [
+                {
+                    q: "What tool is used to tighten or loosen pipes?",
+                    options: ["Plier (Palaash)", "Pipe Wrench", "Hammer (Hathori)"],
+                    correct: 1
+                },
+                {
+                    q: "How do you stop a leaking joint temporarily?",
+                    options: ["Teflon Tape", "Paper & Thread", "Wrapping cloth"],
+                    correct: 0
+                },
+                {
+                    q: "What is a U-trap used for in drain lines?",
+                    options: ["To slow down water flow", "To block sewer gas & smell", "To catch lost rings"],
+                    correct: 1
+                }
+            ],
+            "electrician": [
+                {
+                    q: "What tool is used to measure electrical voltage and current?",
+                    options: ["Thermometer", "Screw Driver", "Multimeter"],
+                    correct: 2
+                },
+                {
+                    q: "Which wire color is universally used for Earth / Grounding?",
+                    options: ["Green or Yellow", "Red", "Black"],
+                    correct: 0
+                },
+                {
+                    q: "What causes a fuse or circuit breaker to blow continuously?",
+                    options: ["Low voltage supply", "Overload or Short Circuit", "Very thick wire"],
+                    correct: 1
+                }
+            ],
+            "AC technician": [
+                {
+                    q: "What refrigerant gas is commonly used in modern split AC units?",
+                    options: ["Oxygen Gas", "R410A / R32 Gas", "Carbon Dioxide"],
+                    correct: 1
+                },
+                {
+                    q: "If the compressor is running but not cooling, what is the primary suspect?",
+                    options: ["Low/Leaked Refrigerant Gas", "Remote batteries are low", "Dirt on indoor body"],
+                    correct: 0
+                },
+                {
+                    q: "What causes water to leak or drip from the indoor unit inside the room?",
+                    options: ["Very cold room setting", "Blocked drain pipe or dust", "High outdoor humidity"],
+                    correct: 1
+                }
+            ],
+            "painter": [
+                {
+                    q: "What must be applied before painting a raw new plaster wall?",
+                    options: ["Varnish", "Water coat", "Wall Primer / Undercoat"],
+                    correct: 2
+                },
+                {
+                    q: "What is the best way to remove loose, peeling old paint?",
+                    options: ["Scraping with putty knife", "Washing with acid", "Burning it off"],
+                    correct: 0
+                },
+                {
+                    q: "Which paint type offers washability and waterproofing for exterior walls?",
+                    options: ["Distemper Paint", "Weather Sheet / Acrylic Emulsion", "Lime wash (Choona)"],
+                    correct: 1
+                }
+            ],
+            "carpenter": [
+                {
+                    q: "Which tool is used to shave and smooth the surface of wood?",
+                    options: ["Planer (Randa)", "Chisel (Ramba)", "Handsaw (Aari)"],
+                    correct: 0
+                },
+                {
+                    q: "What is the strongest way to join two wood panels permanently?",
+                    options: ["Sticky tape", "Wood glue and screws", "Nails only"],
+                    correct: 1
+                },
+                {
+                    q: "What does MDF stand for in woodworking?",
+                    options: ["Medium Density Fibreboard", "Modern Design Furniture", "Metal Double Frame"],
+                    correct: 0
+                }
+            ]
+        };
+
+        const serviceType = "{{ service_type }}".toLowerCase();
+        const activeQuestions = questionsData[serviceType] || questionsData["plumber"];
+
+        function loadQuestions() {
+            const container = document.getElementById("questions-container");
+            container.innerHTML = "";
+
+            activeQuestions.forEach((qObj, index) => {
+                let optionsHtml = "";
+                qObj.options.forEach((opt, optIdx) => {
+                    optionsHtml += `
+                        <label class="flex items-center gap-3 p-4 bg-white border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 active:scale-[0.99] transition-all">
+                            <input type="radio" name="q_${index}" value="${optIdx}" required
+                                class="h-5 w-5 text-[#1a7f4b] focus:ring-[#1a7f4b] border-gray-300">
+                            <span class="text-sm font-medium text-gray-700">${opt}</span>
+                        </label>
+                    `;
+                });
+
+                container.innerHTML += `
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5 space-y-4 shadow-sm">
+                        <h3 class="text-md font-bold text-gray-800">Question ${index + 1}: ${qObj.q}</h3>
+                        <div class="flex flex-col gap-2">
+                            ${optionsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function gradeQuiz() {
+            let score = 0;
+            let allAnswered = true;
+
+            activeQuestions.forEach((qObj, index) => {
+                const selected = document.querySelector(`input[name="q_${index}"]:checked`);
+                if (!selected) {
+                    allAnswered = false;
+                } else {
+                    if (parseInt(selected.value) === qObj.correct) {
+                        score++;
+                    }
+                }
+            });
+
+            if (!allAnswered) {
+                alert("Please answer all questions before submitting / Baraye meherbani tamam sawalat ke jawab dein.");
+                return;
+            }
+
+            document.getElementById("score-input").value = score;
+            document.getElementById("quiz-form").submit();
+        }
+
+        window.onload = loadQuestions;
+    </script>
+</body>
+</html>

@@ -156,7 +156,7 @@
 <!-- Bottom Navigation Section -->
 <footer class="p-margin-main bg-surface-container-lowest flex items-center justify-between mt-auto">
 <!-- Skip Button -->
-<button onclick="window.location.href='/role-selection'" class="font-label-lg text-label-lg text-on-surface-variant px-stack-md py-stack-sm active:opacity-60 transition-opacity">
+<button onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'role-selection.html' : '/role-selection'" class="font-label-lg text-label-lg text-on-surface-variant px-stack-md py-stack-sm active:opacity-60 transition-opacity">
       Skip
     </button>
 <!-- Progress Dots -->
@@ -166,7 +166,7 @@
 <div class="h-2 w-2 rounded-full bg-outline-variant"></div>
 </div>
 <!-- Next Button -->
-<button class="flex items-center gap-2 px-stack-lg py-3 rounded-xl bg-primary-container text-on-primary-container font-label-lg text-label-lg active:scale-95 transition-transform" onclick="location.href='/onboarding-2'">
+<button class="flex items-center gap-2 px-stack-lg py-3 rounded-xl bg-primary-container text-on-primary-container font-label-lg text-label-lg active:scale-95 transition-transform" onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'onboarding-2.html' : '/onboarding-2'">
       Next
       <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
 </button>
