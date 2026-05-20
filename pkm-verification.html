@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Police Verification - Mahir</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100dvh; overflow: hidden; }
+        .container { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 16px 20px; overflow: hidden; min-height: 0; background: linear-gradient(180deg, #ffffff 0%, #f4faf6 100%); }
+        .content { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 14px; overflow-y: auto; padding-right: 4px; }
+        .bottom-nav { flex-shrink: 0; padding-bottom: 8px; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        /* Pulsing dot indicator */
+        @keyframes status-pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+        .status-dot-pulse {
+            animation: status-pulse 1.8s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md flex flex-col h-dvh max-w-md mx-auto relative overflow-hidden bg-white">
+    <!-- Green TopAppBar -->
+    <header style='height: 52px; background:#1a7f4b; padding:8px 16px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); z-index: 10;'>
+        <div class="flex items-center gap-3">
+            <button onclick="window.location.href='/provider-registration'" class="text-white flex items-center justify-center min-h-[48px] min-w-[48px] active:opacity-60 transition-opacity">
+                <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+            </button>
+            <h1 class="text-base font-bold text-white">Police Verification</h1>
+        </div>
+        <img src="/static/images/mahir-logo.svg" style="height: 28px; width: auto; object-fit: contain; filter: brightness(0) invert(1);" alt="Mahir Logo">
+    </header>
+
+    <div class="container relative">
+        <main class="content">
+            
+            <!-- Headline block -->
+            <div class="text-center space-y-1 animate-fade-in-up flex-shrink-0">
+                <h2 class="text-lg font-bold text-[#006438]" style="font-size: 18px;">Police Verification Certificate</h2>
+                <p class="text-xs text-gray-500 font-semibold" style="font-size: 11px;">Mubarak ho, test pass ho gaya! Ab character certificate jama karein.</p>
+            </div>
+
+            <!-- PKM Process Steps - Visual Timeline -->
+            <div class="bg-white/80 backdrop-blur-md border border-[#1a7f4b]/10 rounded-2xl p-4 space-y-3 animate-fade-in-up delay-1 flex-shrink-0 shadow-sm">
+                <h3 class="text-xs font-bold text-[#1a7f4b] uppercase tracking-wider">How to get PKM Certificate:</h3>
+                
+                <div class="space-y-3 pl-1 text-[12px] leading-tight">
+                    <!-- Step 1 (Checked) -->
+                    <div class="flex gap-3 items-start">
+                        <div class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <span class="material-symbols-outlined text-[12px] font-bold" style="font-variation-settings: 'FILL' 1;">check</span>
+                        </div>
+                        <p class="text-gray-700">
+                            <strong class="text-green-800">Punjab Police App download karein</strong> — Play Store ya App Store se
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex gap-3 items-start">
+                        <div class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5 font-bold text-[10px]">
+                            2
+                        </div>
+                        <p class="text-gray-600">CNIC number darj karein</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex gap-3 items-start">
+                        <div class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5 font-bold text-[10px]">
+                            3
+                        </div>
+                        <p class="text-gray-600">Rs. 150 fee ada karein — JazzCash ya EasyPaisa se</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="flex gap-3 items-start">
+                        <div class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5 font-bold text-[10px]">
+                            4
+                        </div>
+                        <p class="text-gray-600">3 din mein character certificate milega</p>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="flex gap-3 items-start">
+                        <div class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5 font-bold text-[10px]">
+                            5
+                        </div>
+                        <p class="text-gray-600">Certificate ID yahan niche enter karein</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PKM Verification Submission Form -->
+            <form id="pkm-form" onsubmit="handlePKMSubmit(event)" class="bg-white/80 backdrop-blur-md border border-outline-variant/20 rounded-2xl p-4 space-y-3 animate-fade-in-up delay-2 shadow-sm flex-shrink-0">
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label for="pkm-id" class="block text-[11px] font-bold text-gray-700">PKM Certificate ID</label>
+                        <input type="text" id="pkm-id" required placeholder="e.g. PKM-123456"
+                               class="w-full h-10 px-3 border border-gray-200 rounded-xl text-xs focus:ring-2 focus:ring-[#1a7f4b] focus:border-[#1a7f4b]">
+                    </div>
+                    <div class="space-y-1">
+                        <label for="pkm-expiry" class="block text-[11px] font-bold text-gray-700">Expiry Date</label>
+                        <input type="date" id="pkm-expiry" required
+                               class="w-full h-10 px-3 border border-gray-200 rounded-xl text-xs focus:ring-2 focus:ring-[#1a7f4b] focus:border-[#1a7f4b]">
+                    </div>
+                </div>
+
+                <!-- Certificate Photo Upload Slot -->
+                <div class="space-y-1">
+                    <label class="block text-[11px] font-bold text-gray-700">Upload Photo (Optional)</label>
+                    <label class="flex justify-center items-center gap-2 w-full h-10 px-4 border border-dashed border-gray-300 rounded-xl cursor-pointer hover:bg-gray-50 active:scale-[0.99] transition-all">
+                        <span class="material-symbols-outlined text-[16px] text-gray-500">add_a_photo</span>
+                        <span class="text-xs font-semibold text-gray-500">Certificate ki photo select karein</span>
+                        <input type="file" id="pkm-file" class="hidden" accept="image/*">
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full h-11 bg-[#1a7f4b] text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md hover:bg-[#006438]">
+                    Submit Certificate
+                    <span class="material-symbols-outlined text-[16px]">verified_user</span>
+                </button>
+            </form>
+
+            <!-- Digital Certificate Badge Preview Card -->
+            <div class="bg-gradient-to-br from-[#0c2e1f] to-[#041b12] border-2 border-yellow-500/20 text-white rounded-3xl p-4 relative overflow-hidden animate-fade-in-up delay-3 shadow-md flex-shrink-0">
+                <div class="absolute -right-4 -bottom-4 w-28 h-28 bg-[#1a7f4b]/20 rounded-full blur-xl"></div>
+                
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-[#1a7f4b] flex items-center justify-center border border-white/20">
+                            <span class="material-symbols-outlined text-[18px] text-white">verified</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold leading-tight">MAHIR PAKISTAN</h4>
+                            <p class="text-[9px] text-white/50 uppercase tracking-widest">Digital Credential</p>
+                        </div>
+                    </div>
+                    <span class="bg-[#ba1a1a]/15 border border-[#ffdad6]/20 text-[#ffdad6] px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-red-400 status-dot-pulse"></span>
+                        PKM Pending
+                    </span>
+                </div>
+
+                <div class="space-y-1.5 mb-2">
+                    <p class="text-[10px] text-white/60">Partner Identity:</p>
+                    <h3 class="text-base font-black tracking-wide text-yellow-400">Ustad {{ name }}</h3>
+                    <p class="text-xs font-bold text-white/90 capitalize leading-none">{{ service_type }} · {{ city }}</p>
+                </div>
+
+                <div class="flex justify-between items-center pt-2.5 border-t border-white/10 text-[9px] text-white/50">
+                    <div>
+                        <p>BADGE STATUS</p>
+                        <p class="text-white font-bold text-[10px]" style="color: {{ badge_color }};">{{ badge }}</p>
+                    </div>
+                    <div class="text-right">
+                        <p>HACKATHON 2026</p>
+                        <p class="text-white font-bold text-[10px]">AI SEEKHO</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sticky Footer -->
+        <footer class="bottom-nav text-center animate-fade-in-up">
+            <div style='text-align:center;font-size:10px;color:#aaaaaa;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</div>
+        </footer>
+    </div>
+
+    <!-- Submission Review Success Modal (Hidden Initially) -->
+    <div id="pkm-success-overlay" class="hidden fixed inset-0 z-50 bg-[#06150f]/95 flex flex-col justify-center items-center p-6 text-center text-white">
+        <div class="w-20 h-20 bg-green-500/10 text-green-400 rounded-full flex items-center justify-center mb-6 animate-bounce">
+            <span class="material-symbols-outlined text-[48px]" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+        </div>
+        
+        <div class="space-y-4 max-w-sm">
+            <h2 class="text-2xl font-black text-green-400">Application Submitted!</h2>
+            <p class="text-sm font-semibold text-white/90 leading-relaxed p-4 bg-white/5 rounded-2xl border border-white/10">
+                Shukriya! Aapki application review mein hai. 24 ghante mein aapko confirm kiya jaye ga. Pehla booking 7 din mein guaranteed hai.
+            </p>
+            <p class="text-xs text-white/50 leading-relaxed">
+                Aapka credential background checks ke baad full active kar diya jaye ga. Let's explore your active dashboard now!
+            </p>
+            
+            <button onclick="goToProfile()" class="w-full h-12 bg-green-500 text-[#06150f] rounded-xl text-sm font-bold flex items-center justify-center gap-2 active:scale-95 transition-all shadow-lg mt-6">
+                Go to Partner Dashboard
+                <span class="material-symbols-outlined text-[18px]">dashboard</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Hidden Inputs -->
+    <input type="hidden" id="p-name" value="{{ name }}">
+    <input type="hidden" id="p-service" value="{{ service_type }}">
+    <input type="hidden" id="p-city" value="{{ city }}">
+    <input type="hidden" id="p-score" value="{{ score }}">
+
+    <script>
+        const name = document.getElementById('p-name').value || "Ustad Ahmed";
+        const service = document.getElementById('p-service').value || "plumber";
+        const city = document.getElementById('p-city').value || "Islamabad";
+        const score = document.getElementById('p-score').value || "0";
+
+        function speakUrdu(text, callback) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ur-PK';
+                utterance.rate = 0.85;
+                const voices = window.speechSynthesis.getVoices();
+                const urVoice = voices.find(v => v.lang.includes('ur') || v.lang.includes('PK'));
+                if (urVoice) utterance.voice = urVoice;
+                if (callback) utterance.onend = callback;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                if (callback) callback();
+            }
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                speakUrdu("Ab aapko Police Khidmat Markaz ka certificate chahiye. Yeh bohat aasaan hai. Char darjat poore karein.");
+            }, 800);
+        });
+
+        function handlePKMSubmit(event) {
+            event.preventDefault();
+            const pkmId = document.getElementById('pkm-id').value;
+            
+            speakUrdu("Shukriya! Aapki application review mein hai. 24 ghante mein aapko confirm kiya jaye ga.", () => {
+                // Show Overlay Modal
+                document.getElementById('pkm-success-overlay').classList.remove('hidden');
+            });
+
+            // Fallback show success overlay instantly
+            document.getElementById('pkm-success-overlay').classList.remove('hidden');
+        }
+
+        function goToProfile() {
+            const pkmId = document.getElementById('pkm-id').value || "PKM-123456";
+            const profileUrl = `/provider-profile?name=${encodeURIComponent(name)}&service_type=${encodeURIComponent(service)}&city=${encodeURIComponent(city)}&score=${score}&pkm_status=Pending&certificate_id=${encodeURIComponent(pkmId)}`;
+            window.location.href = profileUrl;
+        }
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.getVoices();
+            window.speechSynthesis.onvoiceschanged = () => {
+                window.speechSynthesis.getVoices();
+            };
+        }
+    </script>
+</body>
+</html>

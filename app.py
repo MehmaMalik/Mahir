@@ -39,36 +39,65 @@ def onboarding_3():
 def role_selection():
     return render_template('role-selection.html')
 
+@app.route('/provider-start', methods=['GET', 'POST'])
+def provider_start():
+    return render_template('provider-start.html')
+
 @app.route('/provider')
-@app.route('/provider-registration', methods=['GET'])
+@app.route('/provider-registration', methods=['GET', 'POST'])
 def provider_registration():
     return render_template('provider-registration.html')
 
-@app.route('/provider-skill-test', methods=['POST'])
+@app.route('/provider-skill-test', methods=['GET', 'POST'])
 def provider_skill_test():
-    name = request.form.get('name', '')
-    service_type = request.form.get('service_type', 'plumber')
-    city = request.form.get('city', '')
+    name = request.values.get('name', '')
+    service_type = request.values.get('service_type', 'plumber')
+    city = request.values.get('city', '')
     return render_template('provider-skill-test.html', name=name, service_type=service_type, city=city)
 
-@app.route('/provider-profile', methods=['POST'])
-def provider_profile_view():
-    name = request.form.get('name', '')
-    service_type = request.form.get('service_type', 'plumber')
-    city = request.form.get('city', '')
-    score = int(request.form.get('score', '2'))
+@app.route('/pkm-verification', methods=['GET', 'POST'])
+def pkm_verification():
+    name = request.values.get('name', '')
+    service_type = request.values.get('service_type', 'plumber')
+    city = request.values.get('city', '')
+    score = int(request.values.get('score', '0'))
+    
     # Assign skill badge based on score
-    if score >= 3:
+    if score == 5:
         badge = 'Master Ustad'
         badge_color = '#1a7f4b'
-    elif score == 2:
+    elif score == 4:
         badge = 'Verified Ustad'
         badge_color = '#1960a3'
     else:
         badge = 'Rookie'
         badge_color = '#854600'
+        
+    return render_template('pkm-verification.html', name=name, service_type=service_type, city=city, score=score, badge=badge, badge_color=badge_color)
+
+@app.route('/provider-profile', methods=['GET', 'POST'])
+def provider_profile_view():
+    name = request.values.get('name', '')
+    service_type = request.values.get('service_type', 'plumber')
+    city = request.values.get('city', '')
+    score = int(request.values.get('score', '2'))
+    pkm_status = request.values.get('pkm_status', 'Pending')
+    certificate_id = request.values.get('certificate_id', '')
+    
+    # Assign skill badge based on score
+    if score == 5:
+        badge = 'Master Ustad'
+        badge_color = '#1a7f4b'
+    elif score == 4:
+        badge = 'Verified Ustad'
+        badge_color = '#1960a3'
+    else:
+        badge = 'Rookie'
+        badge_color = '#854600'
+        
     return render_template('provider-profile.html', name=name, service_type=service_type,
-                           city=city, badge=badge, badge_color=badge_color)
+                           city=city, badge=badge, badge_color=badge_color, score=score,
+                           pkm_status=pkm_status, certificate_id=certificate_id)
 
 @app.route('/home')
 def home():

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
@@ -8,92 +8,157 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'DM Sans', sans-serif; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .delay-1 { animation-delay: 100ms; }
+        .delay-2 { animation-delay: 200ms; }
+        .delay-3 { animation-delay: 300ms; }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1.25); opacity: 0; }
+        }
+        .live-badge::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #1a7f4b;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
     </style>
 </head>
-<body class="bg-[#f8f9fa] text-[#191c1d] min-h-screen pb-24">
-    <!-- TopAppBar -->
-    <header class="bg-white border-b border-outline-variant sticky top-0 z-50 flex justify-between items-center w-full px-4 h-16 shadow-sm">
+<body class="bg-[#f8f9fa] text-[#191c1d] min-h-screen flex flex-col justify-between relative">
+    
+    <!-- Green TopAppBar -->
+    <header style='height: 52px; background:#1a7f4b; padding:8px 16px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); z-index: 10;' class="sticky top-0 shadow-sm">
         <div class="flex items-center gap-3">
-            <button onclick="window.location.href='/role-selection'" class="text-on-surface flex items-center justify-center min-h-[48px] min-w-[48px]">
-                <span class="material-symbols-outlined">arrow_back</span>
+            <button onclick="window.location.href='/role-selection'" class="text-white flex items-center justify-center min-h-[48px] min-w-[48px] active:opacity-60 transition-opacity">
+                <span class="material-symbols-outlined text-[24px]">arrow_back</span>
             </button>
-            <h1 class="text-lg font-bold text-primary">Partner Profile</h1>
+            <h1 class="text-base font-bold text-white">Partner Profile</h1>
         </div>
-        <img src="/static/images/mahir-logo.svg" height="32" alt="Mahir Logo" class="mr-2">
+        <img src="/static/images/mahir-logo.svg" style="height: 28px; width: auto; object-fit: contain; filter: brightness(0) invert(1);" alt="Mahir Logo">
     </header>
 
-    <main class="max-w-md mx-auto py-6 px-4 space-y-6">
-        <!-- Success Confirmation Card -->
-        <div class="bg-white border border-gray-200 rounded-2xl p-6 text-center space-y-4 shadow-sm">
-            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto">
-                <span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+    <!-- Scrollable Main Container -->
+    <main class="max-w-md w-full mx-auto py-6 px-4 space-y-6 flex-grow">
+        
+        <!-- Registration Confirmation -->
+        <div class="bg-white border border-gray-100 rounded-3xl p-5 text-center space-y-3 shadow-sm animate-fade-in-up">
+            <div class="w-14 h-14 bg-green-50 text-[#1a7f4b] rounded-full flex items-center justify-center mx-auto shadow-sm">
+                <span class="material-symbols-outlined text-3xl font-bold" style="font-variation-settings: 'FILL' 1;">check_circle</span>
             </div>
-            <div>
-                <h2 class="text-xl font-bold text-[#006438]">Registration Successful!</h2>
-                <p class="text-xs text-gray-500">Mubarak ho! Your provider profile is active.</p>
+            <div class="space-y-0.5">
+                <h2 class="text-lg font-bold text-[#006438]">Mubarak Ho! Profile Active</h2>
+                <p class="text-xs text-gray-500 font-semibold">Your Mahir provider account registration is complete.</p>
             </div>
         </div>
 
-        <!-- Provider Card -->
-        <div class="bg-white border border-gray-200 rounded-2xl p-6 space-y-4 shadow-sm relative overflow-hidden">
+        <!-- Ustad Profile Identity Card -->
+        <div class="bg-white border border-gray-100 rounded-3xl p-5 space-y-4 shadow-sm relative overflow-hidden animate-fade-in-up delay-1">
+            <div class="absolute right-0 top-0 w-24 h-24 bg-[#1a7f4b]/5 rounded-bl-full flex justify-end p-4">
+                <span class="material-symbols-outlined text-[20px] text-[#1a7f4b] font-bold">verified</span>
+            </div>
+
             <div class="flex items-center gap-4">
-                <div class="w-20 h-20 rounded-full bg-primary/10 border border-primary flex items-center justify-center text-primary">
-                    <span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">handyman</span>
+                <div class="w-16 h-16 rounded-full bg-[#1a7f4b]/10 border-2 border-[#1a7f4b]/20 flex items-center justify-center text-[#1a7f4b] relative shadow-inner">
+                    <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">handyman</span>
                 </div>
-                <div class="space-y-1">
-                    <h3 class="text-xl font-bold text-on-surface">Ustad {{ name }}</h3>
-                    <p class="text-sm font-semibold text-gray-500 capitalize">{{ service_type }}</p>
-                    <p class="text-xs text-gray-400 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-xs">location_on</span>
-                        {{ city }}, Pakistan
+                <div class="space-y-0.5">
+                    <h3 class="text-lg font-black text-on-surface">Ustad {% if name %}{{ name }}{% else %}Ahmed{% endif %}</h3>
+                    <p class="text-xs font-bold text-gray-500 capitalize flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-green-500 inline-block relative live-badge"></span>
+                        {% if service_type %}{{ service_type }}{% else %}plumber{% endif %}
+                    </p>
+                    <p class="text-[10px] text-gray-400 flex items-center gap-0.5 font-bold">
+                        <span class="material-symbols-outlined text-[12px]">location_on</span>
+                        {% if city %}{{ city }}{% else %}Islamabad{% endif %}, Pakistan
                     </p>
                 </div>
             </div>
 
-            <!-- Badges Row -->
-            <div class="flex flex-wrap gap-2 pt-2 border-t border-gray-100">
-                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold text-white" style="background-color: {{ badge_color }};">
-                    <span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">award_star</span>
-                    {{ badge }}
+            <!-- Dynamic Badges -->
+            <div class="flex flex-wrap gap-2 pt-3 border-t border-gray-50">
+                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-black text-white shadow-sm" style="background-color: {% if badge_color %}{{ badge_color }}{% else %}#1a7f4b{% endif %};">
+                    <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">award_star</span>
+                    {% if badge %}{{ badge }}{% else %}Master Ustad{% endif %}
                 </span>
-                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-[#dcfce7] text-[#166534]">
-                    <span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">shield</span>
-                    Police Verified
+                
+                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-black bg-blue-50 text-[#1960a3] border border-blue-100 shadow-sm">
+                    <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">security</span>
+                    Police Check: {{ pkm_status }}
                 </span>
             </div>
         </div>
 
-        <!-- Work Orders Status / Summary -->
-        <div class="bg-white border border-gray-200 rounded-2xl p-6 space-y-4 shadow-sm">
-            <h3 class="text-sm font-bold text-gray-700 uppercase tracking-wider">Your Work Dashboard</h3>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="bg-[#f8f9fa] p-4 rounded-xl text-center">
-                    <p class="text-2xl font-bold text-[#1a7f4b]">0</p>
-                    <p class="text-xs text-gray-500">Active Jobs</p>
+        <!-- Dashboard Summary -->
+        <div class="bg-white border border-gray-100 rounded-3xl p-5 space-y-4 shadow-sm animate-fade-in-up delay-2">
+            <h3 class="text-xs font-black text-gray-700 uppercase tracking-widest">Your Work Dashboard</h3>
+            
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-[#f8f9fa] p-3 rounded-2xl text-center border border-gray-100/50">
+                    <p class="text-2xl font-black text-[#1a7f4b] tracking-tight">0</p>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Active Jobs</p>
                 </div>
-                <div class="bg-[#f8f9fa] p-4 rounded-xl text-center">
-                    <p class="text-2xl font-bold text-[#1960a3]">Rs. 0</p>
-                    <p class="text-xs text-gray-500">Earnings</p>
+                <div class="bg-[#f8f9fa] p-3 rounded-2xl text-center border border-gray-100/50">
+                    <p class="text-2xl font-black text-[#1960a3] tracking-tight">Rs. 0</p>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Earnings</p>
                 </div>
             </div>
 
-            <div class="bg-primary/5 border-l-4 border-[#1a7f4b] p-4 rounded-xl flex gap-3 mt-2">
-                <span class="material-symbols-outlined text-[#1a7f4b]">info</span>
-                <p class="text-xs text-gray-600 leading-normal">
-                    You will receive direct phone calls in Urdu from the Mahir AI dispatch agent when customers request services near you.
+            <!-- Call Dispatcher Alert Banner -->
+            <div class="bg-[#1a7f4b]/5 border-l-4 border-[#1a7f4b] p-3.5 rounded-2xl flex gap-3">
+                <span class="material-symbols-outlined text-[#1a7f4b] flex-shrink-0 mt-0.5">phone_callback</span>
+                <p class="text-[11px] text-gray-600 font-medium leading-relaxed">
+                    You will receive direct phone calls in Urdu from the Mahir AI dispatch agent when customers request services near you. Keep your phone active.
                 </p>
             </div>
         </div>
 
-        <!-- Back to Main Screen -->
-        <button onclick="window.location.href='/'" class="w-full h-14 bg-[#1a7f4b] text-white rounded-xl text-md font-bold flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md hover:bg-[#006438]">
-            Go to Main Screen
-            <span class="material-symbols-outlined">home</span>
-        </button>
+        <!-- Dashboard Action Buttons -->
+        <div class="space-y-3 animate-fade-in-up delay-3">
+            <button onclick="window.location.href='/'" class="w-full h-13 bg-[#1a7f4b] text-white rounded-2xl text-sm font-bold flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md hover:bg-[#006438]">
+                Go to Main Screen
+                <span class="material-symbols-outlined text-[16px]">home</span>
+            </button>
+        </div>
     </main>
 
-    <!-- Universal Footer -->
-    <footer style='text-align:center;font-size:10px;color:#aaaaaa;padding:12px 0 24px;position:absolute;bottom:0;width:100%;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</footer>
+    <!-- Universal Static Footer (No overlaps possible!) -->
+    <footer style='text-align:center;font-size:10px;color:#aaaaaa;padding:16px 0 24px;' class="animate-fade-in-up delay-3 w-full flex-shrink-0 border-t border-gray-100 bg-[#f8f9fa]">
+        Powered by Google Pakistan · Innovista · Telenor · Ministry of IT
+    </footer>
+
+    <script>
+        function speakUrdu(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ur-PK';
+                utterance.rate = 0.85;
+                const voices = window.speechSynthesis.getVoices();
+                const urVoice = voices.find(v => v.lang.includes('ur') || v.lang.includes('PK'));
+                if (urVoice) utterance.voice = urVoice;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                speakUrdu("Mubarak ho! Aapka partner profile active ho chuka hai. Aapko jald hi bookings milna shuru ho jayengi.");
+            }, 800);
+        });
+    </script>
 </body>
 </html>

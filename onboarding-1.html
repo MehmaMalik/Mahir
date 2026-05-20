@@ -98,14 +98,14 @@
       },
     }
   </script>
-<<style>
+<style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; }
-    .container { height: calc(100vh - 52px); display: flex; flex-direction: column; justify-content: space-between; padding: 15px 20px; overflow: hidden; }
-    .illustration { flex: 1; max-height: 32vh; display: flex; justify-content: center; align-items: center; overflow: hidden; background-color: #f8f9fa; border-radius: 12px; }
-    .illustration img { max-height: 100%; width: auto; object-fit: contain; }
-    .content { flex: 0; padding: 10px 0; }
-    .bottom-nav { flex: 0; padding-bottom: 10px; }
+    html, body { height: 100dvh; overflow: hidden; }
+    .container { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 16px 20px; overflow: hidden; min-height: 0; background: linear-gradient(180deg, #ffffff 0%, #f4faf6 100%); }
+    .illustration { flex: 1; min-height: 0; display: flex; justify-content: center; align-items: center; overflow: hidden; background-color: #f0f7f3; border-radius: 16px; border: 1px solid rgba(26, 127, 75, 0.08); padding: 12px; position: relative; }
+    .illustration img { max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; border-radius: 8px; }
+    .content { flex-shrink: 0; padding: 12px 0; display: flex; flex-direction: column; gap: 8px; }
+    .bottom-nav { flex-shrink: 0; padding-bottom: 8px; }
 
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -115,50 +115,60 @@
       color: #191c1d;
       font-family: 'DM Sans', sans-serif;
     }
-    /* Flattening all elements as per design system guidelines */
     * {
       box-shadow: none !important;
     }
+    
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(12px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up {
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .delay-1 { animation-delay: 100ms; }
+    .delay-2 { animation-delay: 200ms; }
+    .delay-3 { animation-delay: 300ms; }
   </style>
 </head>
-<body class="font-body-md text-body-md flex flex-col h-screen max-w-md mx-auto relative overflow-hidden bg-white">
-<header style='height: 52px; background:#1a7f4b; padding:8px 16px; display:flex; align-items:center; flex-shrink:0;'>
-  <img src='/static/images/mahir-logo.svg' height='36' alt='Mahir Logo' style='filter:brightness(0) invert(1);'>
+<body class="font-body-md text-body-md flex flex-col h-dvh max-w-md mx-auto relative overflow-hidden bg-white">
+<header style='height: 52px; background:#1a7f4b; padding:8px 16px; display:flex; align-items:center; flex-shrink:0; border-b: 1px solid rgba(0, 0, 0, 0.05); z-index: 10;'>
+  <img src='/static/images/mahir-logo.svg' height='32' alt='Mahir Logo' style='filter:brightness(0) invert(1);'>
 </header>
 
-<div class="container bg-surface-container-lowest">
+<div class="container">
 <!-- Illustration Header Section -->
-<section class="illustration w-full">
+<section class="illustration w-full animate-fade-in-up">
 <img alt="Mahir Service Search Illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTXPuKUUDDcN5e0w0AbiQCAw-l7002rDIB98pBAXXZDiGlC3_BjvBSJLl5JPNd4NDIr0Pqm4naJAUV_o_t6WiUoeE2nsMtJC6V2OWWoGFgSFMwU_ZWk9gLm3v18diRr1QtF1z9fKTSa7DlRVB6g0jNf5VxToctaSVUR_HHbnN-gbwZrF1c0e9poE1MWI502H2YyDWAB--ueRyavpeKufkdFaPIINNGl5IpK8zo4zxyX8j8LK1bi790ROoTDfhpeaB6YN1BL9OdjtY"/>
 </section>
 
 <!-- Content Section -->
-<main class="content px-2">
+<main class="content px-1">
 <!-- Main Headline -->
-<h1 class="text-xl text-on-surface font-bold mb-2" style="font-size: 21.6px; line-height: 28px;">
+<h1 class="text-xl text-on-surface font-bold animate-fade-in-up delay-1" style="font-size: 21.6px; line-height: 28px; color: #004724;">
       Find skilled workers instantly
     </h1>
 <!-- Description -->
-<p class="text-sm text-on-surface-variant mb-4" style="font-size: 14.4px; line-height: 20px;">
+<p class="text-sm text-on-surface-variant animate-fade-in-up delay-1" style="font-size: 14.4px; line-height: 20px;">
       Type in Roman Urdu, Urdu, or English. Our AI finds the best verified worker near you in seconds.
     </p>
 <!-- Features List -->
-<div class="space-y-2">
+<div class="space-y-2 animate-fade-in-up delay-2">
 <!-- Feature Row 1 -->
-<div class="flex items-center gap-3 p-2 rounded-xl border border-outline-variant bg-surface">
-<div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary-container/10 text-primary">
+<div class="flex items-center gap-3 p-2.5 rounded-xl border border-outline-variant/30 bg-white/70 backdrop-blur-md" style="border: 1px solid rgba(26, 127, 75, 0.12);">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-[#1a7f4b]/10 text-[#1a7f4b] flex-shrink-0">
 <span class="material-symbols-outlined text-[18px]" data-icon="language">language</span>
 </div>
-<p class="font-label-lg text-label-lg text-on-surface" style="font-size: 12.6px;">
+<p class="font-label-lg text-label-lg text-on-surface" style="font-size: 12.6px; font-weight: 500;">
           Roman Urdu, Urdu, or English — AI understands
         </p>
 </div>
 <!-- Feature Row 2 -->
-<div class="flex items-center gap-3 p-2 rounded-xl border border-outline-variant bg-surface">
-<div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary-container/10 text-primary">
+<div class="flex items-center gap-3 p-2.5 rounded-xl border border-outline-variant/30 bg-white/70 backdrop-blur-md" style="border: 1px solid rgba(26, 127, 75, 0.12);">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-[#1a7f4b]/10 text-[#1a7f4b] flex-shrink-0">
 <span class="material-symbols-outlined text-[18px]" data-icon="location_on">location_on</span>
 </div>
-<p class="font-label-lg text-label-lg text-on-surface" style="font-size: 12.6px;">
+<p class="font-label-lg text-label-lg text-on-surface" style="font-size: 12.6px; font-weight: 500;">
           Workers near your location
         </p>
 </div>
@@ -166,20 +176,20 @@
 </main>
 
 <!-- Bottom Navigation Section -->
-<footer class="bottom-nav flex flex-col gap-3 bg-surface-container-lowest w-full">
+<footer class="bottom-nav flex flex-col gap-3 w-full animate-fade-in-up delay-3">
 <div class="flex items-center justify-between w-full">
 <!-- Skip Button -->
-<button onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'role-selection.html' : '/role-selection'" class="font-label-lg text-label-lg text-on-surface-variant px-3 py-1.5 active:opacity-60 transition-opacity" style="font-size: 12.6px;">
+<button onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'role-selection.html' : '/role-selection'" class="font-label-lg text-label-lg text-on-surface-variant px-3 py-1.5 active:opacity-60 transition-opacity" style="font-size: 12.6px; font-weight: 600;">
       Skip
     </button>
 <!-- Progress Dots -->
 <div class="flex items-center gap-2">
-<div class="h-2 w-6 rounded-full bg-primary-container"></div>
-<div class="h-2 w-2 rounded-full bg-outline-variant"></div>
-<div class="h-2 w-2 rounded-full bg-outline-variant"></div>
+<div class="h-2 w-6 rounded-full bg-[#1a7f4b]"></div>
+<div class="h-2 w-2 rounded-full bg-outline-variant/50"></div>
+<div class="h-2 w-2 rounded-full bg-outline-variant/50"></div>
 </div>
 <!-- Next Button -->
-<button class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-container text-on-primary-container font-label-lg text-label-lg active:scale-95 transition-transform" style="font-size: 12.6px;" onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'onboarding-2.html' : '/onboarding-2'">
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#1a7f4b] to-[#0d5e35] text-white font-label-lg text-label-lg active:scale-95 transition-transform" style="font-size: 12.6px; font-weight: 600; box-shadow: 0 4px 12px rgba(26, 127, 75, 0.15) !important;" onclick="window.location.href = (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) ? 'onboarding-2.html' : '/onboarding-2'">
       Next
       <span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
 </button>

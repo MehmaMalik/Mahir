@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Mahir Partner - Start Onboarding</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100dvh; overflow: hidden; }
+        .container { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 16px 20px; overflow: hidden; min-height: 0; background: linear-gradient(180deg, #ffffff 0%, #f4faf6 100%); }
+        .content { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px; overflow: hidden; }
+        .bottom-nav { flex-shrink: 0; padding-bottom: 8px; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .delay-1 { animation-delay: 100ms; }
+        .delay-2 { animation-delay: 200ms; }
+        .delay-3 { animation-delay: 300ms; }
+
+        /* Glowing ring for simulation */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+        .pulse-effect {
+            position: relative;
+        }
+        .pulse-effect::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid #1a7f4b;
+            border-radius: 50%;
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md flex flex-col h-dvh max-w-md mx-auto relative overflow-hidden bg-white">
+    <!-- Green TopAppBar -->
+    <header style='height: 52px; background:#1a7f4b; padding:8px 16px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); z-index: 10;'>
+        <div class="flex items-center gap-3">
+            <button onclick="window.location.href='/role-selection'" class="text-white flex items-center justify-center min-h-[48px] min-w-[48px] active:opacity-60 transition-opacity">
+                <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+            </button>
+            <h1 class="text-base font-bold text-white">Mahir Partner Onboarding</h1>
+        </div>
+        <img src="/static/images/mahir-logo.svg" style="height: 28px; width: auto; object-fit: contain; filter: brightness(0) invert(1);" alt="Mahir Logo">
+    </header>
+
+    <div class="container relative">
+        <main class="content">
+            <!-- Headline Section -->
+            <div class="text-center space-y-2 animate-fade-in-up">
+                <div class="w-16 h-16 bg-[#1a7f4b]/10 text-[#1a7f4b] rounded-full flex items-center justify-center mx-auto mb-1">
+                    <span class="material-symbols-outlined text-[32px]">assignment_ind</span>
+                </div>
+                <h2 class="text-xl font-bold text-on-surface" style="font-size: 20px; color: #004724;">
+                    How do you want to register?
+                </h2>
+                <p class="text-sm text-gray-500 font-semibold" style="font-size: 13.5px;">
+                    Aap kaise register hona chahte hain?
+                </p>
+            </div>
+
+            <!-- Choice Bento Cards -->
+            <div class="space-y-4 animate-fade-in-up delay-1">
+                <!-- Card 1: Self Registration -->
+                <button onclick="speakAndNavigate('/provider-registration', 'Main khud register karunga')" 
+                        class="w-full text-left bg-white border border-outline-variant/30 rounded-2xl p-4 flex gap-4 items-center transition-all active:scale-[0.98] hover:border-[#1a7f4b] shadow-sm relative overflow-hidden"
+                        style="border: 1.5px solid rgba(26, 127, 75, 0.12);">
+                    <div class="bg-[#1a7f4b]/10 text-[#1a7f4b] p-3 rounded-xl flex-shrink-0">
+                        <span class="material-symbols-outlined text-[28px]">edit_note</span>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-base font-bold text-on-surface" style="color: #1a7f4b;">Main khud register karunga</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">I will register myself (Takes 2 minutes)</p>
+                    </div>
+                    <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+                </button>
+
+                <!-- Card 2: Agent Call -->
+                <button onclick="toggleCallForm()" 
+                        class="w-full text-left bg-white border border-outline-variant/30 rounded-2xl p-4 flex gap-4 items-center transition-all active:scale-[0.98] hover:border-[#1a7f4b] shadow-sm relative overflow-hidden"
+                        style="border: 1.5px solid rgba(26, 127, 75, 0.12);">
+                    <div class="bg-blue-50 text-blue-600 p-3 rounded-xl flex-shrink-0">
+                        <span class="material-symbols-outlined text-[28px]">phone_in_talk</span>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-base font-bold text-on-surface" style="color: #1960a3;">Mujhe call karein</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">Agent will call me in Urdu &amp; register me</p>
+                    </div>
+                    <span class="material-symbols-outlined text-gray-400">expand_more</span>
+                </button>
+            </div>
+
+            <!-- Agent Call Phone Input Form (Hidden initially) -->
+            <div id="call-form-container" class="hidden animate-fade-in-up p-4 bg-white/70 backdrop-blur-md rounded-2xl border border-blue-100 shadow-sm space-y-3">
+                <p id="urdu-alert-msg" class="text-xs font-semibold text-blue-800 leading-normal bg-blue-50 p-2.5 rounded-xl border border-blue-200">
+                    Hum aapko 5 minute mein Urdu mein call karein ge. Apna phone ready rakhein.
+                </p>
+                <div class="flex gap-2">
+                    <input type="tel" id="provider-phone" required placeholder="e.g. 03001234567"
+                           class="flex-grow h-12 px-4 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#1a7f4b] focus:border-[#1a7f4b]">
+                    <button onclick="triggerAICall()" class="px-5 bg-[#1a7f4b] text-white rounded-xl font-bold text-xs flex items-center gap-1 active:scale-95 transition-all">
+                        Request Call
+                        <span class="material-symbols-outlined text-[14px]">call</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sticky Footer -->
+        <footer class="bottom-nav text-center animate-fade-in-up delay-2">
+            <div style='text-align:center;font-size:10px;color:#aaaaaa;padding-top:4px;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</div>
+        </footer>
+    </div>
+
+    <!-- Incoming Call Simulation Overlay (Hidden initially) -->
+    <div id="call-overlay" class="hidden fixed inset-0 z-50 bg-[#0c2e1f]/95 flex flex-col justify-between items-center py-20 px-8 text-white">
+        <div class="text-center space-y-4 mt-12 animate-bounce">
+            <div class="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center mx-auto pulse-effect">
+                <span class="material-symbols-outlined text-[48px] text-green-400">ring_volume</span>
+            </div>
+            <div class="space-y-1">
+                <h2 class="text-2xl font-bold tracking-wide">Mahir AI Calling</h2>
+                <p class="text-green-400 text-sm animate-pulse font-semibold uppercase tracking-widest">Incoming Call...</p>
+            </div>
+        </div>
+
+        <div class="text-center space-y-3 w-full max-w-xs">
+            <p class="text-xs text-white/60 bg-white/5 py-2 px-3 rounded-full border border-white/10">Press Green to Answer &amp; start Urdu Registration</p>
+            <div class="flex justify-center gap-10 mt-4">
+                <!-- Decline Button -->
+                <button onclick="hangUpCall()" class="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg active:scale-90 transition-transform">
+                    <span class="material-symbols-outlined text-[28px]">call_end</span>
+                </button>
+                <!-- Accept Button -->
+                <button onclick="acceptCall()" class="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center shadow-lg active:scale-90 transition-transform pulse-effect">
+                    <span class="material-symbols-outlined text-[28px]">call</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Web Speech synthesis helper
+        function speakUrdu(text, callback) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // stop previous
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ur-PK';
+                
+                // Fallback rate & pitch
+                utterance.rate = 0.85; 
+                utterance.pitch = 1.0;
+
+                // Attempt to find Urdu voice
+                const voices = window.speechSynthesis.getVoices();
+                const urVoice = voices.find(v => v.lang.includes('ur') || v.lang.includes('PK'));
+                if (urVoice) {
+                    utterance.voice = urVoice;
+                }
+
+                if (callback) {
+                    utterance.onend = callback;
+                }
+                window.speechSynthesis.speak(utterance);
+            } else {
+                if (callback) callback();
+            }
+        }
+
+        // On Load, speak Urdu intro
+        window.addEventListener('load', () => {
+            // Need user interaction to trigger speech in some modern browsers, 
+            // but we register speech as high probability on load or tap.
+            setTimeout(() => {
+                speakUrdu("Assalam o Alaikum! Mahir partner registration mein khush amdeed. Aap kaise register hona chahte hain?");
+            }, 800);
+        });
+
+        // Safe voice redirection
+        function speakAndNavigate(url, urduPhrase) {
+            speakUrdu(urduPhrase + ", please wait...", () => {
+                window.location.href = url;
+            });
+            // fallback
+            setTimeout(() => { window.location.href = url; }, 1800);
+        }
+
+        function toggleCallForm() {
+            const form = document.getElementById('call-form-container');
+            form.classList.toggle('hidden');
+            if (!form.classList.contains('hidden')) {
+                speakUrdu("Hum aapko paanch minute mein Urdu mein call karein ge. Apna phone number enter karein.");
+            }
+        }
+
+        function triggerAICall() {
+            const phone = document.getElementById('provider-phone').value;
+            if (!phone) {
+                alert("Baraye Meherbani apna mobile number enter karein!");
+                speakUrdu("Baraye Meherbani mobile number enter karein.");
+                return;
+            }
+
+            speakUrdu("Shukriya! Call connect ho rahi hai. Apna phone ready rakhein.", () => {
+                // Show dynamic full screen incoming call simulation
+                document.getElementById('call-overlay').classList.remove('hidden');
+                speakUrdu("Tring tring! Tring tring! Mahir AI Call center.");
+            });
+
+            // Fallback show call overlay immediately if speech is blocked
+            document.getElementById('call-overlay').classList.remove('hidden');
+        }
+
+        function hangUpCall() {
+            document.getElementById('call-overlay').classList.add('hidden');
+            speakUrdu("Call disconnected.");
+        }
+
+        function acceptCall() {
+            speakUrdu("Assalam o Alaikum! Main Mahir AI call center se baat kar raha hoon. Aap ne registration ke liye request ki thi. Chaliye, main abhi aapki details register kar ke test shuru karta hoon.", () => {
+                // Redirect directly to the skill test with pre-filled AI profile info!
+                window.location.href = "/provider-skill-test?name=Ustad%20AI%20Call&service_type=plumber&city=Islamabad";
+            });
+            
+            // Fallback redirect
+            setTimeout(() => {
+                window.location.href = "/provider-skill-test?name=Ustad%20AI%20Call&service_type=plumber&city=Islamabad";
+            }, 6000);
+        }
+
+        // Preload voices
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.getVoices();
+            window.speechSynthesis.onvoiceschanged = () => {
+                window.speechSynthesis.getVoices();
+            };
+        }
+    </script>
+</body>
+</html>

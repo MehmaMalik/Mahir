@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
@@ -8,194 +8,312 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <style>
-        body { font-family: 'DM Sans', sans-serif; }
-    </style>
-</head>
-<body class="bg-[#f8f9fa] text-[#191c1d] min-h-screen pb-24">
-    <!-- TopAppBar -->
-    <header class="bg-white border-b border-outline-variant sticky top-0 z-50 flex justify-between items-center w-full px-4 h-16 shadow-sm">
-        <div class="flex items-center gap-3">
-            <button onclick="history.back()" class="text-on-surface flex items-center justify-center min-h-[48px] min-w-[48px]">
-                <span class="material-symbols-outlined">arrow_back</span>
-            </button>
-            <h1 class="text-lg font-bold text-primary">Mahir Skill Test</h1>
-        </div>
-        <img src="/static/images/mahir-logo.svg" height="32" alt="Mahir Logo" class="mr-2">
-    </header>
-
-    <main class="max-w-md mx-auto py-6 px-4 space-y-6">
-        <header class="text-center space-y-2">
-            <span class="bg-[#e0f2fe] text-[#0369a1] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                Skill Validation
-            </span>
-            <h2 class="text-2xl font-bold text-[#006438]">Quick Technical Test</h2>
-            <p class="text-sm text-gray-500">Hello <span class="font-bold text-on-surface">{{ name }}</span>! Please answer these 3 quick questions about <span class="font-bold text-on-surface capitalize">{{ service_type }}</span> work.</p>
-        </header>
-
-        <form id="quiz-form" action="/provider-profile" method="POST" class="space-y-6">
-            <!-- Hidden inputs to forward provider details -->
-            <input type="hidden" name="name" value="{{ name }}">
-            <input type="hidden" name="service_type" value="{{ service_type }}">
-            <input type="hidden" name="city" value="{{ city }}">
-            <input type="hidden" name="score" id="score-input" value="0">
-
-            <!-- Question container loaded via JS -->
-            <div id="questions-container" class="space-y-6">
-                <!-- Dynamically generated questions go here -->
-            </div>
-
-            <!-- Submit Quiz -->
-            <button type="button" onclick="gradeQuiz()" class="w-full h-14 bg-[#1a7f4b] text-white rounded-xl text-md font-bold flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md hover:bg-[#006438]">
-                Submit Test & View Profile
-                <span class="material-symbols-outlined">check_circle</span>
-            </button>
-        </form>
-    </main>
-
-    <script>
-        const questionsData = {
-            "plumber": [
-                {
-                    q: "What tool is used to tighten or loosen pipes?",
-                    options: ["Plier (Palaash)", "Pipe Wrench", "Hammer (Hathori)"],
-                    correct: 1
-                },
-                {
-                    q: "How do you stop a leaking joint temporarily?",
-                    options: ["Teflon Tape", "Paper & Thread", "Wrapping cloth"],
-                    correct: 0
-                },
-                {
-                    q: "What is a U-trap used for in drain lines?",
-                    options: ["To slow down water flow", "To block sewer gas & smell", "To catch lost rings"],
-                    correct: 1
-                }
-            ],
-            "electrician": [
-                {
-                    q: "What tool is used to measure electrical voltage and current?",
-                    options: ["Thermometer", "Screw Driver", "Multimeter"],
-                    correct: 2
-                },
-                {
-                    q: "Which wire color is universally used for Earth / Grounding?",
-                    options: ["Green or Yellow", "Red", "Black"],
-                    correct: 0
-                },
-                {
-                    q: "What causes a fuse or circuit breaker to blow continuously?",
-                    options: ["Low voltage supply", "Overload or Short Circuit", "Very thick wire"],
-                    correct: 1
-                }
-            ],
-            "AC technician": [
-                {
-                    q: "What refrigerant gas is commonly used in modern split AC units?",
-                    options: ["Oxygen Gas", "R410A / R32 Gas", "Carbon Dioxide"],
-                    correct: 1
-                },
-                {
-                    q: "If the compressor is running but not cooling, what is the primary suspect?",
-                    options: ["Low/Leaked Refrigerant Gas", "Remote batteries are low", "Dirt on indoor body"],
-                    correct: 0
-                },
-                {
-                    q: "What causes water to leak or drip from the indoor unit inside the room?",
-                    options: ["Very cold room setting", "Blocked drain pipe or dust", "High outdoor humidity"],
-                    correct: 1
-                }
-            ],
-            "painter": [
-                {
-                    q: "What must be applied before painting a raw new plaster wall?",
-                    options: ["Varnish", "Water coat", "Wall Primer / Undercoat"],
-                    correct: 2
-                },
-                {
-                    q: "What is the best way to remove loose, peeling old paint?",
-                    options: ["Scraping with putty knife", "Washing with acid", "Burning it off"],
-                    correct: 0
-                },
-                {
-                    q: "Which paint type offers washability and waterproofing for exterior walls?",
-                    options: ["Distemper Paint", "Weather Sheet / Acrylic Emulsion", "Lime wash (Choona)"],
-                    correct: 1
-                }
-            ],
-            "carpenter": [
-                {
-                    q: "Which tool is used to shave and smooth the surface of wood?",
-                    options: ["Planer (Randa)", "Chisel (Ramba)", "Handsaw (Aari)"],
-                    correct: 0
-                },
-                {
-                    q: "What is the strongest way to join two wood panels permanently?",
-                    options: ["Sticky tape", "Wood glue and screws", "Nails only"],
-                    correct: 1
-                },
-                {
-                    q: "What does MDF stand for in woodworking?",
-                    options: ["Medium Density Fibreboard", "Modern Design Furniture", "Metal Double Frame"],
-                    correct: 0
-                }
-            ]
-        };
-
-        const serviceType = "{{ service_type }}".toLowerCase();
-        const activeQuestions = questionsData[serviceType] || questionsData["plumber"];
-
-        function loadQuestions() {
-            const container = document.getElementById("questions-container");
-            container.innerHTML = "";
-
-            activeQuestions.forEach((qObj, index) => {
-                let optionsHtml = "";
-                qObj.options.forEach((opt, optIdx) => {
-                    optionsHtml += `
-                        <label class="flex items-center gap-3 p-4 bg-white border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 active:scale-[0.99] transition-all">
-                            <input type="radio" name="q_${index}" value="${optIdx}" required
-                                class="h-5 w-5 text-[#1a7f4b] focus:ring-[#1a7f4b] border-gray-300">
-                            <span class="text-sm font-medium text-gray-700">${opt}</span>
-                        </label>
-                    `;
-                });
-
-                container.innerHTML += `
-                    <div class="bg-white border border-gray-200 rounded-2xl p-5 space-y-4 shadow-sm">
-                        <h3 class="text-md font-bold text-gray-800">Question ${index + 1}: ${qObj.q}</h3>
-                        <div class="flex flex-col gap-2">
-                            ${optionsHtml}
-                        </div>
-                    </div>
-                `;
-            });
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100dvh; overflow: hidden; }
+        .container { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 16px 20px; overflow: hidden; min-height: 0; background: linear-gradient(180deg, #ffffff 0%, #f4faf6 100%); }
+        .content { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px; overflow: hidden; }
+        .bottom-nav { flex-shrink: 0; padding-bottom: 8px; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
-        function gradeQuiz() {
-            let score = 0;
-            let allAnswered = true;
+        /* Pulsing voice effect */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+        .voice-icon-active {
+            animation: pulse 1.2s infinite ease-in-out;
+            color: #1a7f4b !important;
+            background-color: rgba(26, 127, 75, 0.12) !important;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md flex flex-col h-dvh max-w-md mx-auto relative overflow-hidden bg-white">
+    <!-- Green TopAppBar -->
+    <header style='height: 52px; background:#1a7f4b; padding:8px 16px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); z-index: 10;'>
+        <div class="flex items-center gap-3">
+            <button onclick="window.location.href='/provider-registration'" class="text-white flex items-center justify-center min-h-[48px] min-w-[48px] active:opacity-60 transition-opacity">
+                <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+            </button>
+            <h1 class="text-base font-bold text-white">Mahir Skill Test</h1>
+        </div>
+        <img src="/static/images/mahir-logo.svg" style="height: 28px; width: auto; object-fit: contain; filter: brightness(0) invert(1);" alt="Mahir Logo">
+    </header>
 
-            activeQuestions.forEach((qObj, index) => {
-                const selected = document.querySelector(`input[name="q_${index}"]:checked`);
-                if (!selected) {
-                    allAnswered = false;
-                } else {
-                    if (parseInt(selected.value) === qObj.correct) {
-                        score++;
-                    }
-                }
-            });
+    <div class="container">
+        <!-- Main Quiz Dashboard -->
+        <main class="content">
+            
+            <!-- Skill Test Card Container -->
+            <div id="quiz-card" class="bg-white/80 backdrop-blur-md border border-outline-variant/20 rounded-3xl p-5 shadow-sm space-y-4 animate-fade-in-up">
+                
+                <!-- Dynamic Header / Progress Indicator -->
+                <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                    <span id="quiz-progress-badge" class="bg-[#1a7f4b]/10 text-[#1a7f4b] px-3 py-1 rounded-full text-xs font-bold">
+                        Question 1 of 5
+                    </span>
+                    <button onclick="replayQuestionVoice()" id="voice-trigger-btn" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">volume_up</span>
+                    </button>
+                </div>
 
-            if (!allAnswered) {
-                alert("Please answer all questions before submitting / Baraye meherbani tamam sawalat ke jawab dein.");
+                <!-- Active Question Block -->
+                <div class="space-y-4">
+                    <h3 id="question-text" class="text-lg font-bold text-on-surface leading-snug" style="color: #004724;">
+                        Pipe mein leak kaise check karte hain?
+                    </h3>
+                    
+                    <!-- 4 Answer Option Buttons -->
+                    <div id="options-container" class="flex flex-col gap-2.5">
+                        <!-- Option A -->
+                        <button onclick="handleOptionSelect(0)" class="w-full text-left p-3.5 bg-white border border-gray-200 rounded-2xl text-sm font-medium hover:border-[#1a7f4b] active:scale-[0.98] transition-all flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-bold flex items-center justify-center flex-shrink-0">A</span>
+                            <span class="option-content">Paani band karo</span>
+                        </button>
+                        <!-- Option B -->
+                        <button onclick="handleOptionSelect(1)" class="w-full text-left p-3.5 bg-white border border-gray-200 rounded-2xl text-sm font-medium hover:border-[#1a7f4b] active:scale-[0.98] transition-all flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-bold flex items-center justify-center flex-shrink-0">B</span>
+                            <span class="option-content">Pressure test karo</span>
+                        </button>
+                        <!-- Option C -->
+                        <button onclick="handleOptionSelect(2)" class="w-full text-left p-3.5 bg-white border border-gray-200 rounded-2xl text-sm font-medium hover:border-[#1a7f4b] active:scale-[0.98] transition-all flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-bold flex items-center justify-center flex-shrink-0">C</span>
+                            <span class="option-content">Pipe tod do</span>
+                        </button>
+                        <!-- Option D -->
+                        <button onclick="handleOptionSelect(3)" class="w-full text-left p-3.5 bg-white border border-gray-200 rounded-2xl text-sm font-medium hover:border-[#1a7f4b] active:scale-[0.98] transition-all flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-bold flex items-center justify-center flex-shrink-0">D</span>
+                            <span class="option-content">Kuch nahi karo</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Custom Progress Bar -->
+                <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                    <div id="progress-bar-fill" class="bg-[#1a7f4b] h-full transition-all duration-300" style="width: 20%;"></div>
+                </div>
+            </div>
+
+            <!-- Dynamic Result Card Container (Hidden Initially) -->
+            <div id="result-card" class="hidden bg-white/80 backdrop-blur-md border border-outline-variant/20 rounded-3xl p-6 shadow-sm text-center space-y-5 animate-fade-in-up">
+                <div class="w-20 h-20 bg-[#1a7f4b]/10 text-[#1a7f4b] rounded-full flex items-center justify-center mx-auto relative">
+                    <span class="material-symbols-outlined text-[42px]" id="result-icon" style="font-variation-settings: 'FILL' 1;">award_star</span>
+                </div>
+                <div class="space-y-1">
+                    <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Your Badge Result</span>
+                    <h2 id="result-badge" class="text-2xl font-black" style="color: #006438;">Master Ustad</h2>
+                    <p id="result-score" class="text-sm font-bold text-gray-600">Score: 5/5 Sawal Sahi</p>
+                </div>
+                
+                <p id="result-urdu-message" class="text-xs text-gray-500 font-semibold bg-gray-50 p-3 rounded-2xl border border-gray-100">
+                    Mubarak ho! Aap Master Ustad hain.
+                </p>
+
+                <!-- Next Button -->
+                <button onclick="navigateToPKM()" class="w-full h-12 bg-[#1a7f4b] text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md hover:bg-[#006438]">
+                    Next: Police Verification
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- Sticky Footer -->
+        <footer class="bottom-nav text-center animate-fade-in-up">
+            <div style='text-align:center;font-size:10px;color:#aaaaaa;'>Powered by Google Pakistan · Innovista · Telenor · Ministry of IT</div>
+        </footer>
+    </div>
+
+    <!-- Hidden State Forwards -->
+    <input type="hidden" id="provider-name" value="{{ name }}">
+    <input type="hidden" id="provider-service" value="{{ service_type }}">
+    <input type="hidden" id="provider-city" value="{{ city }}">
+
+    <script>
+        // Plumber Question Bank
+        const questionsList = [
+            {
+                q: "Pipe mein leak kaise check karte hain?",
+                options: ["Paani band karo", "Pressure test karo", "Pipe tod do", "Kuch nahi karo"],
+                correct: 1
+            },
+            {
+                q: "PVC pipe kahan use hoti hai?",
+                options: ["Gas ke liye", "Paani ke liye", "Bijli ke liye", "Kahin nahi"],
+                correct: 1
+            },
+            {
+                q: "Geyser install karte waqt pehle kya karte hain?",
+                options: ["Paani chalao", "Gas band karo", "Bijli band karo", "Seedha lagao"],
+                correct: 1
+            },
+            {
+                q: "Pipe joint kaise pakki hoti hai?",
+                options: ["Tape se", "Cement se", "Thread tape aur fitting se", "Garam karo"],
+                correct: 2
+            },
+            {
+                q: "Emergency mein main paani band karne ke liye kya karte hain?",
+                options: ["Main valve band karo", "Pipe todo", "Pump band karo", "Kuch nahi"],
+                correct: 0
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        const totalQuestions = questionsList.length;
+
+        // Dynamic State
+        const providerName = document.getElementById('provider-name').value || "Ustad";
+        const serviceType = document.getElementById('provider-service').value || "plumber";
+        const providerCity = document.getElementById('provider-city').value || "Islamabad";
+
+        // Speech synthesis helper
+        function speakUrdu(text, callback) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ur-PK';
+                utterance.rate = 0.82; // clear and slightly slower
+                
+                const voices = window.speechSynthesis.getVoices();
+                const urVoice = voices.find(v => v.lang.includes('ur') || v.lang.includes('PK'));
+                if (urVoice) utterance.voice = urVoice;
+
+                if (callback) utterance.onend = callback;
+                
+                // Visual feedback that speech is playing
+                const vBtn = document.getElementById('voice-trigger-btn');
+                if (vBtn) vBtn.classList.add('voice-icon-active');
+                
+                utterance.onend = () => {
+                    if (vBtn) vBtn.classList.remove('voice-icon-active');
+                    if (callback) callback();
+                };
+
+                window.speechSynthesis.speak(utterance);
+            } else {
+                if (callback) callback();
+            }
+        }
+
+        // On Load speak introduction, then read Question 1
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                speakUrdu("Assalam o Alaikum! Aapka skill test shuru hota hai. Har sawal ke liye ek option chunein.", () => {
+                    loadQuestion(0);
+                });
+            }, 800);
+        });
+
+        // Load Question details
+        function loadQuestion(index) {
+            if (index >= totalQuestions) {
+                showResults();
                 return;
             }
 
-            document.getElementById("score-input").value = score;
-            document.getElementById("quiz-form").submit();
+            currentQuestionIndex = index;
+            const qObj = questionsList[index];
+
+            // Update Progress Badge & Bar
+            document.getElementById('quiz-progress-badge').innerText = `Question ${index + 1} of ${totalQuestions}`;
+            document.getElementById('progress-bar-fill').style.width = `${((index + 1) / totalQuestions) * 100}%`;
+
+            // Update Text
+            document.getElementById('question-text').innerText = qObj.q;
+
+            // Load options text
+            const buttons = document.querySelectorAll('#options-container button');
+            buttons.forEach((btn, idx) => {
+                btn.querySelector('.option-content').innerText = qObj.options[idx];
+            });
+
+            // Read the question aloud automatically in Urdu
+            speakUrdu(qObj.q);
         }
 
-        window.onload = loadQuestions;
+        function replayQuestionVoice() {
+            const qObj = questionsList[currentQuestionIndex];
+            speakUrdu(qObj.q);
+        }
+
+        // Option click handler
+        function handleOptionSelect(selectedIdx) {
+            const qObj = questionsList[currentQuestionIndex];
+            
+            // Speak selected option aloud
+            const selectedText = qObj.options[selectedIdx];
+            
+            // Check Correct
+            if (selectedIdx === qObj.correct) {
+                score++;
+            }
+
+            speakUrdu(selectedText, () => {
+                setTimeout(() => {
+                    loadQuestion(currentQuestionIndex + 1);
+                }, 400);
+            });
+        }
+
+        // Show result details
+        function showResults() {
+            // Hide quiz panel, show result panel
+            document.getElementById('quiz-card').classList.add('hidden');
+            const resultPanel = document.getElementById('result-card');
+            resultPanel.classList.remove('hidden');
+
+            let badge = 'Rookie';
+            let msg = 'Theek hai. Aap Rookie badge se shuru karein ge';
+            let badgeColor = '#854600';
+            let icon = 'military_tech';
+
+            if (score === 5) {
+                badge = 'Master Ustad';
+                msg = 'Mubarak ho! Aap Master Ustad hain';
+                badgeColor = '#1a7f4b';
+                icon = 'award_star';
+            } else if (score === 4) {
+                badge = 'Verified Ustad';
+                msg = 'Bohat acha! Aap Verified Ustad hain';
+                badgeColor = '#1960a3';
+                icon = 'verified';
+            }
+
+            // Update DOM details
+            document.getElementById('result-badge').innerText = badge;
+            document.getElementById('result-badge').style.color = badgeColor;
+            document.getElementById('result-score').innerText = `Score: ${score} of 5 Sawal Sahi`;
+            document.getElementById('result-urdu-message').innerText = msg;
+            
+            const rIcon = document.getElementById('result-icon');
+            rIcon.innerText = icon;
+            rIcon.style.color = badgeColor;
+
+            // Voice result aloud
+            speakUrdu(msg);
+        }
+
+        // Submit parameters to PKM Route
+        function navigateToPKM() {
+            const redirectUrl = `/pkm-verification?name=${encodeURIComponent(providerName)}&service_type=${encodeURIComponent(serviceType)}&city=${encodeURIComponent(providerCity)}&score=${score}`;
+            window.location.href = redirectUrl;
+        }
+
+        // Initialize Speech synthesis voice lists
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.getVoices();
+            window.speechSynthesis.onvoiceschanged = () => {
+                window.speechSynthesis.getVoices();
+            };
+        }
     </script>
 </body>
 </html>
