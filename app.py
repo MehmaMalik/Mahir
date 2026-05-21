@@ -386,8 +386,13 @@ def guardian_notify():
     print(f"==================================================\n")
     return {"status": "success"}
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    debug = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
-    print(f"Starting Mahir AI Flask Server on http://0.0.0.0:{port}")
-    app.run(host='0.0.0.0', port=port, debug=debug)
+    # Disable caching of static files in development
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
+    @app.after_request
+    def add_header(response):
+        # Set cache control headers to prevent stale assets on mobile devices
+        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        return response

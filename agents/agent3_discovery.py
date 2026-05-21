@@ -142,10 +142,51 @@ def discover_providers(service_type, complexity, cust_lat, cust_lng, customer_ci
     for idx, provider in enumerate(top_5, 1):
         print(f"{idx}. {provider['name']} ({provider['skill_level']}) - {provider['distance_km']} km away in {provider.get('area', 'Unknown')}")
 
+    # If no providers found with city filter, fallback to show providers from other areas
     if not top_5:
-        print(f"No providers found for city: {customer_city_canonical}")
+        print("No providers found for city: {}. Showing alternatives from other areas.".format(customer_city_canonical))
+        # Re-run provider collection without city constraint
+        fallback_providers = []
+        for p in providers:
+            # 1. Match service type (case-insensitive)
+            if p.get("service_type", "").lower() != service_type.lower():
+                continue
 
-    return top_5
+            p_copy = p.copy()
+
+            # 2. Expiry date check if pkm_verified
+            if p_copy.get("pkm_verified"):
+                expiry_str = p_copy.get("pkm_expiry")
+                if expiry_str and expiry_str != "null":
+                    try:
+                        expiry_date = datetime.strptime(expiry_str, "%Y-%m-%d")
+                        if expiry_date < today:
+                            p_copy["pkm_verified"] = False
+                    except ValueError:
+                        p_copy["pkm_verified"] = False
+                else:
+                    p_copy["pkm_verified"] = False
+
+            # 3. Complexity & Skill Level check
+            if p_copy.get("skill_level") not in allowed_skills:
+                continue
+
+            # 4. Calculate distance (same as before)
+            if p_copy.get("area") == "Available nearby" or p_copy.get("city") == "Available nearby":
+                dist = 1.2
+            else:
+                dist = haversine_distance(cust_lat, cust_lng, p_copy.get("location_lat", cust_lat), p_copy.get("location_lng", cust_lng))
+
+            p_copy["distance_km"] = round(dist, 2)
+            p_copy["fallback_used"] = True
+            fallback_providers.append(p_copy)
+
+        # Sort fallback providers by distance and take top 5
+        fallback_providers.sort(key=lambda x: x["distance_km"])
+        top_5 = fallback_providers[:5]
+        for idx, provider in enumerate(top_5, 1):
+            print(f"{idx}. {provider['name']} ({provider['skill_level']}) - {provider['distance_km']} km away in {provider.get('area', 'Unknown')} (fallback)")
+
 
 if __name__ == "__main__":
     # Dummy test: Islamabad (G-13)
