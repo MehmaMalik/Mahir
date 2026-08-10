@@ -32,6 +32,7 @@ CITY_KEYWORDS = {
     "i-14": "islamabad",
     "e-7": "islamabad",
     "blue area": "islamabad",
+    "bahria islamabad": "islamabad",
     "bahria town": "rawalpindi",
     "saddar": "rawalpindi",
     "lahore": "lahore",
@@ -187,6 +188,7 @@ def discover_providers(service_type, complexity, cust_lat, cust_lng, customer_ci
         for idx, provider in enumerate(top_5, 1):
             print(f"{idx}. {provider['name']} ({provider['skill_level']}) - {provider['distance_km']} km away in {provider.get('area', 'Unknown')} (fallback)")
 
+    return top_5
 
 if __name__ == "__main__":
     # Dummy test: Islamabad (G-13)
